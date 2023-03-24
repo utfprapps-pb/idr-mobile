@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/models/user_model.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository.dart';
@@ -11,17 +12,20 @@ class LoginRepositoryImpl implements LoginRepository {
   }) : _restClient = restClient;
 
   @override
-  Future<UserModel?> login() async {
-    final result = await _restClient.get<UserModel?>(
-      headers: HeadersAPI(token: '_').getHeaders(),
-      '/login',
+  Future<String?> login() async {
+    var json = {"username": "Fulano 1", "password": "123"};
+
+    final result = await _restClient.post(
+      'login',
+      json,
       decoder: (data) {
+        print(data);
         // Pega os dados
-        final resultData = data['_'];
+        final resultData = data;
         // Verifica se não é nulo
         if (resultData != null) {
           // Passa para a lista de CHAVExVALOR (JSON) do model
-          return resultData.map<UserModel>((g) => UserModel.fromMap(g));
+          return resultData["token"];
         } else {
           //se for vazio retorna nulo
           return null;
