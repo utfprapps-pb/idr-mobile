@@ -21,128 +21,120 @@ class LoginPage extends GetView<LoginController> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              SafeArea(
-                child: TopWavesCustomPainter(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        children: const [
-                          Text(
-                            'Login',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff0059AA),
-                              fontFamily: 'Segoe-UI',
-                            ),
+        child: Column(
+          children: [
+            SafeArea(
+              child: TopWavesCustomPainter(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      children: const [
+                        Text(
+                          'Login',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff0059AA),
+                            fontFamily: 'Segoe-UI',
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 15.0),
-                              child: CustomInputField(
-                                inputController: _usernameController,
-                                onTapCallBack: () {},
-                                labelText: 'Usuário',
-                                icon: Icons.person,
-                                validator: (username) {
-                                  if (username == null || username.isEmpty) {
-                                    return "Digite seu usuário";
-                                  }
-
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 15.0),
                             child: CustomInputField(
-                              inputController: _passwordController,
+                              inputController: _usernameController,
                               onTapCallBack: () {},
-                              labelText: 'Senha',
+                              labelText: 'Usuário',
                               icon: Icons.person,
-                              validator: (password) {
-                                if (password == null ||
-                                    password.toString().trim().isEmpty) {
-                                  return "Digite sua senha";
+                              validator: (username) {
+                                if (username == null || username.isEmpty) {
+                                  return "Digite seu usuário";
                                 }
 
                                 return null;
                               },
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 48,
-                              child: Obx(() => controller.isLoading.value
-                                  ? Center(
-                                      child: CircularProgressIndicator(
-                                        color: UIColors.primaryColor,
-                                      ),
-                                    )
-                                  : CustomElevatedButton(
-                                      onPressedCallBack: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          controller.signIn(
-                                            username: _usernameController.text,
-                                            password: _passwordController.text,
-                                          );
-                                        }
-                                      },
-                                      title: 'Login',
-                                    )),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 48,
-                              child: OutlinedButton(
-                                style: UIConfig.outlineButtonStyle,
-                                onPressed: () {},
-                                child: const Text('Login'),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Obx(() => CustomInputField(
+                                inputController: _passwordController,
+                                onTapCallBack: () {},
+                                onPressedIcon: () =>
+                                    controller.onChangedObscureText(),
+                                isObscureText: controller.isObscureText.value,
+                                labelText: 'Senha',
+                                icon: controller.isObscureText.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                validator: (password) {
+                                  if (password == null ||
+                                      password.toString().trim().isEmpty) {
+                                    return "Digite sua senha";
+                                  }
+
+                                  return null;
+                                },
+                              )),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Spacer(),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 16, left: 16, bottom: 16, top: 32),
+                  child: SizedBox(
+                    height: 48,
+                    child: Obx(
+                      () => controller.isLoading.value
+                          ? Center(
+                              child: CircularProgressIndicator(
+                                color: UIColors.primaryColor,
                               ),
+                            )
+                          : CustomElevatedButton(
+                              onPressedCallBack: () {
+                                if (_formKey.currentState!.validate()) {
+                                  controller.signIn(
+                                    username: _usernameController.text,
+                                    password: _passwordController.text,
+                                  );
+                                }
+                              },
+                              title: 'Login',
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+            // ),
+          ],
         ),
       ),
     );
