@@ -13,6 +13,7 @@ class LoginController extends GetxController {
 
   AuthService? auth;
   RxBool isLoading = false.obs;
+  RxBool isObscureText = true.obs;
   RxString titleTest = ''.obs;
 
   @override
@@ -30,12 +31,19 @@ class LoginController extends GetxController {
     });
   }
 
+  onChangedObscureText() {
+    isObscureText.value = !isObscureText.value;
+  }
+
   Future<void> signIn({
     required String username,
     required String password,
   }) async {
-    isLoading.value = true;
+    // isLoading.value = true;
 
+    await _loginService.login().then(
+        (value) => {if (value != null) print("Success") else print("Error")});
+    // print(token);
     await Future.delayed(
       const Duration(seconds: 3),
     );
