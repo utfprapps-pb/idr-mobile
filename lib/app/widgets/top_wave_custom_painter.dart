@@ -7,7 +7,7 @@ Widget TopWavesCustomPainter() {
       Padding(
         padding: const EdgeInsets.only(top: 50),
         child: SizedBox(
-          height: 200,
+          height: 190,
           child: CustomPaint(
             painter: SecondWave(),
             child: Container(),
@@ -15,7 +15,7 @@ Widget TopWavesCustomPainter() {
         ),
       ),
       SizedBox(
-        height: 150,
+        height: 145,
         child: CustomPaint(
           painter: FirstWave(),
           child: Container(),
