@@ -10,5 +10,5 @@ class LoginServiceImpl implements LoginService {
   }) : _loginRepository = loginRepository;
 
   @override
-  Future<String?> login() => _loginRepository.login();
+  Future<String?> login(dynamic json) => _loginRepository.login(json);
 }

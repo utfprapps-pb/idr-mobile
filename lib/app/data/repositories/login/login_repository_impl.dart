@@ -12,8 +12,8 @@ class LoginRepositoryImpl implements LoginRepository {
   }) : _restClient = restClient;
 
   @override
-  Future<String?> login() async {
-    var json = {"username": "Fulano 1", "password": "123"};
+  Future<String?> login(dynamic json) async {
+    // var json = {"username": "Fulano 1", "password": "123"};
 
     final result = await _restClient.post(
       'login',

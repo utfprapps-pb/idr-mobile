@@ -40,9 +40,23 @@ class LoginController extends GetxController {
     required String password,
   }) async {
     // isLoading.value = true;
+    var login = {
+      "username": username,
+      "password": password,
+    };
 
-    await _loginService.login().then(
-        (value) => {if (value != null) print("Success") else print("Error")});
+    await _loginService.login(login).then((value) => {
+          if (value != null)
+            {
+              auth!.changeApiToken(value),
+              auth!.changeIsLogged(true),
+              reauth(),
+            }
+          else
+            {
+              print("Error"),
+            }
+        });
     // print(token);
     await Future.delayed(
       const Duration(seconds: 3),
