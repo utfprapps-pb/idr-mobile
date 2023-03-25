@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:idr_mobile/app/modules/home/home_binding.dart';
+import 'package:idr_mobile/app/modules/home/home_page.dart';
 import 'package:idr_mobile/app/modules/login/login_binding.dart';
 import 'package:idr_mobile/app/modules/login/login_page.dart';
 
@@ -16,9 +18,9 @@ abstract class AppPages {
     ),
     GetPage(
       name: Routes.HOME,
-      page: () => LoginPage(),
+      page: () => HomePage(),
       bindings: [
-        LoginBinding(),
+        HomeBinding(),
       ],
     ),
   ];
