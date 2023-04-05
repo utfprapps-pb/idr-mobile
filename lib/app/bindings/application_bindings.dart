@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
+import 'package:idr_mobile/app/data/repositories/home/home_repository.dart';
+import 'package:idr_mobile/app/data/repositories/home/home_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository_impl.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/app/data/services/home/home_service.dart';
+import 'package:idr_mobile/app/data/services/home/home_service_impl.dart';
 import 'package:idr_mobile/app/data/services/login/login_service.dart';
 import 'package:idr_mobile/app/data/services/login/login_service_impl.dart';
 
@@ -32,5 +36,15 @@ class ApplicationBindings implements Bindings {
 
     //ao carregar a aplicação verifica se está logado ou nao e faz o direcionamento para a rota inicial
     Get.put(AuthService()).init();
+
+    Get.lazyPut<HomeRepository>(
+      () => HomeRepositoryImpl(restClient: Get.find()),
+      fenix: true,
+    );
+
+    Get.lazyPut<HomeService>(
+      () => HomeServiceImpl(homeRepository: Get.find()),
+      fenix: true,
+    );
   }
 }
