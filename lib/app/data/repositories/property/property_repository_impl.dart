@@ -13,7 +13,7 @@ class PropertyRepositoryImpl implements PropertyRepository {
   }) : _restClient = restClient;
 
   @override
-  Future<PropertyModel?> getProperties() async {
+  Future<PropertyModel?> getAll() async {
     final result = await _restClient.get(
       'properties',
       headers: HeadersAPI().getHeaders(),
