@@ -4,11 +4,15 @@ import 'package:idr_mobile/app/data/repositories/home/home_repository.dart';
 import 'package:idr_mobile/app/data/repositories/home/home_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/property/property_repository.dart';
+import 'package:idr_mobile/app/data/repositories/property/property_repository_impl.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/app/data/services/home/home_service.dart';
 import 'package:idr_mobile/app/data/services/home/home_service_impl.dart';
 import 'package:idr_mobile/app/data/services/login/login_service.dart';
 import 'package:idr_mobile/app/data/services/login/login_service_impl.dart';
+import 'package:idr_mobile/app/data/services/property/property_service.dart';
+import 'package:idr_mobile/app/data/services/property/property_service_impl.dart';
 
 class ApplicationBindings implements Bindings {
   @override
@@ -44,6 +48,16 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<HomeService>(
       () => HomeServiceImpl(homeRepository: Get.find()),
+      fenix: true,
+    );
+
+    Get.lazyPut<PropertyService>(
+      () => PropertyServiceImpl(propertyRepository: Get.find()),
+      fenix: true,
+    );
+
+    Get.lazyPut<PropertyRepository>(
+      () => PropertyRepositoryImpl(restClient: Get.find()),
       fenix: true,
     );
   }
