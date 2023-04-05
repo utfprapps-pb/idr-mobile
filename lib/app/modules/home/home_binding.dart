@@ -8,6 +8,7 @@ class HomeBinding implements Bindings {
     Get.lazyPut<HomeController>(
       () => HomeController(
         homeService: Get.find(),
+        propertyService: Get.find(),
       ),
     );
   }
