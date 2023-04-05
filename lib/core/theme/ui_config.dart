@@ -30,4 +30,28 @@ class UIConfig {
           color: UIColors.blackColor,
         ),
       );
+
+  static TextStyle get titleStyle => TextStyle(
+        color: UIColors.blackColor24,
+        fontFamily: 'Segoe-UI',
+        fontSize: 24,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 0.25,
+      );
+
+  static TextStyle get textStyle => TextStyle(
+        color: UIColors.blackColor24,
+        fontFamily: 'Segoe-UI',
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        letterSpacing: 0.5,
+      );
+
+  static TextStyle get subtitleStyle => TextStyle(
+        color: UIColors.blackColor24,
+        fontFamily: 'Segoe-UI',
+        fontSize: 16,
+        letterSpacing: 0.15,
+        fontWeight: FontWeight.w400,
+      );
 }
