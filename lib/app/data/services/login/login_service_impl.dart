@@ -1,3 +1,4 @@
+import 'package:idr_mobile/app/data/models/login_model.dart';
 import 'package:idr_mobile/app/data/models/user_model.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository.dart';
 import 'package:idr_mobile/app/data/services/login/login_service.dart';
@@ -10,5 +11,5 @@ class LoginServiceImpl implements LoginService {
   }) : _loginRepository = loginRepository;
 
   @override
-  Future<String?> login(dynamic json) => _loginRepository.login(json);
+  Future<LoginModel?> login(dynamic json) => _loginRepository.login(json);
 }

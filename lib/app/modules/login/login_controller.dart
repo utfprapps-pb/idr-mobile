@@ -48,8 +48,9 @@ class LoginController extends GetxController {
     await _loginService.login(login).then((value) => {
           if (value != null)
             {
-              auth!.changeApiToken(value),
+              auth!.changeApiToken(value.token),
               auth!.changeIsLogged(true),
+              auth!.changeDisplayName(value.displayName),
               reauth(),
             }
           else
