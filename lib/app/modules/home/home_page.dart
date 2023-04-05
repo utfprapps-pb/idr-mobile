@@ -15,10 +15,27 @@ class HomePage extends GetView<HomeController> {
     SizeConfig().init(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        child: Center(
-          child: Text('Home Page'),
+      backgroundColor: UIColors.whiteColor,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Obx(
+                  () => Text(
+                    'Olá, ${controller.displayName.value}',
+                    style: UIConfig.titleStyle,
+                  ),
+                ),
+                Text(
+                  'Bem vindo de volta',
+                  style: UIConfig.textStyle,
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

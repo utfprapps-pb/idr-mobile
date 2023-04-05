@@ -7,8 +7,8 @@ class HomeBinding implements Bindings {
   void dependencies() {
     Get.lazyPut<HomeController>(
       () => HomeController(
-          // loginService: Get.find(),
-          ),
+        homeService: Get.find(),
+      ),
     );
   }
 }
