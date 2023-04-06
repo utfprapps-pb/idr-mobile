@@ -6,17 +6,17 @@ import 'package:flutter/foundation.dart';
 class PropertyModel {
   final int id;
   final String ocupationArea;
-  final double totalArea;
-  final int latitude;
-  final int longitude;
+  final double? totalArea;
+  final int? latitude;
+  final int? longitude;
   final bool leased;
 
   PropertyModel({
     required this.id,
     required this.ocupationArea,
-    required this.totalArea,
-    required this.latitude,
-    required this.longitude,
+    this.totalArea,
+    this.latitude,
+    this.longitude,
     required this.leased,
   });
 
@@ -53,9 +53,9 @@ class PropertyModel {
     return PropertyModel(
       id: map['id'] as int,
       ocupationArea: map['ocupationArea'] as String,
-      totalArea: map['totalArea'] as double,
-      latitude: map['latitude'] as int,
-      longitude: map['longitude'] as int,
+      totalArea: map['totalArea'] != null ? map['totalArea'] as double : null,
+      latitude: map['latitude'] != null ? map['latitude'] as int : null,
+      longitude: map['longitude'] != null ? map['longitude'] as int : null,
       leased: map['leased'] as bool,
     );
   }

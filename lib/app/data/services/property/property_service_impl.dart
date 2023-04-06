@@ -12,5 +12,6 @@ class PropertyServiceImpl implements PropertyService {
   }) : _propertyRepository = propertyRepository;
 
   @override
-  Future<PropertyModel?> getAllProperties() => _propertyRepository.getAll();
+  Future<List<PropertyModel>> getAllProperties() =>
+      _propertyRepository.getAll();
 }
