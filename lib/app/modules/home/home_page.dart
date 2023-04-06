@@ -18,20 +18,35 @@ class HomePage extends GetView<HomeController> {
       backgroundColor: UIColors.whiteColor,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Obx(
-                  () => Text(
-                    'Olá, ${controller.displayName.value}',
-                    style: UIConfig.titleStyle,
-                  ),
-                ),
-                Text(
-                  'Bem vindo de volta',
-                  style: UIConfig.textStyle,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Obx(
+                          () => Text(
+                            'Olá, ${controller.displayName.value}',
+                            style: UIConfig.titleStyle,
+                          ),
+                        ),
+                        Text(
+                          'Bem vindo de volta',
+                          style: UIConfig.textStyle,
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      onPressed: () => controller.auth!.logout(),
+                      icon: Icon(
+                        Icons.logout,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
