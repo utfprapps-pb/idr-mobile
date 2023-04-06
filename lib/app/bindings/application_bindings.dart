@@ -27,6 +27,11 @@ class ApplicationBindings implements Bindings {
       fenix: true,
     );
 
+    Get.lazyPut(
+      () => AuthService(),
+      fenix: true,
+    );
+
     //classes que "não" finalizam durante o tempo de vida da aplicação dado "fenix: true"
     Get.lazyPut<LoginRepository>(
       () => LoginRepositoryImpl(restClient: Get.find()),
@@ -57,7 +62,10 @@ class ApplicationBindings implements Bindings {
     );
 
     Get.lazyPut<PropertyRepository>(
-      () => PropertyRepositoryImpl(restClient: Get.find()),
+      () => PropertyRepositoryImpl(
+        restClient: Get.find(),
+        authService: Get.find(),
+      ),
       fenix: true,
     );
   }
