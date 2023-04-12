@@ -9,7 +9,10 @@ class UIConfig {
 
   static ThemeData get theme => ThemeData(
         fontFamily: 'Segoe-UI',
-        // colorScheme: ThemeData().colorScheme.copyWith(secondary: Colors.white),
+        primaryColor: UIColors.primaryColor,
+        colorScheme: ThemeData().colorScheme.copyWith(
+              primary: UIColors.primaryColor,
+            ),
       );
 
   static ButtonStyle get elevatedButtonStyle => ElevatedButton.styleFrom(
