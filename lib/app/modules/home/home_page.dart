@@ -20,35 +20,88 @@ class HomePage extends GetView<HomeController> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Obx(
-                          () => Text(
-                            'Olá, ${controller.displayName.value}',
+            child: SizedBox(
+              height: Get.height,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Obx(
+                            () => Text(
+                              'Olá, ${controller.displayName.value}',
+                              style: UIConfig.textStyle,
+                            ),
+                          ),
+                          Text(
+                            'Bem vindo de volta',
                             style: UIConfig.titleStyle,
                           ),
-                        ),
-                        Text(
-                          'Bem vindo de volta',
-                          style: UIConfig.textStyle,
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      onPressed: () => controller.auth!.logout(),
-                      icon: Icon(
-                        Icons.logout,
+                        ],
                       ),
+                      IconButton(
+                        onPressed: () => controller.logout(),
+                        icon: const Icon(
+                          Icons.logout,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Obx(
+                    () => TextField(
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        suffixIcon: controller.isEmptyInput.value
+                            ? IconButton(
+                                onPressed: () => controller.cleanInput(),
+                                icon: Icon(Icons.close),
+                              )
+                            : Icon(Icons.search),
+
+                        // icon: Icon(Icons.person),
+                        hintText: 'Pesquisar',
+                      ),
+                      controller: controller.searchController.value,
+                      onChanged: (_) => controller.onChangeSearch(_),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Expanded(
+                    child: Obx(() {
+                      return ListView.separated(
+                        separatorBuilder: (context, index) => Divider(),
+                        itemCount: controller.propertiesShowList.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          var property = controller.propertiesShowList[index];
+                          return ListTile(
+                            leading: const Icon(Icons.terrain),
+                            title: Text(
+                                '${property.id} - ${property.ocupationArea}'),
+                            subtitle: Text('${property.ocupationArea}'),
+                            trailing: const Icon(Icons.more_vert),
+                          );
+                        },
+                      );
+                    }),
+                  )
+                ],
+              ),
             ),
           ),
         ),
