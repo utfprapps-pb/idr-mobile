@@ -20,7 +20,7 @@ class PropertyRepositoryImpl implements PropertyRepository {
   Future<List<PropertyModel>> getAll() async {
     final result = await _restClient.get(
       'properties',
-      headers: HeadersAPI(token: auth!.apiToken()).getHeaders(),
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
         final resultData = data;
 
