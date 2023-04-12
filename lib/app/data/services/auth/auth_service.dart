@@ -27,8 +27,8 @@ class AuthService extends GetxService {
       box.write(DISPLAY_NAME, displayName);
 
   logout() async => {
-        box.remove(IS_LOGGED),
-        box.remove(TOKEN),
-        box.remove(DISPLAY_NAME),
+        changeIsLogged(false),
+        changeApiToken(''),
+        changeDisplayName(''),
       };
 }
