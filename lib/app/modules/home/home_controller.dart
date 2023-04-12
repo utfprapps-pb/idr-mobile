@@ -6,6 +6,7 @@ import 'package:idr_mobile/app/data/services/home/home_service.dart';
 import 'package:idr_mobile/app/data/services/login/login_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
 import 'package:idr_mobile/routes/app_pages.dart';
+import 'package:flutter/material.dart';
 
 class HomeController extends GetxController {
   final HomeService _homeService;
@@ -19,12 +20,16 @@ class HomeController extends GetxController {
 
   AuthService? auth;
   RxString displayName = ''.obs;
-  final properties = <PropertyModel>[].obs;
+  RxBool isEmptyInput = false.obs;
+  final propertiesFinal = <PropertyModel>[].obs;
+  final propertiesShowList = <PropertyModel>[].obs;
+  Rx<TextEditingController> searchController = TextEditingController().obs;
 
   @override
   void onInit() async {
     auth = Get.find<AuthService>();
     displayName.value = await auth!.displayName();
+    searchController.value.text = '';
     super.onInit();
   }
 
@@ -33,7 +38,8 @@ class HomeController extends GetxController {
     super.onReady();
     try {
       final propertiesData = await _propertyService.getAllProperties();
-      properties.assignAll(propertiesData);
+      propertiesFinal.assignAll(propertiesData);
+      propertiesShowList.assignAll(propertiesFinal);
     } on Exception catch (e, s) {
       print(e);
       print(s);
@@ -44,5 +50,38 @@ class HomeController extends GetxController {
   void logout() {
     auth!.logout();
     Get.offNamed(Routes.LOGIN);
+  }
+
+  onChangeSearch(_) {
+    if (_ == '') {
+      isEmptyInput.value = false;
+    } else {
+      isEmptyInput.value = true;
+    }
+
+    filterList(_);
+  }
+
+  cleanInput() {
+    searchController.value.text = '';
+    onChangeSearch(searchController.value.text);
+  }
+
+  void filterList(String value) {
+    List<PropertyModel> newList = [];
+
+    newList = propertiesFinal.where((o) {
+      if (o.ocupationArea.contains(value)) {
+        return true;
+      }
+
+      if (o.id.toString() == value) {
+        return true;
+      }
+
+      return false;
+    }).toList();
+
+    propertiesShowList.assignAll(newList);
   }
 }
