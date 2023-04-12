@@ -24,6 +24,7 @@ class HomeController extends GetxController {
   final propertiesFinal = <PropertyModel>[].obs;
   final propertiesShowList = <PropertyModel>[].obs;
   Rx<TextEditingController> searchController = TextEditingController().obs;
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void onInit() async {
@@ -45,6 +46,10 @@ class HomeController extends GetxController {
       print(s);
       //TODO: Mostrar snackbar com mensagem de erro
     }
+  }
+
+  void openEndDrawer() {
+    scaffoldKey.currentState!.openEndDrawer();
   }
 
   void logout() {
