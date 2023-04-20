@@ -1,7 +1,6 @@
-import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
-import 'package:idr_mobile/core/values/consts_tables.dart';
+import 'package:idr_mobile/core/values/consts_db.dart';
 
 class DatabaseInit {
   Future<Box<dynamic>> getInstance() async {
