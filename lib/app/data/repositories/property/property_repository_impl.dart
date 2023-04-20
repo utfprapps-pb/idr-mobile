@@ -1,14 +1,17 @@
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
-import 'package:idr_mobile/app/data/models/user_model.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
+import 'package:idr_mobile/app/data/providers/db/db.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/core/utils/header_api.dart';
+import 'package:idr_mobile/core/values/consts_db.dart';
 
 class PropertyRepositoryImpl implements PropertyRepository {
   final RestClient _restClient;
   final AuthService auth;
+  late Box _box;
 
   PropertyRepositoryImpl({
     required RestClient restClient,
@@ -29,7 +32,6 @@ class PropertyRepositoryImpl implements PropertyRepository {
               .map<PropertyModel>((p) => PropertyModel.fromMap(p))
               .toList();
         } else {
-          //se for vazio retorna nulo
           return <PropertyModel>[];
         }
       },
@@ -37,10 +39,20 @@ class PropertyRepositoryImpl implements PropertyRepository {
 
     // Cao houver erro
     if (result.hasError) {
-      print('Erro [${result.statusText}]');
-      throw Exception('Erro _');
+      print('Error [${result.statusText}]');
+      throw Exception('Error _');
     }
 
     return result.body ?? <PropertyModel>[];
+  }
+
+  @override
+  Future<bool> saveProperties(List<PropertyModel> properties) async {
+    _box = await DatabaseInit().getInstance();
+
+    _box.put(PROPERTIES, properties.toList());
+    var propertyBox = _box.get(PROPERTIES);
+    print(propertyBox);
+    return true;
   }
 }
