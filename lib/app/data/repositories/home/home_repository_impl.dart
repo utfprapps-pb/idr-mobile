@@ -33,8 +33,8 @@ class HomeRepositoryImpl implements HomeRepository {
 
     // Cao houver erro
     if (result.hasError) {
-      print('Erro [${result.statusText}]');
-      throw Exception('Erro _');
+      print('Error [${result.statusText}]');
+      throw Exception('Error _');
     }
 
     return result.body;
