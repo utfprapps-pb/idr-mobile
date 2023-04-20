@@ -2,13 +2,23 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 
+part 'property_model.g.dart';
+
+@HiveType(typeId: 0)
 class PropertyModel {
+  @HiveField(0)
   final int id;
+  @HiveField(1)
   final String ocupationArea;
+  @HiveField(2)
   final double? totalArea;
+  @HiveField(3)
   final int? latitude;
+  @HiveField(4)
   final int? longitude;
+  @HiveField(5)
   final bool leased;
 
   PropertyModel({
