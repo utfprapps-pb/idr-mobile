@@ -20,7 +20,7 @@ class PropertyRepositoryImpl implements PropertyRepository {
         auth = authService;
 
   @override
-  Future<List<PropertyModel>> getAll() async {
+  Future<List<PropertyModel>> getAllProperties() async {
     final result = await _restClient.get(
       'properties',
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
@@ -47,12 +47,22 @@ class PropertyRepositoryImpl implements PropertyRepository {
   }
 
   @override
-  Future<bool> saveProperties(List<PropertyModel> properties) async {
+  Future<bool> savePropertiesInDb(List<PropertyModel> properties) async {
     _box = await DatabaseInit().getInstance();
 
     _box.put(PROPERTIES, properties.toList());
     var propertyBox = _box.get(PROPERTIES);
     print(propertyBox);
     return true;
+  }
+
+  @override
+  Future<List<PropertyModel>> getAllPropertiesInDb() async {
+    _box = await DatabaseInit().getInstance();
+    var properties = _box.get(PROPERTIES);
+    List<PropertyModel> propertiesList =
+        List<PropertyModel>.from(properties as List);
+
+    return propertiesList;
   }
 }
