@@ -29,12 +29,12 @@ class SideMenuTile extends StatelessWidget {
         selected: true,
         trailing: Icon(
           icon,
-          color: isSelected ? UIColors.whiteColor : UIColors.blackColor24,
+          color: isSelected ? UIColors.whiteColor : UIColors.primaryColor,
         ),
         title: Text(
           text,
           style: TextStyle(
-            color: isSelected ? UIColors.whiteColor : UIColors.blackColor24,
+            color: isSelected ? UIColors.whiteColor : UIColors.primaryColor,
           ),
         ),
         onTap: onTap,
