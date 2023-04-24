@@ -56,6 +56,18 @@ class _SideMenuState extends State<SideMenu> {
                     },
                     isSelected: Get.currentRoute == Routes.HOME,
                   ),
+                  SideMenuTile(
+                    icon: Icons.pets_outlined,
+                    text: 'Animais',
+                    onTap: () {
+                      if (Get.currentRoute != Routes.ANIMAL) {
+                        Get.offNamed(Routes.ANIMAL);
+                      } else {
+                        Get.back();
+                      }
+                    },
+                    isSelected: Get.currentRoute == Routes.ANIMAL,
+                  ),
                 ],
               ),
             ),
