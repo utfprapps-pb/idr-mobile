@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/modules/home/home_binding.dart';
+import 'package:idr_mobile/app/modules/animal/animal_binding.dart';
+import 'package:idr_mobile/app/modules/animal/animal_page.dart';
 import 'package:idr_mobile/app/modules/home/home_page.dart';
 import 'package:idr_mobile/app/modules/login/login_binding.dart';
 import 'package:idr_mobile/app/modules/login/login_page.dart';
@@ -21,6 +23,13 @@ abstract class AppPages {
       page: () => HomePage(),
       bindings: [
         HomeBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.ANIMAL,
+      page: () => AnimalPage(),
+      bindings: [
+        AnimalBinding(),
       ],
     ),
   ];
