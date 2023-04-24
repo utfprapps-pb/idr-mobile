@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
@@ -9,7 +10,7 @@ class DatabaseInit {
       box = Hive.box(DB_NAME);
     } catch (e) {
       box = await Hive.openBox(DB_NAME);
-      print(e);
+      print("Error Hive:" + e.toString());
     }
 
     return box;
@@ -17,5 +18,6 @@ class DatabaseInit {
 
   void registerAdapters() {
     Hive.registerAdapter(PropertyModelAdapter());
+    Hive.registerAdapter(AnimalModelAdapter());
   }
 }
