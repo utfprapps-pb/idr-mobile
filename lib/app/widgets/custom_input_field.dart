@@ -16,7 +16,9 @@ class CustomInputField extends StatelessWidget {
   final bool? isObscureText;
   final bool? isEnable;
   final String? Function(String?)? validator;
-  final Function(String?)? onChanged;
+  final Function(String s)? onSaved;
+  final Function(String s)? onValidate;
+  final Function(String s)? onChanged;
 
   const CustomInputField({
     super.key,
@@ -32,12 +34,16 @@ class CustomInputField extends StatelessWidget {
     this.isEnable,
     this.validator,
     this.onChanged,
+    this.onSaved,
+    this.onValidate,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       onChanged: onChanged,
+      onSaved: (v) => onSaved!(v!),
+      // validator: (v) => onValidate!(v!),
       validator: validator,
       controller: inputController,
       style: TextStyle(
@@ -79,42 +85,42 @@ class CustomInputField extends StatelessWidget {
               color: UIColors.dangerColor,
               width: 1,
             ),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: UIColors.primaryColor,
               width: 1,
             ),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: UIColors.primaryColor,
               width: 1,
             ),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
           ),
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: UIColors.disableColor,
               width: 1,
             ),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: UIColors.primaryColor,
               width: 1.5,
             ),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
           ),
           border: OutlineInputBorder(
             borderSide: BorderSide(
               color: UIColors.primaryColor,
               width: 1,
             ),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
           ),
           enabled: isEnable ?? true,
           fillColor: UIColors.dangerColor),
