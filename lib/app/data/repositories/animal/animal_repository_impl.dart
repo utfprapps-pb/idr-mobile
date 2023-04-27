@@ -51,9 +51,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
   Future<bool> saveAnimalsInDb(List<AnimalModel> properties) async {
     _box = await DatabaseInit().getInstance();
 
-    _box.put(PROPERTIES, properties.toList());
-    var propertyBox = _box.get(PROPERTIES);
-    print(propertyBox);
+    _box.put(ANIMALS, properties.toList());
+
     return true;
   }
 
@@ -61,7 +60,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
   Future<List<AnimalModel>> getAllAnimalsInDb() async {
     _box = await DatabaseInit().getInstance();
     var animals = _box.get(ANIMALS) ?? [];
-    List<AnimalModel> animalsList = List<AnimalModel>.from(animals as List);
+    List<AnimalModel> animalsList =
+        animals != null ? List<AnimalModel>.from(animals as List) : [];
 
     return animalsList;
   }
