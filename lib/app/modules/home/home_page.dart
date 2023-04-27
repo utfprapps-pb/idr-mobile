@@ -62,7 +62,7 @@ class HomePage extends GetView<HomeController> {
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
-                            Radius.circular(10),
+                            Radius.circular(5),
                           ),
                         ),
                         suffixIcon: controller.isEmptyInput.value
