@@ -9,34 +9,35 @@ part 'animal_model.g.dart';
 @HiveType(typeId: 1)
 class AnimalModel {
   @HiveField(1)
-  final int id;
+  int? id;
   @HiveField(2)
-  final String bornDate;
+  String? bornDate;
   @HiveField(3)
-  final double? bornWeight;
+  double? bornWeight;
   @HiveField(4)
-  final String breed;
+  String? breed;
   @HiveField(5)
-  final double? currentWeight;
+  double? currentWeight;
   @HiveField(6)
-  final double? ecc;
+  double? ecc;
   @HiveField(7)
-  final String? identifier;
+  String? identifier;
   @HiveField(8)
-  final String name;
+  String? name;
   @HiveField(9)
-  final double? previousWeight;
+  double? previousWeight;
   @HiveField(10)
-  final String? type;
+  String? type;
+
   AnimalModel({
-    required this.id,
-    required this.bornDate,
+    this.id,
+    this.bornDate,
     this.bornWeight,
-    required this.breed,
+    this.breed,
     this.currentWeight,
     this.ecc,
     this.identifier,
-    required this.name,
+    this.name,
     this.previousWeight,
     this.type,
   });
@@ -84,17 +85,17 @@ class AnimalModel {
 
   factory AnimalModel.fromMap(Map<String, dynamic> map) {
     return AnimalModel(
-      id: map['id'] as int,
-      bornDate: map['bornDate'] as String,
+      id: map['id'] != null ? map['id'] as int : null,
+      bornDate: map['bornDate'] != null ? map['bornDate'] as String : null,
       bornWeight:
           map['bornWeight'] != null ? map['bornWeight'] as double : null,
-      breed: map['breed'] as String,
+      breed: map['breed'] != null ? map['breed'] as String : null,
       currentWeight:
           map['currentWeight'] != null ? map['currentWeight'] as double : null,
       ecc: map['ecc'] != null ? map['ecc'] as double : null,
       identifier:
           map['identifier'] != null ? map['identifier'] as String : null,
-      name: map['name'] as String,
+      name: map['name'] != null ? map['name'] as String : null,
       previousWeight: map['previousWeight'] != null
           ? map['previousWeight'] as double
           : null,

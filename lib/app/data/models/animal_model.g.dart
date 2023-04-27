@@ -17,14 +17,14 @@ class AnimalModelAdapter extends TypeAdapter<AnimalModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AnimalModel(
-      id: fields[1] as int,
-      bornDate: fields[2] as String,
+      id: fields[1] as int?,
+      bornDate: fields[2] as String?,
       bornWeight: fields[3] as double?,
-      breed: fields[4] as String,
+      breed: fields[4] as String?,
       currentWeight: fields[5] as double?,
       ecc: fields[6] as double?,
       identifier: fields[7] as String?,
-      name: fields[8] as String,
+      name: fields[8] as String?,
       previousWeight: fields[9] as double?,
       type: fields[10] as String?,
     );
