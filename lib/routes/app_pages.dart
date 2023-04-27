@@ -5,6 +5,7 @@ import 'package:idr_mobile/app/modules/animal/animal_page.dart';
 import 'package:idr_mobile/app/modules/home/home_page.dart';
 import 'package:idr_mobile/app/modules/login/login_binding.dart';
 import 'package:idr_mobile/app/modules/login/login_page.dart';
+import 'package:idr_mobile/app/modules/animal/form/animal_form_page.dart';
 
 part './routes.dart';
 
@@ -28,6 +29,13 @@ abstract class AppPages {
     GetPage(
       name: Routes.ANIMAL,
       page: () => AnimalPage(),
+      bindings: [
+        AnimalBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.ANIMAL_FORM,
+      page: () => AnimalPageForm(),
       bindings: [
         AnimalBinding(),
       ],
