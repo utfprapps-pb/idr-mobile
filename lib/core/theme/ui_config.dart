@@ -19,13 +19,13 @@ class UIConfig {
         backgroundColor: UIColors.primaryColor,
         maximumSize: Size(Get.width, 50),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(5),
         ),
       );
 
   static ButtonStyle get outlineButtonStyle => OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(5),
         ),
         side:
             const BorderSide(color: Color(0xFF0059AA), width: 1), //<-- SEE HERE
