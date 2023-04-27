@@ -59,9 +59,13 @@ class PropertyRepositoryImpl implements PropertyRepository {
   @override
   Future<List<PropertyModel>> getAllPropertiesInDb() async {
     _box = await DatabaseInit().getInstance();
-    var properties = _box.get(PROPERTIES);
+    var properties = _box.get(PROPERTIES) ?? [];
+    print(_box.keys);
+    // _box.delete(_box.keys);
+    // var properties = _box.deleteAll(PROPERTIES);
+    // properties = [];
     List<PropertyModel> propertiesList =
-        List<PropertyModel>.from(properties as List);
+        properties != null ? List<PropertyModel>.from(properties as List) : [];
 
     return propertiesList;
   }
