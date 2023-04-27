@@ -23,7 +23,7 @@ class SideMenuTile extends StatelessWidget {
       decoration: BoxDecoration(
           color: isSelected ? UIColors.primaryColor : Colors.transparent,
           borderRadius: const BorderRadius.all(
-            Radius.circular(10),
+            Radius.circular(5),
           )),
       child: ListTile(
         selected: true,
