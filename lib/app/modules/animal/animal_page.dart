@@ -5,11 +5,13 @@ import 'package:idr_mobile/app/modules/animal/animal_controller.dart';
 import 'package:idr_mobile/app/modules/home/home_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
 import 'package:idr_mobile/app/widgets/custom_input_field.dart';
+import 'package:idr_mobile/app/widgets/custom_outlined_button.dart';
 import 'package:idr_mobile/app/widgets/side_menu.dart';
 import 'package:idr_mobile/app/widgets/top_wave_custom_painter.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
+import 'package:idr_mobile/routes/app_pages.dart';
 
 class AnimalPage extends GetView<AnimalController> {
   @override
@@ -51,6 +53,20 @@ class AnimalPage extends GetView<AnimalController> {
                   const SizedBox(
                     height: 30,
                   ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomOutlinedButton(
+                          onPressedCallBack: () =>
+                              Get.offNamed(Routes.ANIMAL_FORM),
+                          title: "Adicionar animais",
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Expanded(
                     child: Obx(() {
                       return ListView.separated(
@@ -64,7 +80,7 @@ class AnimalPage extends GetView<AnimalController> {
                             leading: const Icon(Icons.pets_rounded),
                             title: Text('${animal.id} - ${animal.bornDate}'),
                             subtitle: Text('${animal.name}'),
-                            trailing: const Icon(Icons.more_vert),
+                            // trailing: const Icon(Icons.more_vert),
                           );
                         },
                       );

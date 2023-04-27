@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository.dart';
@@ -20,6 +21,17 @@ class AnimalController extends GetxController {
   AuthService? auth;
   final animalsFinal = <AnimalModel>[].obs;
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  final animal = AnimalModel().obs;
+
+  final bornDateController = TextEditingController();
+  final nameController = TextEditingController();
+  final bornWeightdController = TextEditingController();
+  final breedController = TextEditingController();
+  final currentWeightController = TextEditingController();
+  final eccController = TextEditingController();
+  final identifierController = TextEditingController();
+  final previousWeightController = TextEditingController();
+  final propertyController = TextEditingController();
 
   @override
   void onInit() async {
@@ -44,4 +56,12 @@ class AnimalController extends GetxController {
   void openEndDrawer() {
     scaffoldKey.currentState!.openEndDrawer();
   }
+
+  onChange(_) {
+    animal.update((val) => val!.name = _);
+  }
+
+  onSaved(_) => animal.update((val) => val!.name = _);
+
+  onValidateIsNull(_) => GetUtils.isNull(_) ? null : 'Insira um valor';
 }
