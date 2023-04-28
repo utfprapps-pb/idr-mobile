@@ -7,6 +7,7 @@ class AnimalBinding implements Bindings {
     Get.lazyPut<AnimalController>(
       () => AnimalController(
         animalService: Get.find(),
+        propertyService: Get.find(),
       ),
     );
   }

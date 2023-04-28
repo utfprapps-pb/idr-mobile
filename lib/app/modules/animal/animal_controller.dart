@@ -13,15 +13,21 @@ import 'package:flutter/material.dart';
 
 class AnimalController extends GetxController {
   final AnimalService _animalService;
+  final PropertyService _propertyService;
 
   AnimalController({
     required AnimalService animalService,
-  }) : _animalService = animalService;
+    required PropertyService propertyService,
+  })  : _animalService = animalService,
+        _propertyService = propertyService;
 
   AuthService? auth;
   final animalsFinal = <AnimalModel>[].obs;
+  final propertiesStringList = <String>[];
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
   final animal = AnimalModel().obs;
+  RxString selectedProperty = ''.obs;
 
   final bornDateController = TextEditingController();
   final nameController = TextEditingController();
@@ -44,8 +50,18 @@ class AnimalController extends GetxController {
     super.onReady();
     try {
       final animalsData = await _animalService.getAllAnimals();
+      final propertiesData = await _propertyService.getAllProperties();
       final isSave = await _animalService.saveAnimals(animalsData);
+
       animalsFinal.assignAll(animalsData);
+
+      propertiesStringList.assignAll(
+        propertiesData.map((element) => element.getNamed()).toList(),
+      );
+      selectedProperty.value = animal.value.propertyId != null
+          ? animal.value.propertyId.toString()
+          : propertiesStringList[0];
+      update();
     } on Exception catch (e, s) {
       print(e);
       print(s);
@@ -59,6 +75,17 @@ class AnimalController extends GetxController {
 
   onChange(_) {
     animal.update((val) => val!.name = _);
+  }
+
+  void onChangedDropdown(newValue) {
+    selectedProperty.value = newValue;
+    animal.update(
+      (val) => val!.propertyId =
+          int.parse(newValue.replaceAll('Propriedade', '').trim()),
+    );
+
+    // print(animal);
+    // update(); // atualiza o estado do controlador
   }
 
   onSaved(_) => animal.update((val) => val!.name = _);
