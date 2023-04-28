@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/app/modules/animal/animal_controller.dart';
 import 'package:idr_mobile/app/modules/home/home_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
@@ -58,7 +59,7 @@ class AnimalPage extends GetView<AnimalController> {
                       Expanded(
                         child: CustomOutlinedButton(
                           onPressedCallBack: () =>
-                              Get.offNamed(Routes.ANIMAL_FORM),
+                              Get.toNamed(Routes.ANIMAL_FORM),
                           title: "Adicionar animais",
                         ),
                       ),
