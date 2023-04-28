@@ -28,6 +28,8 @@ class AnimalModel {
   double? previousWeight;
   @HiveField(10)
   String? type;
+  @HiveField(11)
+  int? propertyId;
 
   AnimalModel({
     this.id,
@@ -40,6 +42,7 @@ class AnimalModel {
     this.name,
     this.previousWeight,
     this.type,
+    this.propertyId,
   });
 
   AnimalModel copyWith({
@@ -53,6 +56,7 @@ class AnimalModel {
     String? name,
     double? previousWeight,
     String? type,
+    int? propertyId,
   }) {
     return AnimalModel(
       id: id ?? this.id,
@@ -65,6 +69,7 @@ class AnimalModel {
       name: name ?? this.name,
       previousWeight: previousWeight ?? this.previousWeight,
       type: type ?? this.type,
+      propertyId: propertyId ?? this.propertyId,
     );
   }
 
@@ -80,6 +85,7 @@ class AnimalModel {
       'name': name,
       'previousWeight': previousWeight,
       'type': type,
+      'propertyId': propertyId,
     };
   }
 
@@ -100,6 +106,8 @@ class AnimalModel {
           ? map['previousWeight'] as double
           : null,
       type: map['type'] != null ? map['type'] as String : null,
+      propertyId:
+          map['property']['id'] != null ? map['property']['id'] as int : null,
     );
   }
 
@@ -110,7 +118,7 @@ class AnimalModel {
 
   @override
   String toString() {
-    return 'AnimalModel(id: $id, bornDate: $bornDate, bornWeight: $bornWeight, breed: $breed, currentWeight: $currentWeight, ecc: $ecc, identifier: $identifier, name: $name, previousWeight: $previousWeight, type: $type)';
+    return 'AnimalModel(id: $id, bornDate: $bornDate, bornWeight: $bornWeight, breed: $breed, currentWeight: $currentWeight, ecc: $ecc, identifier: $identifier, name: $name, previousWeight: $previousWeight, type: $type, propertyId: $propertyId)';
   }
 
   @override
@@ -126,7 +134,8 @@ class AnimalModel {
         other.identifier == identifier &&
         other.name == name &&
         other.previousWeight == previousWeight &&
-        other.type == type;
+        other.type == type &&
+        other.propertyId == propertyId;
   }
 
   @override
@@ -140,6 +149,7 @@ class AnimalModel {
         identifier.hashCode ^
         name.hashCode ^
         previousWeight.hashCode ^
-        type.hashCode;
+        type.hashCode ^
+        propertyId.hashCode;
   }
 }
