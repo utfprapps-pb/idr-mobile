@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/app/modules/animal/animal_controller.dart';
+import 'package:idr_mobile/app/widgets/custom_dropdown.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
 import 'package:idr_mobile/app/widgets/custom_input_field.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
@@ -80,7 +82,7 @@ class AnimalPageForm extends GetView<AnimalController> {
                               inputController: controller.breedController,
                               onTapCallBack: () {},
                               labelText: 'Raça',
-                              icon: Icons.stars,
+                              icon: Icons.auto_awesome,
                               onSaved: (_) => controller.onSaved(_),
                               onChanged: (_) => controller.animal
                                   .update((val) => val!.breed = _),
@@ -181,10 +183,78 @@ class AnimalPageForm extends GetView<AnimalController> {
                       const SizedBox(
                         height: 12,
                       ),
+                      // CustomDropdownButton<String>(
+                      //   items: controller.propertiesStringList,
+                      //   selectedValue: controller.selectedProperty.toString(),
+                      //   onChanged: (String newValue) {
+                      //     controller.selectedProperty.value = newValue;
+                      //     controller.animal.update(
+                      //       (val) => val!.propertyId = int.parse(
+                      //           newValue.replaceAll('Propriedade', '').trim()),
+                      //     );
+                      //     controller.onSaved(newValue);
+                      //   },
+                      // ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: UIColors.primaryColor,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Obx(
+                            () => DropdownButton<String>(
+                              value: controller.selectedProperty.value,
+                              icon: Icon(
+                                Icons.arrow_drop_down,
+                                color: UIColors.primaryColor,
+                              ),
+                              iconSize: 24.0,
+                              elevation: 16,
+                              style: TextStyle(
+                                color: UIColors.primaryColor,
+                                fontSize: 16.0,
+                              ),
+                              isExpanded: true,
+                              alignment: Alignment.centerRight,
+                              // onChanged: onChanged(newObject()),
+                              onChanged: (newValue) =>
+                                  controller.onChangedDropdown(newValue),
+                              items: controller.propertiesStringList
+                                  .map<DropdownMenuItem<String>>(
+                                      (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(
+                                      color: UIColors.primaryColor,
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 12,
+                      ),
                       CustomElevatedButton(
                         title: 'Salvar',
-                        onPressedCallBack: () =>
-                            print(controller.animal.toJson()),
+                        onPressedCallBack: () {
+                          // if (_formKey.currentState!.validate()) {
+                          // controller.signIn(
+                          //   username: 'fulano1@test.com',
+                          //   password: '123',
+                          // );
+                          // }
+                        },
                       )
                     ],
                   ),
