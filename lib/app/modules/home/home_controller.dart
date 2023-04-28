@@ -77,7 +77,7 @@ class HomeController extends GetxController {
     List<PropertyModel> newList = [];
 
     newList = propertiesFinal.where((o) {
-      if (o.ocupationArea.contains(value)) {
+      if (o.ocupationArea != null && o.ocupationArea!.contains(value)) {
         return true;
       }
 

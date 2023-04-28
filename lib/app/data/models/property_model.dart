@@ -9,9 +9,9 @@ part 'property_model.g.dart';
 @HiveType(typeId: 0)
 class PropertyModel {
   @HiveField(0)
-  final int id;
+  final int? id;
   @HiveField(1)
-  final String ocupationArea;
+  final String? ocupationArea;
   @HiveField(2)
   final double? totalArea;
   @HiveField(3)
@@ -19,16 +19,20 @@ class PropertyModel {
   @HiveField(4)
   final int? longitude;
   @HiveField(5)
-  final bool leased;
+  final bool? leased;
 
   PropertyModel({
-    required this.id,
-    required this.ocupationArea,
+    this.id,
+    this.ocupationArea,
     this.totalArea,
     this.latitude,
     this.longitude,
-    required this.leased,
+    this.leased,
   });
+
+  String getNamed() {
+    return "Propriedade $id";
+  }
 
   PropertyModel copyWith({
     int? id,
