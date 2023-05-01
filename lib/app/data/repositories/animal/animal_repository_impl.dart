@@ -65,4 +65,79 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
     return animalsList;
   }
+
+  @override
+  Future<bool> saveAnimalInDb(AnimalModel animal) async {
+    _box = await DatabaseInit().getInstance();
+
+    try {
+      var animals = _box.get(ANIMALS) ?? [];
+      animals.add(animal);
+
+      _box.put(ANIMALS, animals);
+    } catch (e) {
+      print(e);
+    }
+
+    return true;
+  }
+
+  @override
+  Future<bool> deleteAll() {
+    var status;
+
+    try {
+      _box.delete(ANIMALS);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
+  }
+
+  @override
+  Future<bool> deleteAnimal(AnimalModel animal) {
+    var status;
+
+    try {
+      var animals = _box.get(ANIMALS) ?? [];
+      List<AnimalModel> animalsList =
+          animals != null ? List<AnimalModel>.from(animals as List) : [];
+
+      animalsList.remove(animal);
+
+      _box.put(ANIMALS, animals);
+
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
+  }
+
+  @override
+  Future<bool> deleteAnimalByKey(int key) {
+    var status;
+
+    try {
+      var animals = _box.get(ANIMALS) ?? [];
+      List<AnimalModel> animalsList =
+          animals != null ? List<AnimalModel>.from(animals as List) : [];
+
+      animalsList.removeAt(key);
+
+      _box.put(ANIMALS, animals);
+
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
+  }
 }
