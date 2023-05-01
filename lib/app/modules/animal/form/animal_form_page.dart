@@ -65,7 +65,9 @@ class AnimalPageForm extends GetView<AnimalController> {
                               icon: Icons.balance_rounded,
                               onSaved: (_) => controller.onSaved(_),
                               onChanged: (_) => controller.animal.update(
-                                  (val) => val!.bornWeight = double.parse(_)),
+                                  (val) => val!.bornWeight =
+                                      _ != "" ? double.parse(_) : null),
+
                               // onValidate: (_) => controller.onValidate(_),
                               // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
                             ),
@@ -160,6 +162,16 @@ class AnimalPageForm extends GetView<AnimalController> {
                       const SizedBox(
                         height: 12,
                       ),
+                      CustomInputField(
+                        inputController: controller.bornDateController,
+                        onTapCallBack: () {},
+                        onPressedIcon: () => controller.showCalendario(context),
+                        labelText: 'Data nascimento',
+                        icon: Icons.calendar_today,
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       Row(
                         children: [
                           Expanded(
@@ -248,12 +260,9 @@ class AnimalPageForm extends GetView<AnimalController> {
                       CustomElevatedButton(
                         title: 'Salvar',
                         onPressedCallBack: () {
-                          // if (_formKey.currentState!.validate()) {
-                          // controller.signIn(
-                          //   username: 'fulano1@test.com',
-                          //   password: '123',
-                          // );
-                          // }
+                          if (_formKey.currentState!.validate()) {
+                            controller.onFormSubmit();
+                          }
                         },
                       )
                     ],
