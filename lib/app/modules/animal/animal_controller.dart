@@ -3,6 +3,8 @@ import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
+import 'package:idr_mobile/app/widgets/snackbar.dart';
+import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 import 'package:flutter/material.dart';
 
@@ -90,6 +92,10 @@ class AnimalController extends GetxController {
   onFormSubmit() async {
     print(animal.value);
     var isSaved = await _animalService.saveAnimal(animal.value);
+    isSaved
+        ? successSnackBar('title', 'message')
+        : errorSnackBar('title', 'message');
+
     print(isSaved);
   }
 
