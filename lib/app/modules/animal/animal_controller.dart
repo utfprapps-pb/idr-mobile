@@ -1,12 +1,13 @@
 import 'package:get/get.dart';
+import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
 import 'package:idr_mobile/app/widgets/snackbar.dart';
-import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 import 'package:flutter/material.dart';
+import 'package:idr_mobile/routes/app_pages.dart';
 
 class AnimalController extends GetxController {
   final AnimalService _animalService;
@@ -62,12 +63,38 @@ class AnimalController extends GetxController {
     } on Exception catch (e, s) {
       print(e);
       print(s);
-      //TODO: Mostrar snackbar com mensagem de erro
+
+      Snack.show(
+        content: 'Ocorreu um erro ao buscar animais',
+        snackType: SnackType.error,
+        behavior: SnackBarBehavior.floating,
+      );
+    }
+  }
+
+  void loadAnimals() async {
+    try {
+      final animalsData = await _animalService.getAllAnimals();
+      animalsFinal.assignAll(animalsData);
+    } catch (e) {
+      Snack.show(
+        content: 'Ocorreu um erro ao buscar animais',
+        snackType: SnackType.error,
+        behavior: SnackBarBehavior.floating,
+      );
     }
   }
 
   void openEndDrawer() {
     scaffoldKey.currentState!.openEndDrawer();
+  }
+
+  goToForm() async {
+    var result = await Get.toNamed(Routes.ANIMAL_FORM);
+
+    if (result) {
+      loadAnimals();
+    }
   }
 
   onChange(_) {
@@ -80,26 +107,25 @@ class AnimalController extends GetxController {
       (val) => val!.propertyId =
           int.parse(newValue.replaceAll('Propriedade', '').trim()),
     );
-
-    // print(animal);
-    // update(); // atualiza o estado do controlador
   }
-
-  onSaved(_) => animal.update((val) => val!.name = _);
 
   onValidateIsNull(_) => GetUtils.isNull(_) ? null : 'Insira um valor';
 
   onFormSubmit() async {
-    print(animal.value);
     var isSaved = await _animalService.saveAnimal(animal.value);
-    isSaved
-        ? successSnackBar('title', 'message')
-        : errorSnackBar('title', 'message');
 
-    print(isSaved);
+    Snack.show(
+      content: isSaved
+          ? 'Sucesso ao salvar animal'
+          : 'Ocorreu um erro ao salvar animal',
+      snackType: isSaved ? SnackType.success : SnackType.error,
+      behavior: SnackBarBehavior.floating,
+    );
+
+    Get.back(result: isSaved);
   }
 
-  void showCalendario(BuildContext context) {
+  void showCalendar(BuildContext context) {
     final dataFormatted = bornDateController.text;
 
     var data = DateTime.now();
