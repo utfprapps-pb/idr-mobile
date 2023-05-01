@@ -42,7 +42,6 @@ class AnimalPageForm extends GetView<AnimalController> {
                               onTapCallBack: () {},
                               labelText: 'Nome',
                               icon: Icons.text_fields_rounded,
-                              onSaved: (_) => controller.onSaved(_),
                               onChanged: (_) => controller.animal
                                   .update((val) => val!.name = _),
                               // onValidate: (_) => controller.onValidate(_),
@@ -63,7 +62,6 @@ class AnimalPageForm extends GetView<AnimalController> {
                               keyboardType: TextInputType.number,
                               labelText: 'Peso nascido',
                               icon: Icons.balance_rounded,
-                              onSaved: (_) => controller.onSaved(_),
                               onChanged: (_) => controller.animal.update(
                                   (val) => val!.bornWeight =
                                       _ != "" ? double.parse(_) : null),
@@ -85,7 +83,6 @@ class AnimalPageForm extends GetView<AnimalController> {
                               onTapCallBack: () {},
                               labelText: 'Raça',
                               icon: Icons.auto_awesome,
-                              onSaved: (_) => controller.onSaved(_),
                               onChanged: (_) => controller.animal
                                   .update((val) => val!.breed = _),
                               // onValidate: (_) => controller.onValidate(_),
@@ -106,7 +103,6 @@ class AnimalPageForm extends GetView<AnimalController> {
                               labelText: 'Ecc',
                               keyboardType: TextInputType.number,
                               icon: Icons.eco,
-                              onSaved: (_) => controller.onSaved(_),
                               onChanged: (_) => controller.animal
                                   .update((val) => val!.ecc = double.parse(_)),
                               // onValidate: (_) => controller.onValidate(_),
@@ -128,7 +124,6 @@ class AnimalPageForm extends GetView<AnimalController> {
                               labelText: 'Peso atual',
                               keyboardType: TextInputType.number,
                               icon: Icons.balance_rounded,
-                              onSaved: (_) => controller.onSaved(_),
                               onChanged: (_) => controller.animal.update(
                                   (val) =>
                                       val!.currentWeight = double.parse(_)),
@@ -150,7 +145,6 @@ class AnimalPageForm extends GetView<AnimalController> {
                               labelText: 'Identificador',
                               keyboardType: TextInputType.text,
                               icon: Icons.fingerprint_outlined,
-                              onSaved: (_) => controller.onSaved(_),
                               onChanged: (_) => controller.animal
                                   .update((val) => val!.identifier = _),
                               // onValidate: (_) => controller.onValidate(_),
@@ -164,8 +158,8 @@ class AnimalPageForm extends GetView<AnimalController> {
                       ),
                       CustomInputField(
                         inputController: controller.bornDateController,
-                        onTapCallBack: () {},
-                        onPressedIcon: () => controller.showCalendario(context),
+                        onTapCallBack: () => controller.showCalendar(context),
+                        onPressedIcon: () => controller.showCalendar(context),
                         labelText: 'Data nascimento',
                         icon: Icons.calendar_today,
                       ),
@@ -182,7 +176,6 @@ class AnimalPageForm extends GetView<AnimalController> {
                               labelText: 'Peso previsto',
                               keyboardType: TextInputType.number,
                               icon: Icons.balance_rounded,
-                              onSaved: (_) => controller.onSaved(_),
                               onChanged: (_) => controller.animal.update(
                                   (val) =>
                                       val!.previousWeight = double.parse(_)),
