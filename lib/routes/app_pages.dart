@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:idr_mobile/app/modules/animal/form/animal_form_binding.dart';
 import 'package:idr_mobile/app/modules/home/home_binding.dart';
 import 'package:idr_mobile/app/modules/animal/animal_binding.dart';
 import 'package:idr_mobile/app/modules/animal/animal_page.dart';
@@ -37,7 +38,7 @@ abstract class AppPages {
       name: Routes.ANIMAL_FORM,
       page: () => AnimalPageForm(),
       bindings: [
-        AnimalBinding(),
+        AnimalFormBinding(),
       ],
     ),
   ];
