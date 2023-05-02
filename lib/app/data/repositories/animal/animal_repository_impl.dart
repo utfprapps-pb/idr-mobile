@@ -69,22 +69,25 @@ class AnimalRepositoryImpl implements AnimalRepository {
   @override
   Future<bool> saveAnimalInDb(AnimalModel animal) async {
     _box = await DatabaseInit().getInstance();
+    var status = false;
 
     try {
       var animals = _box.get(ANIMALS) ?? [];
       animals.add(animal);
 
       _box.put(ANIMALS, animals);
+      status = true;
     } catch (e) {
       print(e);
+      status = false;
     }
 
-    return true;
+    return status;
   }
 
   @override
-  Future<bool> deleteAll() {
-    var status;
+  Future<bool> deleteAll() async {
+    var status = false;
 
     try {
       _box.delete(ANIMALS);
@@ -98,8 +101,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
   }
 
   @override
-  Future<bool> deleteAnimal(AnimalModel animal) {
-    var status;
+  Future<bool> deleteAnimal(AnimalModel animal) async {
+    var status = false;
 
     try {
       var animals = _box.get(ANIMALS) ?? [];
@@ -108,7 +111,7 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
       animalsList.remove(animal);
 
-      _box.put(ANIMALS, animals);
+      _box.put(ANIMALS, animalsList);
 
       status = true;
     } catch (e) {
@@ -120,8 +123,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
   }
 
   @override
-  Future<bool> deleteAnimalByKey(int key) {
-    var status;
+  Future<bool> deleteAnimalByKey(int key) async {
+    var status = false;
 
     try {
       var animals = _box.get(ANIMALS) ?? [];
