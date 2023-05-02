@@ -41,6 +41,9 @@ class AnimalController extends GetxController {
   void onInit() async {
     auth = Get.find<AuthService>();
     super.onInit();
+    var data = Get.arguments;
+    print(data);
+    print("data");
   }
 
   @override
@@ -89,60 +92,30 @@ class AnimalController extends GetxController {
     scaffoldKey.currentState!.openEndDrawer();
   }
 
-  goToForm() async {
-    var result = await Get.toNamed(Routes.ANIMAL_FORM);
+  goToForm(AnimalModel? animal) async {
+    print(animal);
+    if (animal != null) {}
+    var result = await Get.toNamed(Routes.ANIMAL_FORM, arguments: [
+      {'animal': animal},
+      {'propertiesStringList': propertiesStringList},
+    ]);
 
-    if (result) {
+    if (result != null && result) {
       loadAnimals();
     }
   }
 
-  onChange(_) {
-    animal.update((val) => val!.name = _);
-  }
-
-  void onChangedDropdown(newValue) {
-    selectedProperty.value = newValue;
-    animal.update(
-      (val) => val!.propertyId =
-          int.parse(newValue.replaceAll('Propriedade', '').trim()),
-    );
-  }
-
-  onValidateIsNull(_) => GetUtils.isNull(_) ? null : 'Insira um valor';
-
-  onFormSubmit() async {
-    var isSaved = await _animalService.saveAnimal(animal.value);
-
+  removeAnimal(AnimalModel animal) async {
+    print(animal);
+    var isRemoved = await _animalService.deleteAnimal(animal);
     Snack.show(
-      content: isSaved
-          ? 'Sucesso ao salvar animal'
-          : 'Ocorreu um erro ao salvar animal',
-      snackType: isSaved ? SnackType.success : SnackType.error,
+      content: isRemoved
+          ? 'Sucesso ao remover animal'
+          : 'Ocorreu um erro ao remover animal',
+      snackType: isRemoved ? SnackType.success : SnackType.error,
       behavior: SnackBarBehavior.floating,
     );
 
-    Get.back(result: isSaved);
-  }
-
-  void showCalendar(BuildContext context) {
-    final dataFormatted = bornDateController.text;
-
-    var data = DateTime.now();
-    if (dataFormatted.isNotEmpty) {
-      data = dateFormat.parse(dataFormatted);
-    }
-    showDatePicker(
-      context: context,
-      initialDate: data,
-      firstDate: data.subtract(Duration(days: 365 * 5)),
-      lastDate: data.add(Duration(days: 365 * 5)),
-    ).then((DateTime? dataSelected) {
-      if (dataSelected != null) {
-        animal.update((val) => val!.bornDate = dateFormat.format(dataSelected));
-
-        bornDateController.text = dateFormat.format(dataSelected);
-      }
-    });
+    loadAnimals();
   }
 }
