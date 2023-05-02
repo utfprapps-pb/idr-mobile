@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/app/modules/animal/animal_controller.dart';
+import 'package:idr_mobile/app/modules/animal/form/animal_form_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_dropdown.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
 import 'package:idr_mobile/app/widgets/custom_input_field.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
 
-class AnimalPageForm extends GetView<AnimalController> {
-  final _formKey = GlobalKey<FormState>();
-
+class AnimalPageForm extends GetView<AnimalFormController> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -27,7 +26,7 @@ class AnimalPageForm extends GetView<AnimalController> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Form(
-                  key: _formKey,
+                  key: controller.formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -253,7 +252,7 @@ class AnimalPageForm extends GetView<AnimalController> {
                       CustomElevatedButton(
                         title: 'Salvar',
                         onPressedCallBack: () {
-                          if (_formKey.currentState!.validate()) {
+                          if (controller.formKey.currentState!.validate()) {
                             controller.onFormSubmit();
                           }
                         },
