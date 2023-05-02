@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/modules/animal/animal_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_outlined_button.dart';
+import 'package:idr_mobile/app/widgets/custom_slidable.dart';
 import 'package:idr_mobile/app/widgets/side_menu.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
@@ -50,7 +51,7 @@ class AnimalPage extends GetView<AnimalController> {
                   children: [
                     Expanded(
                       child: CustomOutlinedButton(
-                        onPressedCallBack: () => controller.goToForm(),
+                        onPressedCallBack: () => controller.goToForm(null),
                         title: "Adicionar animais",
                       ),
                     ),
@@ -68,12 +69,19 @@ class AnimalPage extends GetView<AnimalController> {
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
                         var animal = controller.animalsFinal[index];
-                        return ListTile(
-                          leading: const Icon(Icons.pets_rounded),
-                          title: Text(
-                              '${animal.id ?? index} - ${animal.bornDate}'),
-                          subtitle: Text('${animal.name}'),
-                          // trailing: const Icon(Icons.more_vert),
+                        return CustomSlidable(
+                          identity: index,
+                          content: '${animal.name}',
+                          title: '${animal.id ?? index} - ${animal.bornDate}',
+                          icon: Icons.pets,
+                          onPressedEditCallBack: (BuildContext context) {
+                            controller.goToForm(animal);
+                            print(animal);
+                          },
+                          onPressedRemoveCallBack: (BuildContext context) {
+                            controller.removeAnimal(animal);
+                            print(animal);
+                          },
                         );
                       },
                     );
