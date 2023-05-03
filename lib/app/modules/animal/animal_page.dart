@@ -51,7 +51,8 @@ class AnimalPage extends GetView<AnimalController> {
                   children: [
                     Expanded(
                       child: CustomOutlinedButton(
-                        onPressedCallBack: () => controller.goToForm(null),
+                        onPressedCallBack: () =>
+                            controller.goToForm(null, null),
                         title: "Adicionar animais",
                       ),
                     ),
@@ -75,7 +76,7 @@ class AnimalPage extends GetView<AnimalController> {
                           title: '${animal.id ?? index} - ${animal.bornDate}',
                           icon: Icons.pets,
                           onPressedEditCallBack: (BuildContext context) {
-                            controller.goToForm(animal);
+                            controller.goToForm(animal, index);
                             print(animal);
                           },
                           onPressedRemoveCallBack: (BuildContext context) {

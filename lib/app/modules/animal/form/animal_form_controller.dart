@@ -17,6 +17,9 @@ class AnimalFormController extends GetxController {
 
   final animal = AnimalModel().obs;
   RxString selectedProperty = ''.obs;
+  RxString buttonText = ''.obs;
+  int? idxAnimal = null;
+
   final formKey = GlobalKey<FormState>();
   final bornDateController = TextEditingController();
   final nameController = TextEditingController();
@@ -34,6 +37,8 @@ class AnimalFormController extends GetxController {
   void onInit() async {
     // _animalService = Get.find<AnimalService>();
     super.onInit();
+    buttonText.value = "Salvar";
+
     var data = Get.arguments;
     if (data != null && data[1] != null) {
       propertiesStringList.assignAll(data[1]['propertiesStringList']);
@@ -41,10 +46,14 @@ class AnimalFormController extends GetxController {
 
     if (data[0]['animal'] != null) {
       setFormValues(data[0]['animal']);
+      buttonText.value = "Editar";
     } else {
       selectedProperty.value = animal.value.propertyId != null
           ? animal.value.propertyId.toString()
           : propertiesStringList[0];
+    }
+    if (data[2]['index'] != null) {
+      idxAnimal = data[2]['index'];
     }
     print(data);
     print("data");
@@ -105,7 +114,9 @@ class AnimalFormController extends GetxController {
   }
 
   onFormSubmit() async {
-    var isSaved = await _animalService!.saveAnimal(animal.value);
+    var isSaved = idxAnimal != null
+        ? await _animalService!.editAnimal(animal.value, idxAnimal!)
+        : await _animalService!.saveAnimal(animal.value);
 
     Snack.show(
       content: isSaved

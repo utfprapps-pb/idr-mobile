@@ -249,13 +249,15 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                       const SizedBox(
                         height: 12,
                       ),
-                      CustomElevatedButton(
-                        title: 'Salvar',
-                        onPressedCallBack: () {
-                          if (controller.formKey.currentState!.validate()) {
-                            controller.onFormSubmit();
-                          }
-                        },
+                      Obx(
+                        () => CustomElevatedButton(
+                          title: '${controller.buttonText}',
+                          onPressedCallBack: () {
+                            if (controller.formKey.currentState!.validate()) {
+                              controller.onFormSubmit();
+                            }
+                          },
+                        ),
                       )
                     ],
                   ),
