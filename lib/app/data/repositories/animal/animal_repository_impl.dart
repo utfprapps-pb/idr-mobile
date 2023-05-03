@@ -143,4 +143,24 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
     return status;
   }
+
+  @override
+  Future<bool> editAnimalInDb(AnimalModel animal, int pos) async {
+    var status = false;
+    try {
+      var animals = _box.get(ANIMALS) ?? [];
+      List<AnimalModel> list = [];
+      list.add(animal);
+      animals.replaceRange(pos, pos + 1, list);
+
+      print(animals);
+
+      _box.put(ANIMALS, animals);
+      status = true;
+    } catch (e) {
+      status = false;
+    }
+
+    return status;
+  }
 }

@@ -30,6 +30,9 @@ class AnimalServiceImpl implements AnimalService {
   @override
   Future<bool> saveAnimal(AnimalModel animal) =>
       _animalRepository.saveAnimalInDb(animal);
+  @override
+  Future<bool> editAnimal(AnimalModel animal, int pos) =>
+      _animalRepository.editAnimalInDb(animal, pos);
 
   @override
   Future<bool> deleteAll() => _animalRepository.deleteAll();
