@@ -25,17 +25,6 @@ class AnimalController extends GetxController {
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
   final animal = AnimalModel().obs;
-  RxString selectedProperty = ''.obs;
-
-  final bornDateController = TextEditingController();
-  final nameController = TextEditingController();
-  final bornWeightdController = TextEditingController();
-  final breedController = TextEditingController();
-  final currentWeightController = TextEditingController();
-  final eccController = TextEditingController();
-  final identifierController = TextEditingController();
-  final previousWeightController = TextEditingController();
-  final propertyController = TextEditingController();
 
   @override
   void onInit() async {
@@ -59,9 +48,6 @@ class AnimalController extends GetxController {
       propertiesStringList.assignAll(
         propertiesData.map((element) => element.getNamed()).toList(),
       );
-      selectedProperty.value = animal.value.propertyId != null
-          ? animal.value.propertyId.toString()
-          : propertiesStringList[0];
       update();
     } on Exception catch (e, s) {
       print(e);
@@ -92,12 +78,13 @@ class AnimalController extends GetxController {
     scaffoldKey.currentState!.openEndDrawer();
   }
 
-  goToForm(AnimalModel? animal) async {
+  goToForm(AnimalModel? animal, int? idx) async {
     print(animal);
     if (animal != null) {}
     var result = await Get.toNamed(Routes.ANIMAL_FORM, arguments: [
       {'animal': animal},
       {'propertiesStringList': propertiesStringList},
+      {'index': idx},
     ]);
 
     if (result != null && result) {
