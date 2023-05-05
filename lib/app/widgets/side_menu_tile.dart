@@ -19,7 +19,7 @@ class SideMenuTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
           color: isSelected ? UIColors.primaryColor : Colors.transparent,
           borderRadius: const BorderRadius.all(
