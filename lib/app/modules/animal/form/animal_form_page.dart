@@ -199,53 +199,19 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                       //     controller.onSaved(newValue);
                       //   },
                       // ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(
-                            color: UIColors.primaryColor,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: Obx(
-                            () => DropdownButton<String>(
-                              value: controller.selectedProperty.value,
-                              icon: Icon(
-                                Icons.arrow_drop_down,
-                                color: UIColors.primaryColor,
-                              ),
-                              iconSize: 24.0,
-                              elevation: 16,
-                              style: TextStyle(
-                                color: UIColors.primaryColor,
-                                fontSize: 16.0,
-                              ),
-                              isExpanded: true,
-                              alignment: Alignment.centerRight,
-                              // onChanged: onChanged(newObject()),
-                              onChanged: (newValue) =>
-                                  controller.onChangedDropdown(newValue),
-                              items: controller.propertiesStringList
-                                  .map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: TextStyle(
-                                      color: UIColors.primaryColor,
-                                      fontSize: 16.0,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomInputField(
+                              inputController: controller.propertyController,
+                              onTapCallBack: () {},
+                              isEnable: false,
+                              labelText: 'Propriedade',
+                              icon: Icons.agriculture_rounded,
                             ),
                           ),
-                        ),
+                        ],
                       ),
-
                       const SizedBox(
                         height: 12,
                       ),

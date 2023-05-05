@@ -31,8 +31,6 @@ class AnimalFormController extends GetxController {
   final previousWeightController = TextEditingController();
   final propertyController = TextEditingController();
 
-  final propertiesStringList = <String>[];
-
   @override
   void onInit() async {
     // _animalService = Get.find<AnimalService>();
@@ -41,17 +39,21 @@ class AnimalFormController extends GetxController {
 
     var data = Get.arguments;
     if (data != null && data[1] != null) {
-      propertiesStringList.assignAll(data[1]['propertiesStringList']);
+      var propertySaved = data[1]['propertySelected'];
+
+      selectedProperty.value = propertySaved.value.getNamed();
+      propertyController.text = selectedProperty.value;
+      animal.update(
+        (val) => val!.propertyId = int.parse(
+            propertyController.text.replaceAll('Propriedade', '').trim()),
+      );
     }
 
     if (data[0]['animal'] != null) {
       setFormValues(data[0]['animal']);
       buttonText.value = "Editar";
-    } else {
-      selectedProperty.value = animal.value.propertyId != null
-          ? animal.value.propertyId.toString()
-          : propertiesStringList[0];
     }
+
     if (data[2]['index'] != null) {
       idxAnimal = data[2]['index'];
     }
@@ -61,13 +63,6 @@ class AnimalFormController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    // propertiesStringList.assignAll(
-    //   propertiesData.map((element) => element.getNamed()).toList(),
-    // );
-    // selectedProperty.value = animal.value.propertyId != null
-    //     ? animal.value.propertyId.toString()
-    //     : propertiesStringList[0];
-    update();
   }
 
   void setFormValues(AnimalModel values) {
@@ -79,7 +74,6 @@ class AnimalFormController extends GetxController {
     eccController.text = values.ecc.toString();
     identifierController.text = values.identifier.toString();
     previousWeightController.text = values.previousWeight.toString();
-    propertyController.text = values.propertyId.toString();
 
     animal.update((val) {
       val!.previousWeight = double.parse(values.previousWeight.toString());
@@ -92,11 +86,6 @@ class AnimalFormController extends GetxController {
       val.previousWeight = double.parse(values.previousWeight.toString());
       val.propertyId = int.parse(values.propertyId.toString());
     });
-
-    var alwaysIds =
-        propertiesStringList.map((element) => element.split(' ')[1]).toList();
-
-    selectedProperty.value = "Propriedade ${values.propertyId}";
   }
 
   void onChangedDropdown(newValue) {

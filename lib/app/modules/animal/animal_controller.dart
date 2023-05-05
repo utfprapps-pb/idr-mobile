@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
+import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
@@ -12,16 +13,19 @@ import 'package:idr_mobile/routes/app_pages.dart';
 class AnimalController extends GetxController {
   final AnimalService _animalService;
   final PropertyService _propertyService;
+  final AuthService _authService;
 
   AnimalController({
     required AnimalService animalService,
     required PropertyService propertyService,
+    required AuthService authService,
   })  : _animalService = animalService,
-        _propertyService = propertyService;
+        _propertyService = propertyService,
+        _authService = authService;
 
   AuthService? auth;
   final animalsFinal = <AnimalModel>[].obs;
-  final propertiesStringList = <String>[];
+  final property = PropertyModel().obs;
 
   final animal = AnimalModel().obs;
 
@@ -30,6 +34,10 @@ class AnimalController extends GetxController {
     auth = Get.find<AuthService>();
     super.onInit();
     var data = Get.arguments;
+
+    var propertySaved = _authService.property();
+    property.value = propertySaved;
+    update();
   }
 
   @override
@@ -42,9 +50,6 @@ class AnimalController extends GetxController {
 
       animalsFinal.assignAll(animalsData);
 
-      propertiesStringList.assignAll(
-        propertiesData.map((element) => element.getNamed()).toList(),
-      );
       update();
     } on Exception catch (e, s) {
       print(e);
@@ -75,7 +80,7 @@ class AnimalController extends GetxController {
     if (animal != null) {}
     var result = await Get.toNamed(Routes.ANIMAL_FORM, arguments: [
       {'animal': animal},
-      {'propertiesStringList': propertiesStringList},
+      {'propertySelected': property},
       {'index': idx},
     ]);
 

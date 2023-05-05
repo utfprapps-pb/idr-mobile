@@ -8,6 +8,7 @@ class AnimalBinding implements Bindings {
       () => AnimalController(
         animalService: Get.find(),
         propertyService: Get.find(),
+        authService: Get.find(),
       ),
     );
   }
