@@ -153,8 +153,6 @@ class AnimalRepositoryImpl implements AnimalRepository {
       list.add(animal);
       animals.replaceRange(pos, pos + 1, list);
 
-      print(animals);
-
       _box.put(ANIMALS, animals);
       status = true;
     } catch (e) {

@@ -30,8 +30,6 @@ class AnimalController extends GetxController {
     auth = Get.find<AuthService>();
     super.onInit();
     var data = Get.arguments;
-    print(data);
-    print("data");
   }
 
   @override
@@ -74,7 +72,6 @@ class AnimalController extends GetxController {
   }
 
   goToForm(AnimalModel? animal, int? idx) async {
-    print(animal);
     if (animal != null) {}
     var result = await Get.toNamed(Routes.ANIMAL_FORM, arguments: [
       {'animal': animal},
@@ -88,7 +85,6 @@ class AnimalController extends GetxController {
   }
 
   removeAnimal(AnimalModel animal) async {
-    print(animal);
     var isRemoved = await _animalService.deleteAnimal(animal);
     Snack.show(
       content: isRemoved

@@ -17,7 +17,6 @@ class HomeRepositoryImpl implements HomeRepository {
       'users',
       headers: HeadersAPI().getHeaders(),
       decoder: (data) {
-        print(data);
         // Pega os dados
         final resultData = data;
         // Verifica se não é nulo

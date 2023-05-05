@@ -52,7 +52,7 @@ class PropertyRepositoryImpl implements PropertyRepository {
 
     _box.put(PROPERTIES, properties.toList());
     var propertyBox = _box.get(PROPERTIES);
-    print(propertyBox);
+
     return true;
   }
 
@@ -60,7 +60,7 @@ class PropertyRepositoryImpl implements PropertyRepository {
   Future<List<PropertyModel>> getAllPropertiesInDb() async {
     _box = await DatabaseInit().getInstance();
     var properties = _box.get(PROPERTIES) ?? [];
-    print(_box.keys);
+
     // _box.delete(_box.keys);
     // var properties = _box.deleteAll(PROPERTIES);
     // properties = [];

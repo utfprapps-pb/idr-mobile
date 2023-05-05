@@ -18,7 +18,6 @@ class LoginRepositoryImpl implements LoginRepository {
       'login',
       json,
       decoder: (data) {
-        print(data);
         // Pega os dados
         final resultData = data;
         // Verifica se não é nulo

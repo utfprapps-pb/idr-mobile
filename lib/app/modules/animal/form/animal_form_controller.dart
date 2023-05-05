@@ -55,8 +55,6 @@ class AnimalFormController extends GetxController {
     if (data[2]['index'] != null) {
       idxAnimal = data[2]['index'];
     }
-    print(data);
-    print("data");
   }
 
   @override
@@ -102,15 +100,11 @@ class AnimalFormController extends GetxController {
   }
 
   void onChangedDropdown(newValue) {
-    print(newValue);
-    print("newValue");
     selectedProperty.value = newValue;
     animal.update(
       (val) => val!.propertyId =
           int.parse(newValue.replaceAll('Propriedade', '').trim()),
     );
-    print(animal);
-    print("newValue");
   }
 
   onFormSubmit() async {

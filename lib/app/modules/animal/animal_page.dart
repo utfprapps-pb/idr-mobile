@@ -80,11 +80,9 @@ class AnimalPage extends GetView<AnimalController> {
                           icon: Icons.pets,
                           onPressedEditCallBack: (BuildContext context) {
                             controller.goToForm(animal, index);
-                            print(animal);
                           },
                           onPressedRemoveCallBack: (BuildContext context) {
                             controller.removeAnimal(animal);
-                            print(animal);
                           },
                         );
                       },

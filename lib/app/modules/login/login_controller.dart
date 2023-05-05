@@ -58,7 +58,7 @@ class LoginController extends GetxController {
               print("Error"),
             }
         });
-    // print(token);
+
     await Future.delayed(
       const Duration(seconds: 3),
     );
