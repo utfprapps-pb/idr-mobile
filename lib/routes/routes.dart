@@ -5,4 +5,5 @@ abstract class Routes {
   static const LOGIN = '/login';
   static const ANIMAL = '/animals';
   static const ANIMAL_FORM = '/animals/form';
+  static const PROPERTY = '/property';
 }

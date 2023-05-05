@@ -7,6 +7,8 @@ import 'package:idr_mobile/app/modules/home/home_page.dart';
 import 'package:idr_mobile/app/modules/login/login_binding.dart';
 import 'package:idr_mobile/app/modules/login/login_page.dart';
 import 'package:idr_mobile/app/modules/animal/form/animal_form_page.dart';
+import 'package:idr_mobile/app/modules/property/property_binding.dart';
+import 'package:idr_mobile/app/modules/property/property_page.dart';
 
 part './routes.dart';
 
@@ -39,6 +41,13 @@ abstract class AppPages {
       page: () => AnimalPageForm(),
       bindings: [
         AnimalFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.PROPERTY,
+      page: () => PropertyPage(),
+      bindings: [
+        PropertyBinding(),
       ],
     ),
   ];
