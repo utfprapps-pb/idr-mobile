@@ -9,17 +9,17 @@ part 'property_model.g.dart';
 @HiveType(typeId: 0)
 class PropertyModel {
   @HiveField(0)
-  final int? id;
+  int? id;
   @HiveField(1)
-  final String? ocupationArea;
+  String? ocupationArea;
   @HiveField(2)
-  final double? totalArea;
+  double? totalArea;
   @HiveField(3)
-  final int? latitude;
+  int? latitude;
   @HiveField(4)
-  final int? longitude;
+  int? longitude;
   @HiveField(5)
-  final bool? leased;
+  bool? leased;
 
   PropertyModel({
     this.id,
