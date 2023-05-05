@@ -9,13 +9,15 @@ import 'package:idr_mobile/core/theme/ui_config.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
 
 class AnimalPage extends GetView<AnimalController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
       backgroundColor: UIColors.whiteColor,
       endDrawer: SideMenu(),
-      key: controller.scaffoldKey,
+      key: scaffoldKey,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0, left: 16, top: 32.0),
@@ -37,7 +39,8 @@ class AnimalPage extends GetView<AnimalController> {
                       ],
                     ),
                     IconButton(
-                      onPressed: () => controller.openEndDrawer(),
+                      onPressed: () =>
+                          scaffoldKey.currentState!.openEndDrawer(),
                       icon: const Icon(
                         Icons.menu,
                       ),

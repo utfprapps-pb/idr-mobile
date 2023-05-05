@@ -24,13 +24,13 @@ class HomeController extends GetxController {
   final propertiesFinal = <PropertyModel>[].obs;
   final propertiesShowList = <PropertyModel>[].obs;
   Rx<TextEditingController> searchController = TextEditingController().obs;
-  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void onInit() async {
     auth = Get.find<AuthService>();
     displayName.value = await auth!.displayName();
     searchController.value.text = '';
+    auth!.changeProperty(null);
     super.onInit();
   }
 
@@ -47,10 +47,6 @@ class HomeController extends GetxController {
       print(s);
       //TODO: Mostrar snackbar com mensagem de erro
     }
-  }
-
-  void openEndDrawer() {
-    scaffoldKey.currentState!.openEndDrawer();
   }
 
   void logout() {
@@ -89,5 +85,10 @@ class HomeController extends GetxController {
     }).toList();
 
     propertiesShowList.assignAll(newList);
+  }
+
+  void selectProperty(PropertyModel p) {
+    auth!.changeProperty(p);
+    Get.toNamed(Routes.PROPERTY);
   }
 }

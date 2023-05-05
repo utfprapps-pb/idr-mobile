@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/modules/home/home_controller.dart';
-import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
-import 'package:idr_mobile/app/widgets/custom_input_field.dart';
 import 'package:idr_mobile/app/widgets/side_menu.dart';
-import 'package:idr_mobile/app/widgets/top_wave_custom_painter.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
+import 'package:idr_mobile/app/widgets/custom_list_tile.dart';
 
 class HomePage extends GetView<HomeController> {
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
       backgroundColor: UIColors.whiteColor,
       endDrawer: SideMenu(),
-      key: controller.scaffoldKey,
+      key: scaffoldKey,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
@@ -44,12 +43,6 @@ class HomePage extends GetView<HomeController> {
                             style: UIConfig.titleStyle,
                           ),
                         ],
-                      ),
-                      IconButton(
-                        onPressed: () => controller.openEndDrawer(),
-                        icon: const Icon(
-                          Icons.menu,
-                        ),
                       ),
                     ],
                   ),
@@ -91,12 +84,16 @@ class HomePage extends GetView<HomeController> {
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
                           var property = controller.propertiesShowList[index];
-                          return ListTile(
-                            leading: const Icon(Icons.terrain),
-                            title: Text(
-                                '${property.id} - ${property.ocupationArea}'),
-                            subtitle: Text('${property.ocupationArea}'),
-                            trailing: const Icon(Icons.more_vert),
+                          return InkWell(
+                            onTap: () {
+                              controller.selectProperty(property);
+                            },
+                            child: CustomListTile(
+                              content: '${property.ocupationArea}',
+                              title:
+                                  '${property.id} - ${property.ocupationArea}',
+                              icon: Icons.terrain,
+                            ),
                           );
                         },
                       );

@@ -23,7 +23,6 @@ class AnimalController extends GetxController {
   final animalsFinal = <AnimalModel>[].obs;
   final propertiesStringList = <String>[];
 
-  var scaffoldKey = GlobalKey<ScaffoldState>();
   final animal = AnimalModel().obs;
 
   @override
@@ -72,10 +71,6 @@ class AnimalController extends GetxController {
         behavior: SnackBarBehavior.floating,
       );
     }
-  }
-
-  void openEndDrawer() {
-    scaffoldKey.currentState!.openEndDrawer();
   }
 
   goToForm(AnimalModel? animal, int? idx) async {
