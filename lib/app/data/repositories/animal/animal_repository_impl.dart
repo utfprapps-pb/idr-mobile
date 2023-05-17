@@ -29,9 +29,13 @@ class AnimalRepositoryImpl implements AnimalRepository {
         final resultData = data;
 
         if (resultData != null) {
-          return resultData
+          var animalList = resultData
               .map<AnimalModel>((p) => AnimalModel.fromMap(p))
               .toList();
+
+          saveAnimalsInDb(animalList);
+
+          return animalList;
         } else {
           return <AnimalModel>[];
         }
@@ -57,13 +61,34 @@ class AnimalRepositoryImpl implements AnimalRepository {
   }
 
   @override
-  Future<List<AnimalModel>> getAllAnimalsInDb() async {
+  Future<List<AnimalModel>> getAllAnimalsInDb(int? propertyId) async {
     _box = await DatabaseInit().getInstance();
     var animals = _box.get(ANIMALS) ?? [];
     List<AnimalModel> animalsList =
         animals != null ? List<AnimalModel>.from(animals as List) : [];
 
+    if (propertyId != null) {
+      animalsList = findAnimalByProperty(propertyId, animalsList);
+    }
+
+    print(animalsList);
+
     return animalsList;
+  }
+
+  List<AnimalModel> findAnimalByProperty(
+      int propertyId, List<AnimalModel> animalList) {
+    List<AnimalModel> newList = [];
+
+    newList = animalList.where((o) {
+      if (o.propertyId == propertyId) {
+        return true;
+      }
+
+      return false;
+    }).toList();
+
+    return newList;
   }
 
   @override
