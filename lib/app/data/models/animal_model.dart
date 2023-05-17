@@ -30,6 +30,10 @@ class AnimalModel {
   String? type;
   @HiveField(11)
   int? propertyId;
+  @HiveField(12)
+  bool? bornInProperty;
+  @HiveField(13)
+  String? cowIdentifier;
 
   AnimalModel({
     this.id,
@@ -43,6 +47,8 @@ class AnimalModel {
     this.previousWeight,
     this.type,
     this.propertyId,
+    this.bornInProperty,
+    this.cowIdentifier,
   });
 
   AnimalModel copyWith({
@@ -57,6 +63,8 @@ class AnimalModel {
     double? previousWeight,
     String? type,
     int? propertyId,
+    bool? bornInProperty,
+    String? cowIdentifier,
   }) {
     return AnimalModel(
       id: id ?? this.id,
@@ -70,6 +78,8 @@ class AnimalModel {
       previousWeight: previousWeight ?? this.previousWeight,
       type: type ?? this.type,
       propertyId: propertyId ?? this.propertyId,
+      bornInProperty: bornInProperty ?? this.bornInProperty,
+      cowIdentifier: cowIdentifier ?? this.cowIdentifier,
     );
   }
 
@@ -86,6 +96,8 @@ class AnimalModel {
       'previousWeight': previousWeight,
       'type': type,
       'propertyId': propertyId,
+      'bornInProperty': bornInProperty,
+      'cowIdentifier': cowIdentifier,
     };
   }
 
@@ -108,6 +120,10 @@ class AnimalModel {
       type: map['type'] != null ? map['type'] as String : null,
       propertyId:
           map['property']['id'] != null ? map['property']['id'] as int : null,
+      bornInProperty:
+          map['bornInProperty'] != null ? map['bornInProperty'] as bool : null,
+      cowIdentifier:
+          map['cowIdentifier'] != null ? map['cowIdentifier'] as String : null,
     );
   }
 
@@ -118,7 +134,7 @@ class AnimalModel {
 
   @override
   String toString() {
-    return 'AnimalModel(id: $id, bornDate: $bornDate, bornWeight: $bornWeight, breed: $breed, currentWeight: $currentWeight, ecc: $ecc, identifier: $identifier, name: $name, previousWeight: $previousWeight, type: $type, propertyId: $propertyId)';
+    return 'AnimalModel(id: $id, bornDate: $bornDate, bornWeight: $bornWeight, breed: $breed, currentWeight: $currentWeight, ecc: $ecc, identifier: $identifier, name: $name, previousWeight: $previousWeight, type: $type, propertyId: $propertyId, bornInProperty: $bornInProperty, cowIdentifier: $cowIdentifier)';
   }
 
   @override
@@ -135,7 +151,9 @@ class AnimalModel {
         other.name == name &&
         other.previousWeight == previousWeight &&
         other.type == type &&
-        other.propertyId == propertyId;
+        other.propertyId == propertyId &&
+        other.bornInProperty == bornInProperty &&
+        other.cowIdentifier == cowIdentifier;
   }
 
   @override
@@ -150,6 +168,8 @@ class AnimalModel {
         name.hashCode ^
         previousWeight.hashCode ^
         type.hashCode ^
-        propertyId.hashCode;
+        propertyId.hashCode ^
+        bornInProperty.hashCode ^
+        cowIdentifier.hashCode;
   }
 }
