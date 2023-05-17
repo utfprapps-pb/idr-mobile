@@ -18,9 +18,7 @@ class InseminationFormController extends GetxController {
   final insemination = InseminationModel().obs;
   RxString selectedProperty = ''.obs;
   RxString buttonText = ''.obs;
-  Rx<AnimalSexType> calfSex = AnimalSexType.female.obs;
-  Rx<AnimalConditionBirthType> conditionBirth =
-      AnimalConditionBirthType.alive.obs;
+
   int? idxInsemination = null;
 
   final formKey = GlobalKey<FormState>();
