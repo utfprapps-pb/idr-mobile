@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:idr_mobile/app/data/enums/enum_animal_menu.dart';
 import 'package:idr_mobile/app/modules/animal/animal_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_outlined_button.dart';
 import 'package:idr_mobile/app/widgets/custom_slidable.dart';
@@ -7,9 +8,11 @@ import 'package:idr_mobile/app/widgets/side_menu.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
+import 'package:idr_mobile/routes/app_pages.dart';
 
 class AnimalPage extends GetView<AnimalController> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  AnimalMenuType? selectedMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -73,17 +76,25 @@ class AnimalPage extends GetView<AnimalController> {
                       scrollDirection: Axis.vertical,
                       itemBuilder: (context, index) {
                         var animal = controller.animalsFinal[index];
-                        return CustomSlidable(
-                          identity: index,
-                          content: '${animal.name}',
-                          title: '${animal.id ?? index} - ${animal.bornDate}',
-                          icon: Icons.pets,
-                          onPressedEditCallBack: (BuildContext context) {
-                            controller.goToForm(animal, index);
+                        return PopupMenuButton<AnimalMenuType>(
+                          initialValue: selectedMenu,
+                          onSelected: (AnimalMenuType item) {
+                            controller.goToInseminationPage(animal);
                           },
-                          onPressedRemoveCallBack: (BuildContext context) {
-                            controller.removeAnimal(animal);
-                          },
+                          itemBuilder: (BuildContext context) =>
+                              _itemsPopMenu(),
+                          child: CustomSlidable(
+                            identity: index,
+                            content: '${animal.name}',
+                            title: '${animal.id ?? index} - ${animal.bornDate}',
+                            icon: Icons.pets,
+                            onPressedEditCallBack: (BuildContext context) {
+                              controller.goToForm(animal, index);
+                            },
+                            onPressedRemoveCallBack: (BuildContext context) {
+                              controller.removeAnimal(animal);
+                            },
+                          ),
                         );
                       },
                     );
@@ -95,5 +106,36 @@ class AnimalPage extends GetView<AnimalController> {
         ),
       ),
     );
+  }
+
+  List<PopupMenuEntry<AnimalMenuType>> _itemsPopMenu() {
+    return [
+      PopupMenuItem<AnimalMenuType>(
+        value: AnimalMenuType.insemination,
+        child: Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                'Inseminação',
+              ),
+            )
+          ],
+        ),
+      ),
+      PopupMenuItem<AnimalMenuType>(
+        value: AnimalMenuType.mastitis,
+        child: Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                'Mastite',
+              ),
+            )
+          ],
+        ),
+      ),
+    ];
   }
 }

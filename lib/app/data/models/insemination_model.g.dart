@@ -1,47 +1,41 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'property_model.dart';
+part of 'insemination_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PropertyModelAdapter extends TypeAdapter<PropertyModel> {
+class InseminationModelAdapter extends TypeAdapter<InseminationModel> {
   @override
-  final int typeId = 0;
+  final int typeId = 3;
 
   @override
-  PropertyModel read(BinaryReader reader) {
+  InseminationModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return PropertyModel(
-      id: fields[0] as int?,
-      ocupationArea: fields[1] as String?,
-      totalArea: fields[2] as double?,
-      latitude: fields[3] as int?,
-      longitude: fields[4] as int?,
-      leased: fields[5] as bool?,
+    return InseminationModel(
+      id: fields[1] as int?,
+      date: fields[2] as String?,
+      bull: fields[3] as String?,
+      animalIdentifier: fields[4] as String?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, PropertyModel obj) {
+  void write(BinaryWriter writer, InseminationModel obj) {
     writer
-      ..writeByte(6)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.ocupationArea)
-      ..writeByte(2)
-      ..write(obj.totalArea)
-      ..writeByte(3)
-      ..write(obj.latitude)
       ..writeByte(4)
-      ..write(obj.longitude)
-      ..writeByte(5)
-      ..write(obj.leased);
+      ..writeByte(1)
+      ..write(obj.id)
+      ..writeByte(2)
+      ..write(obj.date)
+      ..writeByte(3)
+      ..write(obj.bull)
+      ..writeByte(4)
+      ..write(obj.animalIdentifier);
   }
 
   @override
@@ -50,7 +44,7 @@ class PropertyModelAdapter extends TypeAdapter<PropertyModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PropertyModelAdapter &&
+      other is InseminationModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

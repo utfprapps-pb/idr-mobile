@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
+import 'package:idr_mobile/app/data/models/insemination_model.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
@@ -19,5 +20,6 @@ class DatabaseInit {
   void registerAdapters() {
     Hive.registerAdapter(PropertyModelAdapter());
     Hive.registerAdapter(AnimalModelAdapter());
+    Hive.registerAdapter(InseminationModelAdapter());
   }
 }

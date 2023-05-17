@@ -14,10 +14,10 @@ class AnimalServiceImpl implements AnimalService {
         _animalRepository = animalRepository;
 
   @override
-  Future<List<AnimalModel>> getAllAnimals() async {
+  Future<List<AnimalModel>> getAllAnimals(int? propertyId) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     // if (connectivityResult == ConnectivityResult.none) {
-    return _animalRepository.getAllAnimalsInDb();
+    return _animalRepository.getAllAnimalsInDb(propertyId);
     // } else {
     //   return _animalRepository.getAllAnimals();
     // }

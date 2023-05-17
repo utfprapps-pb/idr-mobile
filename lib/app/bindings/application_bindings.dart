@@ -6,6 +6,8 @@ import 'package:idr_mobile/app/data/repositories/home/home_repository.dart';
 import 'package:idr_mobile/app/data/repositories/home/home_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/insemination/insemination_repository.dart';
+import 'package:idr_mobile/app/data/repositories/insemination/insemination_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository_impl.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
@@ -15,6 +17,8 @@ import 'package:idr_mobile/app/data/services/home/home_service.dart';
 import 'package:idr_mobile/app/data/services/home/home_service_impl.dart';
 import 'package:idr_mobile/app/data/services/login/login_service.dart';
 import 'package:idr_mobile/app/data/services/login/login_service_impl.dart';
+import 'package:idr_mobile/app/data/services/insemination/insemination_service.dart';
+import 'package:idr_mobile/app/data/services/insemination/insemination_service_impl.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service_impl.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -94,6 +98,22 @@ class ApplicationBindings implements Bindings {
       () => AnimalServiceImpl(
         connectivity: Get.find(),
         animalRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<InseminationRepository>(
+      () => InseminationRepositoryImpl(
+        restClient: Get.find(),
+        authService: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<InseminationService>(
+      () => InseminationServiceImpl(
+        connectivity: Get.find(),
+        inseminationRepository: Get.find(),
       ),
       fenix: true,
     );

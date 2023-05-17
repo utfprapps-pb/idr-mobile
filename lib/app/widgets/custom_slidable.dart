@@ -12,6 +12,7 @@ class CustomSlidable extends StatelessWidget {
   final IconData? icon;
   final void Function(BuildContext)? onPressedRemoveCallBack;
   final void Function(BuildContext)? onPressedEditCallBack;
+  final VoidCallback? onPressedCallBack;
   // final Icon
   const CustomSlidable({
     super.key,
@@ -19,6 +20,7 @@ class CustomSlidable extends StatelessWidget {
     required this.content,
     required this.onPressedRemoveCallBack,
     required this.onPressedEditCallBack,
+    this.onPressedCallBack,
     this.icon,
     this.identity,
   });
@@ -52,7 +54,14 @@ class CustomSlidable extends StatelessWidget {
           ),
         ],
       ),
-      child: CustomListTile(title: title, content: content, icon: icon),
+      child: InkWell(
+        onTap: onPressedCallBack ?? null,
+        child: CustomListTile(
+          title: title,
+          content: content,
+          icon: icon,
+        ),
+      ),
     );
   }
 }
