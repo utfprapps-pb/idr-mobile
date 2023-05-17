@@ -17,12 +17,12 @@ class PropertyModelAdapter extends TypeAdapter<PropertyModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return PropertyModel(
-      id: fields[0] as int,
-      ocupationArea: fields[1] as String,
+      id: fields[0] as int?,
+      ocupationArea: fields[1] as String?,
       totalArea: fields[2] as double?,
       latitude: fields[3] as int?,
       longitude: fields[4] as int?,
-      leased: fields[5] as bool,
+      leased: fields[5] as bool?,
     );
   }
 
