@@ -28,13 +28,15 @@ class AnimalModelAdapter extends TypeAdapter<AnimalModel> {
       previousWeight: fields[9] as double?,
       type: fields[10] as String?,
       propertyId: fields[11] as int?,
+      bornInProperty: fields[12] as bool?,
+      cowIdentifier: fields[13] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, AnimalModel obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(13)
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)
@@ -56,7 +58,11 @@ class AnimalModelAdapter extends TypeAdapter<AnimalModel> {
       ..writeByte(10)
       ..write(obj.type)
       ..writeByte(11)
-      ..write(obj.propertyId);
+      ..write(obj.propertyId)
+      ..writeByte(12)
+      ..write(obj.bornInProperty)
+      ..writeByte(13)
+      ..write(obj.cowIdentifier);
   }
 
   @override

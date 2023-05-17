@@ -19,6 +19,7 @@ class AnimalFormController extends GetxController {
   RxString selectedProperty = ''.obs;
   RxString buttonText = ''.obs;
   int? idxAnimal = null;
+  RxBool isBornInProperty = false.obs;
 
   final formKey = GlobalKey<FormState>();
   final bornDateController = TextEditingController();
@@ -30,12 +31,15 @@ class AnimalFormController extends GetxController {
   final identifierController = TextEditingController();
   final previousWeightController = TextEditingController();
   final propertyController = TextEditingController();
+  final cowIdentifierController = TextEditingController();
 
   @override
   void onInit() async {
     // _animalService = Get.find<AnimalService>();
     super.onInit();
     buttonText.value = "Salvar";
+    bornDateController.text = dateFormat.format(DateTime.now());
+    animal.update((val) => val!.bornDate = bornDateController.text);
 
     var data = Get.arguments;
     if (data != null && data[1] != null) {
@@ -74,6 +78,8 @@ class AnimalFormController extends GetxController {
     eccController.text = values.ecc.toString();
     identifierController.text = values.identifier.toString();
     previousWeightController.text = values.previousWeight.toString();
+    isBornInProperty.value = values.bornInProperty ?? false;
+    cowIdentifierController.text = values.cowIdentifier.toString();
 
     animal.update((val) {
       val!.previousWeight = double.parse(values.previousWeight.toString());
@@ -85,6 +91,8 @@ class AnimalFormController extends GetxController {
       val.identifier = values.identifier.toString();
       val.previousWeight = double.parse(values.previousWeight.toString());
       val.propertyId = int.parse(values.propertyId.toString());
+      val.bornInProperty = values.bornInProperty;
+      val.cowIdentifier = values.cowIdentifier.toString();
     });
   }
 

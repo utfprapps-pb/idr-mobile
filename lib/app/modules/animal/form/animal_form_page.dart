@@ -187,6 +187,58 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                       const SizedBox(
                         height: 12,
                       ),
+                      Row(
+                        children: [
+                          Obx(
+                            () => Checkbox(
+                                activeColor: UIColors.primaryColor,
+                                value: controller.isBornInProperty.value,
+                                onChanged: (value) {
+                                  controller.isBornInProperty.value = value!;
+                                  controller.animal.update(
+                                    (val) => val!.bornInProperty = value,
+                                  );
+                                }),
+                          ),
+                          Text('Nascido na propriedade?')
+                        ],
+                      ),
+                      Obx(
+                        () => Visibility(
+                          visible: controller.isBornInProperty.value,
+                          child: const SizedBox(
+                            height: 12,
+                          ),
+                        ),
+                      ),
+                      Obx(
+                        () => Visibility(
+                          visible: controller.isBornInProperty.value,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: CustomInputField(
+                                  inputController:
+                                      controller.cowIdentifierController,
+                                  onTapCallBack: () {},
+                                  labelText: 'Identificar animal',
+                                  keyboardType: TextInputType.number,
+                                  icon: Icons.pets_rounded,
+                                  onChanged: (_) => controller.animal.update(
+                                    (val) => val!.cowIdentifier = _,
+                                  ),
+                                  // onValidate: (_) => controller.onValidate(_),
+                                  // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(
+                        height: 12,
+                      ),
                       // CustomDropdownButton<String>(
                       //   items: controller.propertiesStringList,
                       //   selectedValue: controller.selectedProperty.toString(),
