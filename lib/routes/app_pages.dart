@@ -7,6 +7,10 @@ import 'package:idr_mobile/app/modules/home/home_page.dart';
 import 'package:idr_mobile/app/modules/login/login_binding.dart';
 import 'package:idr_mobile/app/modules/login/login_page.dart';
 import 'package:idr_mobile/app/modules/animal/form/animal_form_page.dart';
+import 'package:idr_mobile/app/modules/insemination/form/insemination_form_binding.dart';
+import 'package:idr_mobile/app/modules/insemination/form/insemination_form_page.dart';
+import 'package:idr_mobile/app/modules/insemination/insemination_binding.dart';
+import 'package:idr_mobile/app/modules/insemination/insemination_page.dart';
 import 'package:idr_mobile/app/modules/property/property_binding.dart';
 import 'package:idr_mobile/app/modules/property/property_page.dart';
 
@@ -48,6 +52,20 @@ abstract class AppPages {
       page: () => PropertyPage(),
       bindings: [
         PropertyBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.INSEMINATION,
+      page: () => InseminationPage(),
+      bindings: [
+        InseminationBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.INSEMINATION_FORM,
+      page: () => InseminationPageForm(),
+      bindings: [
+        InseminationFormBinding(),
       ],
     ),
   ];
