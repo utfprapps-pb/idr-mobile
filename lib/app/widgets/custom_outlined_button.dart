@@ -6,6 +6,7 @@ import 'package:idr_mobile/core/theme/ui_config.dart';
 class CustomOutlinedButton extends StatelessWidget {
   final VoidCallback onPressedCallBack;
   final String? title;
+  final bool? titleInUppercase;
   final IconData? icon;
   final double? height;
 
@@ -13,12 +14,15 @@ class CustomOutlinedButton extends StatelessWidget {
     super.key,
     required this.onPressedCallBack,
     this.title,
+    this.titleInUppercase = true,
     this.icon,
     this.height,
   });
 
   @override
   Widget build(BuildContext context) {
+    String title = this.title ?? '';
+
     return SizedBox(
       height: height ?? 48,
       child: OutlinedButton(
@@ -36,7 +40,7 @@ class CustomOutlinedButton extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
-                title ?? '',
+                titleInUppercase! ? title.toUpperCase() : title,
               ),
             ),
           ],
