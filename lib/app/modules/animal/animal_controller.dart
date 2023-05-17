@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
+import 'package:idr_mobile/app/data/models/insemination_model.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
@@ -44,11 +45,7 @@ class AnimalController extends GetxController {
   void onReady() async {
     super.onReady();
     try {
-      final animalsData = await _animalService.getAllAnimals();
-      final propertiesData = await _propertyService.getAllProperties();
-      final isSave = await _animalService.saveAnimals(animalsData);
-
-      animalsFinal.assignAll(animalsData);
+      loadAnimals();
 
       update();
     } on Exception catch (e, s) {
@@ -65,7 +62,7 @@ class AnimalController extends GetxController {
 
   void loadAnimals() async {
     try {
-      final animalsData = await _animalService.getAllAnimals();
+      final animalsData = await _animalService.getAllAnimals(property.value.id);
       animalsFinal.assignAll(animalsData);
     } catch (e) {
       Snack.show(
@@ -74,6 +71,12 @@ class AnimalController extends GetxController {
         behavior: SnackBarBehavior.floating,
       );
     }
+  }
+
+  goToInseminationPage(AnimalModel? animal) async {
+    var result = await Get.toNamed(Routes.INSEMINATION, arguments: [
+      {'animal': animal},
+    ]);
   }
 
   goToForm(AnimalModel? animal, int? idx) async {
