@@ -19,7 +19,7 @@ class InseminationPageForm extends GetView<InseminationFormController> {
       backgroundColor: UIColors.whiteColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cadastrar inseminationo"),
+        title: Text("Cadastrar inseminação"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
