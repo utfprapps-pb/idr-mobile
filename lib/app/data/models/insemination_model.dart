@@ -9,14 +9,18 @@ part 'insemination_model.g.dart';
 @HiveType(typeId: 3)
 class InseminationModel {
   @HiveField(1)
-  int? id;
+  String? internalId;
   @HiveField(2)
-  String? date;
+  int? id;
   @HiveField(3)
-  String? bull;
+  String? date;
   @HiveField(4)
+  String? bull;
+  @HiveField(5)
   String? animalIdentifier;
+
   InseminationModel({
+    this.internalId,
     this.id,
     this.date,
     this.bull,
@@ -24,12 +28,14 @@ class InseminationModel {
   });
 
   InseminationModel copyWith({
+    String? internalId,
     int? id,
     String? date,
     String? bull,
     String? animalIdentifier,
   }) {
     return InseminationModel(
+      internalId: internalId ?? this.internalId,
       id: id ?? this.id,
       date: date ?? this.date,
       bull: bull ?? this.bull,
@@ -40,6 +46,9 @@ class InseminationModel {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
+    if (internalId != null) {
+      result.addAll({'internalId': internalId});
+    }
     if (id != null) {
       result.addAll({'id': id});
     }
@@ -58,6 +67,7 @@ class InseminationModel {
 
   factory InseminationModel.fromMap(Map<String, dynamic> map) {
     return InseminationModel(
+      internalId: map['internalId'],
       id: map['id']?.toInt(),
       date: map['date'],
       bull: map['bull'],
@@ -72,7 +82,7 @@ class InseminationModel {
 
   @override
   String toString() {
-    return 'InseminationModel(id: $id, date: $date, bull: $bull, animalIdentifier: $animalIdentifier)';
+    return 'InseminationModel(internalId: $internalId, id: $id, date: $date, bull: $bull, animalIdentifier: $animalIdentifier)';
   }
 
   @override
@@ -80,6 +90,7 @@ class InseminationModel {
     if (identical(this, other)) return true;
 
     return other is InseminationModel &&
+        other.internalId == internalId &&
         other.id == id &&
         other.date == date &&
         other.bull == bull &&
@@ -88,7 +99,8 @@ class InseminationModel {
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return internalId.hashCode ^
+        id.hashCode ^
         date.hashCode ^
         bull.hashCode ^
         animalIdentifier.hashCode;
