@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idr_mobile/app/data/enums/enum_animal_condition_birth.dart';
-import 'package:idr_mobile/app/data/enums/enum_animal_sex.dart';
-import 'package:idr_mobile/app/data/models/property_model.dart';
-import 'package:idr_mobile/app/modules/insemination/insemination_controller.dart';
 import 'package:idr_mobile/app/modules/insemination/form/insemination_form_controller.dart';
-import 'package:idr_mobile/app/widgets/custom_dropdown.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
 import 'package:idr_mobile/app/widgets/custom_input_field.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
