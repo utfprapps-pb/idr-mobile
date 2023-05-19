@@ -15,7 +15,7 @@ class AnimalServiceImpl implements AnimalService {
 
   @override
   Future<List<AnimalModel>> getAllAnimals(int? propertyId) async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
+    // var connectivityResult = await (Connectivity().checkConnectivity());
     // if (connectivityResult == ConnectivityResult.none) {
     return _animalRepository.getAllAnimalsInDb(propertyId);
     // } else {
@@ -31,8 +31,8 @@ class AnimalServiceImpl implements AnimalService {
   Future<bool> saveAnimal(AnimalModel animal) =>
       _animalRepository.saveAnimalInDb(animal);
   @override
-  Future<bool> editAnimal(AnimalModel animal, int pos) =>
-      _animalRepository.editAnimalInDb(animal, pos);
+  Future<bool> editAnimal(AnimalModel animal) =>
+      _animalRepository.editAnimalInDb(animal);
 
   @override
   Future<bool> deleteAll() => _animalRepository.deleteAll();

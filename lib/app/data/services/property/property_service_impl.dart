@@ -18,12 +18,12 @@ class PropertyServiceImpl implements PropertyService {
 
   @override
   Future<List<PropertyModel>> getAllProperties() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.none) {
-      return _propertyRepository.getAllPropertiesInDb();
-    } else {
-      return _propertyRepository.getAllProperties();
-    }
+    // var connectivityResult = await (Connectivity().checkConnectivity());
+    // if (connectivityResult == ConnectivityResult.none) {
+    return _propertyRepository.getAllPropertiesInDb();
+    // } else {
+    //   return _propertyRepository.getAllProperties();
+    // }
   }
 
   @override

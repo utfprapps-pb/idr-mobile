@@ -17,24 +17,27 @@ class InseminationModelAdapter extends TypeAdapter<InseminationModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return InseminationModel(
-      id: fields[1] as int?,
-      date: fields[2] as String?,
-      bull: fields[3] as String?,
-      animalIdentifier: fields[4] as String?,
+      internalId: fields[1] as String?,
+      id: fields[2] as int?,
+      date: fields[3] as String?,
+      bull: fields[4] as String?,
+      animalIdentifier: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, InseminationModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(1)
-      ..write(obj.id)
+      ..write(obj.internalId)
       ..writeByte(2)
-      ..write(obj.date)
+      ..write(obj.id)
       ..writeByte(3)
-      ..write(obj.bull)
+      ..write(obj.date)
       ..writeByte(4)
+      ..write(obj.bull)
+      ..writeByte(5)
       ..write(obj.animalIdentifier);
   }
 

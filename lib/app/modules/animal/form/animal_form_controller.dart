@@ -7,19 +7,24 @@ import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/widgets/snackbar.dart';
 import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
+import 'package:uuid/uuid.dart';
 
 class AnimalFormController extends GetxController {
   final AnimalService? _animalService;
+  final Uuid? _uuid;
 
   AnimalFormController({
     required AnimalService animalService,
-  }) : _animalService = animalService;
+    required Uuid uuid,
+  })  : _animalService = animalService,
+        _uuid = uuid;
 
   final animal = AnimalModel().obs;
   RxString selectedProperty = ''.obs;
   RxString buttonText = ''.obs;
   int? idxAnimal = null;
   RxBool isBornInProperty = false.obs;
+  RxBool isDead = false.obs;
 
   final formKey = GlobalKey<FormState>();
   final bornDateController = TextEditingController();
@@ -32,6 +37,7 @@ class AnimalFormController extends GetxController {
   final previousWeightController = TextEditingController();
   final propertyController = TextEditingController();
   final cowIdentifierController = TextEditingController();
+  final deadDateController = TextEditingController();
 
   @override
   void onInit() async {
@@ -39,6 +45,7 @@ class AnimalFormController extends GetxController {
     super.onInit();
     buttonText.value = "Salvar";
     bornDateController.text = dateFormat.format(DateTime.now());
+    deadDateController.text = dateFormat.format(DateTime.now());
     animal.update((val) => val!.bornDate = bornDateController.text);
 
     var data = Get.arguments;
@@ -56,6 +63,10 @@ class AnimalFormController extends GetxController {
     if (data[0]['animal'] != null) {
       setFormValues(data[0]['animal']);
       buttonText.value = "Editar";
+    } else {
+      animal.update(
+        (val) => val!.internalId = _uuid!.v1(),
+      );
     }
 
     if (data[2]['index'] != null) {
@@ -71,7 +82,7 @@ class AnimalFormController extends GetxController {
 
   void setFormValues(AnimalModel values) {
     bornDateController.text = values.bornDate.toString();
-    nameController.text = values.name.toString();
+    nameController.text = values.name ?? '';
     bornWeightdController.text = values.bornWeight.toString();
     breedController.text = values.breed.toString();
     currentWeightController.text = values.currentWeight.toString();
@@ -79,10 +90,22 @@ class AnimalFormController extends GetxController {
     identifierController.text = values.identifier.toString();
     previousWeightController.text = values.previousWeight.toString();
     isBornInProperty.value = values.bornInProperty ?? false;
-    cowIdentifierController.text = values.cowIdentifier.toString();
+
+    if (values.cowIdentifier != null) {
+      cowIdentifierController.text = values.cowIdentifier.toString();
+      isBornInProperty.value = true;
+    }
+
+    if (values.deadDate != null) {
+      deadDateController.text = values.deadDate.toString();
+      isDead.value = true;
+    }
 
     animal.update((val) {
-      val!.previousWeight = double.parse(values.previousWeight.toString());
+      if (values.previousWeight != null) {
+        val!.previousWeight = double.parse(values.previousWeight.toString());
+      }
+      val!.internalId = values.internalId.toString();
       val.bornDate = values.bornDate.toString();
       val.bornWeight = double.parse(values.previousWeight.toString());
       val.breed = values.breed.toString();
@@ -91,8 +114,17 @@ class AnimalFormController extends GetxController {
       val.identifier = values.identifier.toString();
       val.previousWeight = double.parse(values.previousWeight.toString());
       val.propertyId = int.parse(values.propertyId.toString());
-      val.bornInProperty = values.bornInProperty;
-      val.cowIdentifier = values.cowIdentifier.toString();
+
+      if (values.id != null) {
+        val.id = values.id;
+      }
+      if (values.cowIdentifier != null) {
+        val.bornInProperty = values.bornInProperty;
+        val.cowIdentifier = values.cowIdentifier.toString();
+      }
+      if (values.deadDate != null) {
+        val.deadDate = values.deadDate.toString();
+      }
     });
   }
 
@@ -105,8 +137,18 @@ class AnimalFormController extends GetxController {
   }
 
   onFormSubmit() async {
+    animal.update((val) {
+      if (isDead.value) {
+        val!.deadDate = deadDateController.text;
+      }
+
+      if (isBornInProperty.value) {
+        val!.cowIdentifier = cowIdentifierController.text;
+      }
+    });
+
     var isSaved = idxAnimal != null
-        ? await _animalService!.editAnimal(animal.value, idxAnimal!)
+        ? await _animalService!.editAnimal(animal.value)
         : await _animalService!.saveAnimal(animal.value);
 
     Snack.show(
@@ -120,8 +162,9 @@ class AnimalFormController extends GetxController {
     Get.back(result: isSaved);
   }
 
-  void showCalendar(BuildContext context) {
-    final dataFormatted = bornDateController.text;
+  void showCalendar(BuildContext context, String typeDate) {
+    final dataFormatted =
+        typeDate == 'born' ? bornDateController.text : deadDateController.text;
 
     var data = DateTime.now();
     if (dataFormatted.isNotEmpty) {
@@ -134,9 +177,15 @@ class AnimalFormController extends GetxController {
       lastDate: data.add(Duration(days: 365 * 5)),
     ).then((DateTime? dataSelected) {
       if (dataSelected != null) {
-        animal.update((val) => val!.bornDate = dateFormat.format(dataSelected));
-
-        bornDateController.text = dateFormat.format(dataSelected);
+        if (typeDate == 'born') {
+          animal
+              .update((val) => val!.bornDate = dateFormat.format(dataSelected));
+          bornDateController.text = dateFormat.format(dataSelected);
+        } else {
+          animal
+              .update((val) => val!.deadDate = dateFormat.format(dataSelected));
+          deadDateController.text = dateFormat.format(dataSelected);
+        }
       }
     });
   }

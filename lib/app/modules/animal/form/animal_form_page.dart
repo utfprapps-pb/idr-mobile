@@ -157,8 +157,10 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                       ),
                       CustomInputField(
                         inputController: controller.bornDateController,
-                        onTapCallBack: () => controller.showCalendar(context),
-                        onPressedIcon: () => controller.showCalendar(context),
+                        onTapCallBack: () =>
+                            controller.showCalendar(context, 'born'),
+                        onPressedIcon: () =>
+                            controller.showCalendar(context, 'born'),
                         labelText: 'Data nascimento',
                         icon: Icons.calendar_today,
                       ),
@@ -267,6 +269,42 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                       const SizedBox(
                         height: 12,
                       ),
+                      Row(
+                        children: [
+                          Obx(
+                            () => Checkbox(
+                                activeColor: UIColors.primaryColor,
+                                value: controller.isDead.value,
+                                onChanged: (value) {
+                                  controller.isDead.value = value!;
+                                  controller.animal.update(
+                                    (val) => val!.dead = value,
+                                  );
+                                }),
+                          ),
+                          Text('Morreu?')
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Obx(
+                        () => Visibility(
+                          visible: controller.isDead.value,
+                          child: CustomInputField(
+                            inputController: controller.deadDateController,
+                            onTapCallBack: () =>
+                                controller.showCalendar(context, 'dead'),
+                            onPressedIcon: () =>
+                                controller.showCalendar(context, 'dead'),
+                            labelText: 'Data morte',
+                            icon: Icons.calendar_today,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       Obx(
                         () => CustomElevatedButton(
                           title: '${controller.buttonText}',
@@ -276,7 +314,10 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                             }
                           },
                         ),
-                      )
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
                     ],
                   ),
                 ),

@@ -17,52 +17,61 @@ class AnimalModelAdapter extends TypeAdapter<AnimalModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AnimalModel(
-      id: fields[1] as int?,
-      bornDate: fields[2] as String?,
-      bornWeight: fields[3] as double?,
-      breed: fields[4] as String?,
-      currentWeight: fields[5] as double?,
-      ecc: fields[6] as double?,
-      identifier: fields[7] as String?,
-      name: fields[8] as String?,
-      previousWeight: fields[9] as double?,
-      type: fields[10] as String?,
-      propertyId: fields[11] as int?,
-      bornInProperty: fields[12] as bool?,
-      cowIdentifier: fields[13] as String?,
+      internalId: fields[1] as String?,
+      id: fields[2] as int?,
+      bornDate: fields[3] as String?,
+      bornWeight: fields[4] as double?,
+      breed: fields[5] as String?,
+      currentWeight: fields[6] as double?,
+      ecc: fields[7] as double?,
+      identifier: fields[8] as String?,
+      name: fields[9] as String?,
+      previousWeight: fields[10] as double?,
+      type: fields[11] as String?,
+      propertyId: fields[12] as int?,
+      bornInProperty: fields[13] as bool?,
+      cowIdentifier: fields[14] as String?,
+      dead: fields[15] as bool?,
+      deadDate: fields[16] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, AnimalModel obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(16)
       ..writeByte(1)
-      ..write(obj.id)
+      ..write(obj.internalId)
       ..writeByte(2)
-      ..write(obj.bornDate)
+      ..write(obj.id)
       ..writeByte(3)
-      ..write(obj.bornWeight)
+      ..write(obj.bornDate)
       ..writeByte(4)
-      ..write(obj.breed)
+      ..write(obj.bornWeight)
       ..writeByte(5)
-      ..write(obj.currentWeight)
+      ..write(obj.breed)
       ..writeByte(6)
-      ..write(obj.ecc)
+      ..write(obj.currentWeight)
       ..writeByte(7)
-      ..write(obj.identifier)
+      ..write(obj.ecc)
       ..writeByte(8)
-      ..write(obj.name)
+      ..write(obj.identifier)
       ..writeByte(9)
-      ..write(obj.previousWeight)
+      ..write(obj.name)
       ..writeByte(10)
-      ..write(obj.type)
+      ..write(obj.previousWeight)
       ..writeByte(11)
-      ..write(obj.propertyId)
+      ..write(obj.type)
       ..writeByte(12)
-      ..write(obj.bornInProperty)
+      ..write(obj.propertyId)
       ..writeByte(13)
-      ..write(obj.cowIdentifier);
+      ..write(obj.bornInProperty)
+      ..writeByte(14)
+      ..write(obj.cowIdentifier)
+      ..writeByte(15)
+      ..write(obj.dead)
+      ..writeByte(16)
+      ..write(obj.deadDate);
   }
 
   @override

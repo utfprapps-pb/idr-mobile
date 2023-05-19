@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/insemination_model.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
@@ -59,11 +60,28 @@ class InseminationRepositoryImpl implements InseminationRepository {
     var status = false;
     try {
       var inseminations = _box.get(INSEMINATIONS) ?? [];
+
+      List<InseminationModel> inseminationsList = inseminations != null
+          ? List<InseminationModel>.from(inseminations as List)
+          : [];
+
       List<InseminationModel> list = [];
       list.add(insemination);
-      inseminations.replaceRange(pos, pos + 1, list);
 
-      _box.put(INSEMINATIONS, inseminations);
+      InseminationModel? im = findInsemination(inseminationsList, insemination);
+
+      int pos = 0;
+      if (im != null) {
+        pos = inseminationsList.indexOf(im);
+      }
+
+      if (pos != 0) {
+        inseminationsList.replaceRange(pos, pos + 1, list);
+      }
+
+      inseminationsList.replaceRange(pos, pos + 1, list);
+
+      _box.put(INSEMINATIONS, inseminationsList);
       status = true;
     } catch (e) {
       status = false;
@@ -135,5 +153,13 @@ class InseminationRepositoryImpl implements InseminationRepository {
   Future<bool> saveInseminationsInDb(List<InseminationModel> inseminations) {
     // TODO: implement saveInseminationsInDb
     throw UnimplementedError();
+  }
+
+  InseminationModel? findInsemination(
+      List<InseminationModel> list, InseminationModel insemination) {
+    InseminationModel? im = list.firstWhereOrNull(
+        (element) => element.internalId == insemination.internalId);
+
+    return im;
   }
 }

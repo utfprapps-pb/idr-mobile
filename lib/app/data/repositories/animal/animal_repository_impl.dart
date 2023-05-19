@@ -8,16 +8,20 @@ import 'package:idr_mobile/app/data/repositories/animal/animal_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
+import 'package:uuid/uuid.dart';
 
 class AnimalRepositoryImpl implements AnimalRepository {
   final RestClient _restClient;
   final AuthService auth;
+  final Uuid uuid;
   late Box _box;
 
   AnimalRepositoryImpl({
     required RestClient restClient,
     required AuthService authService,
+    required Uuid uuid,
   })  : _restClient = restClient,
+        uuid = uuid,
         auth = authService;
 
   @override
@@ -52,10 +56,14 @@ class AnimalRepositoryImpl implements AnimalRepository {
   }
 
   @override
-  Future<bool> saveAnimalsInDb(List<AnimalModel> properties) async {
+  Future<bool> saveAnimalsInDb(List<AnimalModel> animals) async {
     _box = await DatabaseInit().getInstance();
 
-    _box.put(ANIMALS, properties.toList());
+    animals.forEach((e) => {
+          if (e.internalId == null) {e.internalId = uuid.v1()},
+        });
+
+    _box.put(ANIMALS, animals.toList());
 
     return true;
   }
@@ -170,20 +178,40 @@ class AnimalRepositoryImpl implements AnimalRepository {
   }
 
   @override
-  Future<bool> editAnimalInDb(AnimalModel animal, int pos) async {
+  Future<bool> editAnimalInDb(AnimalModel animal) async {
     var status = false;
     try {
       var animals = _box.get(ANIMALS) ?? [];
+      List<AnimalModel> animalsList =
+          animals != null ? List<AnimalModel>.from(animals as List) : [];
+
       List<AnimalModel> list = [];
       list.add(animal);
-      animals.replaceRange(pos, pos + 1, list);
 
-      _box.put(ANIMALS, animals);
+      AnimalModel? am = findAnimal(animalsList, animal);
+
+      int pos = 0;
+      if (am != null) {
+        pos = animalsList.indexOf(am);
+      }
+
+      if (pos != 0) {
+        animalsList.replaceRange(pos, pos + 1, list);
+      }
+
+      _box.put(ANIMALS, animalsList);
       status = true;
     } catch (e) {
       status = false;
     }
 
     return status;
+  }
+
+  AnimalModel? findAnimal(List<AnimalModel> list, AnimalModel animal) {
+    AnimalModel? am = list
+        .firstWhereOrNull((element) => element.internalId == animal.internalId);
+
+    return am;
   }
 }
