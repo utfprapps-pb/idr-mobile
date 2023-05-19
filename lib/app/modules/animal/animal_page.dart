@@ -85,7 +85,8 @@ class AnimalPage extends GetView<AnimalController> {
                               _itemsPopMenu(),
                           child: CustomSlidable(
                             identity: index,
-                            content: '${animal.name}',
+                            content:
+                                '${animal.name ?? animal.identifier ?? ''}',
                             title: '${animal.id ?? index} - ${animal.bornDate}',
                             icon: Icons.pets,
                             onPressedEditCallBack: (BuildContext context) {
