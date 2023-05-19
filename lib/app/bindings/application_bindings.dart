@@ -22,6 +22,7 @@ import 'package:idr_mobile/app/data/services/insemination/insemination_service_i
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service_impl.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:uuid/uuid.dart';
 
 class ApplicationBindings implements Bindings {
   @override
@@ -43,6 +44,11 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut(
       () => AuthService(),
+      fenix: true,
+    );
+
+    Get.lazyPut(
+      () => Uuid(),
       fenix: true,
     );
 
@@ -90,6 +96,7 @@ class ApplicationBindings implements Bindings {
       () => AnimalRepositoryImpl(
         restClient: Get.find(),
         authService: Get.find(),
+        uuid: Get.find(),
       ),
       fenix: true,
     );
