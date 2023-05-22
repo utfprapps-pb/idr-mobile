@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/repositories/animal/animal_repository.dart';
 import 'package:idr_mobile/app/data/repositories/animal/animal_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/disease/disease_repository.dart';
+import 'package:idr_mobile/app/data/repositories/disease/disease_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/home/home_repository.dart';
 import 'package:idr_mobile/app/data/repositories/home/home_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository.dart';
@@ -15,6 +17,8 @@ import 'package:idr_mobile/app/data/repositories/property/property_repository_im
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service_impl.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/app/data/services/disease/disease_service.dart';
+import 'package:idr_mobile/app/data/services/disease/disease_service_impl.dart';
 import 'package:idr_mobile/app/data/services/home/home_service.dart';
 import 'package:idr_mobile/app/data/services/home/home_service_impl.dart';
 import 'package:idr_mobile/app/data/services/login/login_service.dart';
@@ -139,6 +143,21 @@ class ApplicationBindings implements Bindings {
     Get.lazyPut<MastitisService>(
       () => MastitisServiceImpl(
         mastitisRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<DiseaseRepository>(
+      () => DiseaseRepositoryImpl(
+        uuid: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<DiseaseService>(
+      () => DiseaseServiceImpl(
+        diseaseRepository: Get.find(),
       ),
       fenix: true,
     );
