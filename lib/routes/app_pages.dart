@@ -11,6 +11,10 @@ import 'package:idr_mobile/app/modules/insemination/form/insemination_form_bindi
 import 'package:idr_mobile/app/modules/insemination/form/insemination_form_page.dart';
 import 'package:idr_mobile/app/modules/insemination/insemination_binding.dart';
 import 'package:idr_mobile/app/modules/insemination/insemination_page.dart';
+import 'package:idr_mobile/app/modules/mastitis/form/mastitis_form_binding.dart';
+import 'package:idr_mobile/app/modules/mastitis/form/mastitis_form_page.dart';
+import 'package:idr_mobile/app/modules/mastitis/mastitis_binding.dart';
+import 'package:idr_mobile/app/modules/mastitis/mastitis_page.dart';
 import 'package:idr_mobile/app/modules/property/property_binding.dart';
 import 'package:idr_mobile/app/modules/property/property_page.dart';
 
@@ -66,6 +70,20 @@ abstract class AppPages {
       page: () => InseminationPageForm(),
       bindings: [
         InseminationFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.MASTITIS,
+      page: () => MastitisPage(),
+      bindings: [
+        MastitisBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.MASTITIS_FORM,
+      page: () => MastitisFormPage(),
+      bindings: [
+        MastitisFormBinding(),
       ],
     ),
   ];

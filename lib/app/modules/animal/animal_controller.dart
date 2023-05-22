@@ -73,8 +73,8 @@ class AnimalController extends GetxController {
     }
   }
 
-  goToInseminationPage(AnimalModel? animal) async {
-    var result = await Get.toNamed(Routes.INSEMINATION, arguments: [
+  goToNextPage(AnimalModel? animal, String route) async {
+    var result = await Get.toNamed(route, arguments: [
       {'animal': animal},
     ]);
   }

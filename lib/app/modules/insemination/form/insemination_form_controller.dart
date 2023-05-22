@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idr_mobile/app/data/enums/enum_animal_condition_birth.dart';
-import 'package:idr_mobile/app/data/enums/enum_animal_sex.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 import 'package:idr_mobile/app/data/models/insemination_model.dart';
 import 'package:idr_mobile/app/data/services/insemination/insemination_service.dart';
