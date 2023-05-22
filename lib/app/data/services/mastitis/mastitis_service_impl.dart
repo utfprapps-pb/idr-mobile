@@ -4,38 +4,34 @@ import 'package:idr_mobile/app/data/models/insemination_model.dart';
 import 'package:idr_mobile/app/data/models/mastitis_model.dart';
 import 'package:idr_mobile/app/data/repositories/animal/animal_repository.dart';
 import 'package:idr_mobile/app/data/repositories/insemination/insemination_repository.dart';
+import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/insemination/insemination_service.dart';
 import 'package:idr_mobile/app/data/services/mastitis/mastitis_service.dart';
 
 class MastitisServiceImpl implements MastitisService {
-  @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
+  final MastitisRepository _mastitisRepository;
+
+  MastitisServiceImpl({
+    required MastitisRepository mastitisRepository,
+  }) : _mastitisRepository = mastitisRepository;
 
   @override
-  Future<bool> deleteMastitis(MastitisModel mastitis) {
-    // TODO: implement deleteMastitis
-    throw UnimplementedError();
-  }
+  Future<bool> deleteAll() => _mastitisRepository.deleteAll();
 
   @override
-  Future<bool> editMastitis(MastitisModel mastitis) {
-    // TODO: implement editMastitis
-    throw UnimplementedError();
-  }
+  Future<bool> deleteMastitis(MastitisModel mastitis) =>
+      _mastitisRepository.deleteMastitis(mastitis);
 
   @override
-  Future<List<MastitisModel>> getAllMastitis(String? animalIdentifier) {
-    // TODO: implement getAllMastitis
-    throw UnimplementedError();
-  }
+  Future<bool> editMastitis(MastitisModel mastitis) =>
+      _mastitisRepository.editMastitisInDb(mastitis);
 
   @override
-  Future<bool> saveMastitis(MastitisModel mastitis) {
-    // TODO: implement saveMastitis
-    throw UnimplementedError();
-  }
+  Future<List<MastitisModel>> getAllMastitis(String? animalIdentifier) =>
+      _mastitisRepository.getAllMastitisInDb(animalIdentifier);
+
+  @override
+  Future<bool> saveMastitis(MastitisModel mastitis) =>
+      _mastitisRepository.saveMastitisInDb(mastitis);
 }
