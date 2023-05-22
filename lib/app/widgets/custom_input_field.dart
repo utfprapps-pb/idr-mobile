@@ -19,6 +19,7 @@ class CustomInputField extends StatelessWidget {
   final Function(String s)? onSaved;
   final Function(String s)? onValidate;
   final Function(String s)? onChanged;
+  final int? maxLines;
 
   const CustomInputField({
     super.key,
@@ -36,6 +37,7 @@ class CustomInputField extends StatelessWidget {
     this.onChanged,
     this.onSaved,
     this.onValidate,
+    this.maxLines,
   });
 
   @override
@@ -45,6 +47,7 @@ class CustomInputField extends StatelessWidget {
       onSaved: (v) => onSaved!(v!),
       // validator: (v) => onValidate!(v!),
       validator: validator,
+      maxLines: maxLines ?? null,
       controller: inputController,
       style: TextStyle(
         color: UIColors.blackColor,

@@ -5,3 +5,4 @@ const ANIMALS = 'animals';
 const PARTS = 'parts';
 const INSEMINATIONS = 'inseminations';
 const MASTITIS = 'mastitis';
+const DISEASE = 'disease';
