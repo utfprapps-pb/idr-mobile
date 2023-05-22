@@ -1,0 +1,1 @@
+enum AnimalMastitisType { clinic, subClinic }
