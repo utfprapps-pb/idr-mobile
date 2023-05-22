@@ -19,7 +19,11 @@ class CustomListTile extends StatelessWidget {
     return ListTile(
       leading: icon != null ? Icon(icon) : null,
       title: Text(title),
-      subtitle: Text(content),
+      subtitle: Text(
+        content,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 2,
+      ),
       // trailing: const Icon(Icons.more_vert),
     );
   }
