@@ -37,6 +37,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.nameController,
                               onTapCallBack: () {},
                               labelText: 'Nome',
@@ -56,6 +57,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.bornWeightdController,
                               onTapCallBack: () {},
                               keyboardType: TextInputType.number,
@@ -78,6 +80,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.breedController,
                               onTapCallBack: () {},
                               labelText: 'Raça',
@@ -97,6 +100,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.eccController,
                               onTapCallBack: () {},
                               labelText: 'Ecc',
@@ -117,6 +121,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController:
                                   controller.currentWeightController,
                               onTapCallBack: () {},
@@ -139,6 +144,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.identifierController,
                               onTapCallBack: () {},
                               labelText: 'Identificador',
@@ -156,6 +162,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         height: 12,
                       ),
                       CustomInputField(
+                        maxLines: 1,
                         inputController: controller.bornDateController,
                         onTapCallBack: () =>
                             controller.showCalendar(context, 'born'),
@@ -171,6 +178,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController:
                                   controller.previousWeightController,
                               onTapCallBack: () {},
@@ -220,6 +228,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                             children: [
                               Expanded(
                                 child: CustomInputField(
+                                  maxLines: 1,
                                   inputController:
                                       controller.cowIdentifierController,
                                   onTapCallBack: () {},
@@ -257,6 +266,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.propertyController,
                               onTapCallBack: () {},
                               isEnable: false,
@@ -292,6 +302,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                         () => Visibility(
                           visible: controller.isDead.value,
                           child: CustomInputField(
+                            maxLines: 1,
                             inputController: controller.deadDateController,
                             onTapCallBack: () =>
                                 controller.showCalendar(context, 'dead'),

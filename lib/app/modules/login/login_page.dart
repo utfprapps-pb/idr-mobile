@@ -56,6 +56,7 @@ class LoginPage extends GetView<LoginController> {
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 15.0),
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: _usernameController,
                               onTapCallBack: () {},
                               labelText: 'Usuário',
@@ -76,6 +77,7 @@ class LoginPage extends GetView<LoginController> {
                       children: [
                         Expanded(
                           child: Obx(() => CustomInputField(
+                                maxLines: 1,
                                 inputController: _passwordController,
                                 onTapCallBack: () {},
                                 onPressedIcon: () =>

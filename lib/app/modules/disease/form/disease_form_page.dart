@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idr_mobile/app/modules/insemination/form/insemination_form_controller.dart';
+import 'package:idr_mobile/app/modules/disease/form/disease_form_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
 import 'package:idr_mobile/app/widgets/custom_input_field.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
 
-class InseminationPageForm extends GetView<InseminationFormController> {
+class DiseaseFormPage extends GetView<DiseaseFormController> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -14,7 +14,7 @@ class InseminationPageForm extends GetView<InseminationFormController> {
       backgroundColor: UIColors.whiteColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cadastrar inseminação"),
+        title: Text("Cadastrar doença"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -34,13 +34,13 @@ class InseminationPageForm extends GetView<InseminationFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
-                              maxLines: 1,
-                              inputController: controller.bullController,
+                              inputController: controller.diagnosticController,
                               onTapCallBack: () {},
-                              labelText: 'Touro',
-                              icon: Icons.qr_code_2_rounded,
-                              onChanged: (_) => controller.insemination
-                                  .update((val) => val!.bull = _),
+                              maxLines: 5,
+                              labelText: 'Diagnóstico',
+                              icon: Icons.medication,
+                              onChanged: (_) => controller.disease
+                                  .update((val) => val!.diagnostic = _),
                               // onValidate: (_) => controller.onValidate(_),
                               validator: (value) {
                                 if (value == null ||
@@ -62,7 +62,7 @@ class InseminationPageForm extends GetView<InseminationFormController> {
                         inputController: controller.dateController,
                         onTapCallBack: () => controller.showCalendar(context),
                         onPressedIcon: () => controller.showCalendar(context),
-                        labelText: 'Data Inseminação',
+                        labelText: 'Data Diagnóstico',
                         icon: Icons.calendar_today,
                       ),
                       const SizedBox(
