@@ -79,7 +79,17 @@ class AnimalPage extends GetView<AnimalController> {
                         return PopupMenuButton<AnimalMenuType>(
                           initialValue: selectedMenu,
                           onSelected: (AnimalMenuType item) {
-                            controller.goToInseminationPage(animal);
+                            switch (item) {
+                              case AnimalMenuType.insemination:
+                                controller.goToNextPage(
+                                    animal, Routes.INSEMINATION);
+                                break;
+                              case AnimalMenuType.mastitis:
+                                controller.goToNextPage(
+                                    animal, Routes.MASTITIS);
+                                break;
+                              default:
+                            }
                           },
                           itemBuilder: (BuildContext context) =>
                               _itemsPopMenu(),
