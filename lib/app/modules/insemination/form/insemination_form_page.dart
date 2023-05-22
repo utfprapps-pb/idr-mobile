@@ -34,6 +34,7 @@ class InseminationPageForm extends GetView<InseminationFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.bullController,
                               onTapCallBack: () {},
                               labelText: 'Touro',
@@ -57,6 +58,7 @@ class InseminationPageForm extends GetView<InseminationFormController> {
                         height: 12,
                       ),
                       CustomInputField(
+                        maxLines: 1,
                         inputController: controller.dateController,
                         onTapCallBack: () => controller.showCalendar(context),
                         onPressedIcon: () => controller.showCalendar(context),

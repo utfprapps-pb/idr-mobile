@@ -32,6 +32,7 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                         height: 12,
                       ),
                       CustomInputField(
+                        maxLines: 1,
                         inputController: controller.dateController,
                         onTapCallBack: () => controller.showCalendar(context),
                         onPressedIcon: () => controller.showCalendar(context),
@@ -89,6 +90,7 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.cmtController,
                               onTapCallBack: () {},
                               labelText: 'CMT',
@@ -115,6 +117,7 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.adController,
                               onTapCallBack: () {},
                               labelText: 'AD',
@@ -140,6 +143,7 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.aeController,
                               onTapCallBack: () {},
                               labelText: 'AE',
@@ -165,6 +169,7 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.pdController,
                               onTapCallBack: () {},
                               labelText: 'PD',
@@ -190,6 +195,7 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
+                              maxLines: 1,
                               inputController: controller.peController,
                               onTapCallBack: () {},
                               labelText: 'PE',
