@@ -4,3 +4,4 @@ const PROPERTIES = 'properties';
 const ANIMALS = 'animals';
 const PARTS = 'parts';
 const INSEMINATIONS = 'inseminations';
+const MASTITIS = 'mastitis';
