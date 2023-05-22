@@ -5,7 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'mastitis_model.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 4)
 class MastitisModel {
   @HiveField(1)
   String? internalId;
@@ -23,6 +23,8 @@ class MastitisModel {
   String? pd;
   @HiveField(8)
   String? pe;
+  @HiveField(9)
+  String? dateDiagnostic;
 
   MastitisModel({
     this.internalId,
@@ -33,6 +35,7 @@ class MastitisModel {
     this.ae,
     this.pd,
     this.pe,
+    this.dateDiagnostic,
   });
 
   MastitisModel copyWith({
@@ -44,6 +47,7 @@ class MastitisModel {
     String? ae,
     String? pd,
     String? pe,
+    String? dateDiagnostic,
   }) {
     return MastitisModel(
       internalId: internalId ?? this.internalId,
@@ -54,6 +58,7 @@ class MastitisModel {
       ae: ae ?? this.ae,
       pd: pd ?? this.pd,
       pe: pe ?? this.pe,
+      dateDiagnostic: dateDiagnostic ?? this.dateDiagnostic,
     );
   }
 
@@ -84,6 +89,9 @@ class MastitisModel {
     if (pe != null) {
       result.addAll({'pe': pe});
     }
+    if (dateDiagnostic != null) {
+      result.addAll({'dateDiagnostic': dateDiagnostic});
+    }
 
     return result;
   }
@@ -98,6 +106,7 @@ class MastitisModel {
       ae: map['ae'],
       pd: map['pd'],
       pe: map['pe'],
+      dateDiagnostic: map['dateDiagnostic'],
     );
   }
 
@@ -108,7 +117,7 @@ class MastitisModel {
 
   @override
   String toString() {
-    return 'MastitisModel(internalId: $internalId, id: $id, animalIdentifier: $animalIdentifier, resultCmt: $resultCmt, ad: $ad, ae: $ae, pd: $pd, pe: $pe)';
+    return 'MastitisModel(internalId: $internalId, id: $id, animalIdentifier: $animalIdentifier, resultCmt: $resultCmt, ad: $ad, ae: $ae, pd: $pd, pe: $pe, dateDiagnostic: $dateDiagnostic)';
   }
 
   @override
@@ -123,7 +132,8 @@ class MastitisModel {
         other.ad == ad &&
         other.ae == ae &&
         other.pd == pd &&
-        other.pe == pe;
+        other.pe == pe &&
+        other.dateDiagnostic == dateDiagnostic;
   }
 
   @override
@@ -135,6 +145,7 @@ class MastitisModel {
         ad.hashCode ^
         ae.hashCode ^
         pd.hashCode ^
-        pe.hashCode;
+        pe.hashCode ^
+        dateDiagnostic.hashCode;
   }
 }
