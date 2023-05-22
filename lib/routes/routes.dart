@@ -8,4 +8,6 @@ abstract class Routes {
   static const PROPERTY = '/property';
   static const INSEMINATION = '/insemination';
   static const INSEMINATION_FORM = '/insemination/form';
+  static const MASTITIS = '/mastitis';
+  static const MASTITIS_FORM = '/mastitis/form';
 }
