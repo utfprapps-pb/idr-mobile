@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/modules/animal/form/animal_form_binding.dart';
+import 'package:idr_mobile/app/modules/disease/disease_binding.dart';
+import 'package:idr_mobile/app/modules/disease/disease_page.dart';
+import 'package:idr_mobile/app/modules/disease/form/disease_form_binding.dart';
+import 'package:idr_mobile/app/modules/disease/form/disease_form_page.dart';
 import 'package:idr_mobile/app/modules/home/home_binding.dart';
 import 'package:idr_mobile/app/modules/animal/animal_binding.dart';
 import 'package:idr_mobile/app/modules/animal/animal_page.dart';
@@ -84,6 +88,20 @@ abstract class AppPages {
       page: () => MastitisFormPage(),
       bindings: [
         MastitisFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.DISEASE,
+      page: () => DiseasePage(),
+      bindings: [
+        DiseaseBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.DISEASE_FORM,
+      page: () => DiseaseFormPage(),
+      bindings: [
+        DiseaseFormBinding(),
       ],
     ),
   ];

@@ -10,4 +10,6 @@ abstract class Routes {
   static const INSEMINATION_FORM = '/insemination/form';
   static const MASTITIS = '/mastitis';
   static const MASTITIS_FORM = '/mastitis/form';
+  static const DISEASE = '/disease';
+  static const DISEASE_FORM = '/disease/form';
 }
