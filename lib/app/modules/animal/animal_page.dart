@@ -91,6 +91,10 @@ class AnimalPage extends GetView<AnimalController> {
                               case AnimalMenuType.disease:
                                 controller.goToNextPage(animal, Routes.DISEASE);
                                 break;
+                              case AnimalMenuType.medicines:
+                                controller.goToNextPage(
+                                    animal, Routes.MEDICINE);
+                                break;
                               default:
                             }
                           },
@@ -158,6 +162,19 @@ class AnimalPage extends GetView<AnimalController> {
               padding: EdgeInsets.only(left: 10),
               child: Text(
                 'Doenças',
+              ),
+            )
+          ],
+        ),
+      ),
+      PopupMenuItem<AnimalMenuType>(
+        value: AnimalMenuType.medicines,
+        child: Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                'Medicamentos',
               ),
             )
           ],
