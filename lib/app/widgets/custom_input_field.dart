@@ -47,7 +47,7 @@ class CustomInputField extends StatelessWidget {
       onSaved: (v) => onSaved!(v!),
       // validator: (v) => onValidate!(v!),
       validator: validator,
-      maxLines: maxLines ?? null,
+      maxLines: maxLines ?? 1,
       controller: inputController,
       style: TextStyle(
         color: UIColors.blackColor,
