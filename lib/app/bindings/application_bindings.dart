@@ -12,6 +12,8 @@ import 'package:idr_mobile/app/data/repositories/insemination/insemination_repos
 import 'package:idr_mobile/app/data/repositories/insemination/insemination_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository.dart';
 import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/medicine/medicine_repository.dart';
+import 'package:idr_mobile/app/data/repositories/medicine/medicine_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository_impl.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
@@ -27,6 +29,8 @@ import 'package:idr_mobile/app/data/services/insemination/insemination_service.d
 import 'package:idr_mobile/app/data/services/insemination/insemination_service_impl.dart';
 import 'package:idr_mobile/app/data/services/mastitis/mastitis_service.dart';
 import 'package:idr_mobile/app/data/services/mastitis/mastitis_service_impl.dart';
+import 'package:idr_mobile/app/data/services/medicine/medicine_service.dart';
+import 'package:idr_mobile/app/data/services/medicine/medicine_service_impl.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service_impl.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -158,6 +162,21 @@ class ApplicationBindings implements Bindings {
     Get.lazyPut<DiseaseService>(
       () => DiseaseServiceImpl(
         diseaseRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<MedicineRepository>(
+      () => MedicineRepositoryImpl(
+        uuid: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<MedicineService>(
+      () => MedicineServiceImpl(
+        medicineRepository: Get.find(),
       ),
       fenix: true,
     );
