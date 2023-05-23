@@ -19,6 +19,10 @@ import 'package:idr_mobile/app/modules/mastitis/form/mastitis_form_binding.dart'
 import 'package:idr_mobile/app/modules/mastitis/form/mastitis_form_page.dart';
 import 'package:idr_mobile/app/modules/mastitis/mastitis_binding.dart';
 import 'package:idr_mobile/app/modules/mastitis/mastitis_page.dart';
+import 'package:idr_mobile/app/modules/medicine/form/medicine_form_binding.dart';
+import 'package:idr_mobile/app/modules/medicine/form/medicine_form_page.dart';
+import 'package:idr_mobile/app/modules/medicine/medicine_binding.dart';
+import 'package:idr_mobile/app/modules/medicine/medicine_page.dart';
 import 'package:idr_mobile/app/modules/property/property_binding.dart';
 import 'package:idr_mobile/app/modules/property/property_page.dart';
 
@@ -102,6 +106,20 @@ abstract class AppPages {
       page: () => DiseaseFormPage(),
       bindings: [
         DiseaseFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.MEDICINE,
+      page: () => MedicinePage(),
+      bindings: [
+        MedicineBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.MEDICINE_FORM,
+      page: () => MedicineFormPage(),
+      bindings: [
+        MedicineFormBinding(),
       ],
     ),
   ];
