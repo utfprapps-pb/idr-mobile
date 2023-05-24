@@ -36,7 +36,7 @@ class MedicinePage extends GetView<MedicineController> {
                           children: [
                             Obx(
                               () => Text(
-                                'Medicamentos ${controller.animal.value.name}',
+                                'Medicamentos ${controller.animal.value.identifier}',
                                 style: UIConfig.titleStyle,
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: StrutStyle.disabled,
