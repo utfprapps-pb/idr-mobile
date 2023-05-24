@@ -23,6 +23,10 @@ import 'package:idr_mobile/app/modules/medicine/form/medicine_form_binding.dart'
 import 'package:idr_mobile/app/modules/medicine/form/medicine_form_page.dart';
 import 'package:idr_mobile/app/modules/medicine/medicine_binding.dart';
 import 'package:idr_mobile/app/modules/medicine/medicine_page.dart';
+import 'package:idr_mobile/app/modules/pregnancy_diagnosis/form/pregnancy_diagnosis_form_binding.dart';
+import 'package:idr_mobile/app/modules/pregnancy_diagnosis/form/pregnancy_diagnosis_form_page.dart';
+import 'package:idr_mobile/app/modules/pregnancy_diagnosis/pregnancy_diagnosis_binding.dart';
+import 'package:idr_mobile/app/modules/pregnancy_diagnosis/pregnancy_diagnosis_page.dart';
 import 'package:idr_mobile/app/modules/property/property_binding.dart';
 import 'package:idr_mobile/app/modules/property/property_page.dart';
 
@@ -120,6 +124,20 @@ abstract class AppPages {
       page: () => MedicineFormPage(),
       bindings: [
         MedicineFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.PREGNANCY_DIAGNOSIS,
+      page: () => PregnancyDiagnosisPage(),
+      bindings: [
+        PregnancyDiagnosisBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.PREGNANCY_DIAGNOSIS_FORM,
+      page: () => PregnancyDiagnosisFormPage(),
+      bindings: [
+        PregnancyDiagnosisFormBinding(),
       ],
     ),
   ];
