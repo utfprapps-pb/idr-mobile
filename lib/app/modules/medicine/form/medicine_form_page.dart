@@ -99,7 +99,7 @@ class MedicineFormPage extends GetView<MedicineFormController> {
                         children: [
                           Expanded(
                             child: CustomInputField(
-                              inputController: controller.nameController,
+                              inputController: controller.doseController,
                               onTapCallBack: () {},
                               labelText: 'Dose aplicada',
                               icon: Icons.vaccines_rounded,

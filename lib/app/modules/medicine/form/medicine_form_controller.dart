@@ -40,8 +40,6 @@ class MedicineFormController extends GetxController {
       applicationTypesList.add(value);
     });
 
-    print(applicationTypesList);
-
     var data = Get.arguments;
 
     if (data[2]['animalIdentifier'] != null) {
@@ -86,7 +84,7 @@ class MedicineFormController extends GetxController {
       val.name = values.name;
       val.applicationType = values.applicationType;
       val.dose = values.dose;
-      val.internalId = values.internalId.toString();
+      val.internalId = values.internalId;
       val.date = values.date.toString();
       val.animalIdentifier = values.animalIdentifier;
     });
