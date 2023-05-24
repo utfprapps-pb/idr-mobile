@@ -14,6 +14,8 @@ import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository.da
 import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/medicine/medicine_repository.dart';
 import 'package:idr_mobile/app/data/repositories/medicine/medicine_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository.dart';
+import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository_impl.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
@@ -31,6 +33,8 @@ import 'package:idr_mobile/app/data/services/mastitis/mastitis_service.dart';
 import 'package:idr_mobile/app/data/services/mastitis/mastitis_service_impl.dart';
 import 'package:idr_mobile/app/data/services/medicine/medicine_service.dart';
 import 'package:idr_mobile/app/data/services/medicine/medicine_service_impl.dart';
+import 'package:idr_mobile/app/data/services/pregnancy_diagnosis/pregnancy_diagnosis_service.dart';
+import 'package:idr_mobile/app/data/services/pregnancy_diagnosis/pregnancy_diagnosis_service_impl.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service_impl.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -108,7 +112,6 @@ class ApplicationBindings implements Bindings {
       () => AnimalRepositoryImpl(
         restClient: Get.find(),
         authService: Get.find(),
-        uuid: Get.find(),
       ),
       fenix: true,
     );
@@ -171,7 +174,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<MedicineRepository>(
       () => MedicineRepositoryImpl(
-        uuid: Get.find(),
         restClient: Get.find(),
       ),
       fenix: true,
@@ -180,6 +182,23 @@ class ApplicationBindings implements Bindings {
     Get.lazyPut<MedicineService>(
       () => MedicineServiceImpl(
         medicineRepository: Get.find(),
+        uuid: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<PregnancyDiagnosisRepository>(
+      () => PregnancyDiagnosisRepositoryImpl(
+        authService: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<PregnancyDiagnosisService>(
+      () => PregnancyDiagnosisServiceImpl(
+        connectivity: Get.find(),
+        pregnancyDiagnosisRepository: Get.find(),
         uuid: Get.find(),
       ),
       fenix: true,

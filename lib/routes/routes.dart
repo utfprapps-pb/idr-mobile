@@ -14,4 +14,6 @@ abstract class Routes {
   static const DISEASE_FORM = '/disease/form';
   static const MEDICINE = '/medicine';
   static const MEDICINE_FORM = '/medicine/form';
+  static const PREGNANCY_DIAGNOSIS = '/pregnancy-diagnosis';
+  static const PREGNANCY_DIAGNOSIS_FORM = '/pregnancy-diagnosis/form';
 }

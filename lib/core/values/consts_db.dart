@@ -7,3 +7,4 @@ const INSEMINATIONS = 'inseminations';
 const MASTITIS = 'mastitis';
 const DISEASE = 'disease';
 const MEDICINE = 'medicamento';
+const PREGNANCY_DIAGNOSIS = 'pregnancy_diagnosis';
