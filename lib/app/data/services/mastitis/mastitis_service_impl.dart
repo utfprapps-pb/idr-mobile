@@ -8,13 +8,17 @@ import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository.da
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/insemination/insemination_service.dart';
 import 'package:idr_mobile/app/data/services/mastitis/mastitis_service.dart';
+import 'package:uuid/uuid.dart';
 
 class MastitisServiceImpl implements MastitisService {
   final MastitisRepository _mastitisRepository;
+  final Uuid _uuid;
 
   MastitisServiceImpl({
     required MastitisRepository mastitisRepository,
-  }) : _mastitisRepository = mastitisRepository;
+    required Uuid uuid,
+  })  : _mastitisRepository = mastitisRepository,
+        _uuid = uuid;
 
   @override
   Future<bool> deleteAll() => _mastitisRepository.deleteAll();
@@ -32,6 +36,9 @@ class MastitisServiceImpl implements MastitisService {
       _mastitisRepository.getAllMastitisInDb(animalIdentifier);
 
   @override
-  Future<bool> saveMastitis(MastitisModel mastitis) =>
-      _mastitisRepository.saveMastitisInDb(mastitis);
+  Future<bool> saveMastitis(MastitisModel mastitis) {
+    mastitis.internalId ??= _uuid.v1();
+
+    return _mastitisRepository.saveMastitisInDb(mastitis);
+  }
 }

@@ -5,16 +5,20 @@ import 'package:idr_mobile/app/data/repositories/animal/animal_repository.dart';
 import 'package:idr_mobile/app/data/repositories/insemination/insemination_repository.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/insemination/insemination_service.dart';
+import 'package:uuid/uuid.dart';
 
 class InseminationServiceImpl implements InseminationService {
   InseminationRepository _inseminationRepository;
   Connectivity _connectivity;
+  Uuid _uuid;
 
   InseminationServiceImpl({
     required InseminationRepository inseminationRepository,
     required Connectivity connectivity,
+    required Uuid uuid,
   })  : _connectivity = connectivity,
-        _inseminationRepository = inseminationRepository;
+        _inseminationRepository = inseminationRepository,
+        _uuid = uuid;
 
   @override
   Future<bool> deleteAll() {
@@ -42,12 +46,20 @@ class InseminationServiceImpl implements InseminationService {
       _inseminationRepository.getAllInseminationsInDb(animalIdentifier);
 
   @override
-  Future<bool> saveInsemination(InseminationModel insemination) =>
-      _inseminationRepository.saveInseminationInDb(insemination);
+  Future<bool> saveInsemination(InseminationModel insemination) {
+    insemination.internalId ??= _uuid.v1();
+
+    return _inseminationRepository.saveInseminationInDb(insemination);
+  }
 
   @override
-  Future<bool> saveInseminations(List<InseminationModel> insemination) {
-    // TODO: implement saveInseminations
-    throw UnimplementedError();
+  Future<bool> saveInseminations(List<InseminationModel> inseminations) {
+    for (var e in inseminations) {
+      {
+        e.internalId ??= _uuid.v1();
+      }
+    }
+
+    return _inseminationRepository.saveInseminationsInDb(inseminations);
   }
 }

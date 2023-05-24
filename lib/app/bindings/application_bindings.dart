@@ -117,6 +117,7 @@ class ApplicationBindings implements Bindings {
       () => AnimalServiceImpl(
         connectivity: Get.find(),
         animalRepository: Get.find(),
+        uuid: Get.find(),
       ),
       fenix: true,
     );
@@ -133,6 +134,7 @@ class ApplicationBindings implements Bindings {
       () => InseminationServiceImpl(
         connectivity: Get.find(),
         inseminationRepository: Get.find(),
+        uuid: Get.find(),
       ),
       fenix: true,
     );
@@ -147,13 +149,13 @@ class ApplicationBindings implements Bindings {
     Get.lazyPut<MastitisService>(
       () => MastitisServiceImpl(
         mastitisRepository: Get.find(),
+        uuid: Get.find(),
       ),
       fenix: true,
     );
 
     Get.lazyPut<DiseaseRepository>(
       () => DiseaseRepositoryImpl(
-        uuid: Get.find(),
         restClient: Get.find(),
       ),
       fenix: true,
@@ -161,6 +163,7 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<DiseaseService>(
       () => DiseaseServiceImpl(
+        uuid: Get.find(),
         diseaseRepository: Get.find(),
       ),
       fenix: true,
@@ -177,6 +180,7 @@ class ApplicationBindings implements Bindings {
     Get.lazyPut<MedicineService>(
       () => MedicineServiceImpl(
         medicineRepository: Get.find(),
+        uuid: Get.find(),
       ),
       fenix: true,
     );

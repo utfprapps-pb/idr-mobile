@@ -12,14 +12,11 @@ import 'package:uuid/uuid.dart';
 
 class DiseaseRepositoryImpl implements DiseaseRepository {
   final RestClient _restClient;
-  final Uuid _uuid;
   late Box _box;
 
   DiseaseRepositoryImpl({
     required RestClient restClient,
-    required Uuid uuid,
-  })  : _restClient = restClient,
-        _uuid = uuid;
+  }) : _restClient = restClient;
 
   @override
   Future<bool> deleteAll() async {
@@ -159,9 +156,9 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
   Future<bool> saveDiseasesInDb(List<DiseaseModel> diseases) async {
     _box = await DatabaseInit().getInstance();
 
-    diseases.forEach((e) => {
-          if (e.internalId == null) {e.internalId = _uuid.v1()},
-        });
+    // diseases.forEach((e) => {
+    //       if (e.internalId == null) {e.internalId = _uuid.v1()},
+    //     });
 
     _box.put(DISEASE, diseases.toList());
 
