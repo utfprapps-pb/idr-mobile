@@ -6,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'medicine_model.g.dart';
 
-@HiveType(typeId: 4)
+@HiveType(typeId: 6)
 class MedicineModel {
   @HiveField(1)
   String? internalId;

@@ -8,7 +8,7 @@ part of 'medicine_model.dart';
 
 class MedicineModelAdapter extends TypeAdapter<MedicineModel> {
   @override
-  final int typeId = 4;
+  final int typeId = 6;
 
   @override
   MedicineModel read(BinaryReader reader) {
