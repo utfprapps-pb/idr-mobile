@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/data/repositories/animal/animal_repository.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
@@ -19,18 +20,16 @@ class AnimalServiceImpl implements AnimalService {
 
   @override
   Future<List<AnimalModel>> getAllAnimals(int? propertyId) async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-    // if (connectivityResult == ConnectivityResult.none) {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    List<AnimalModel> animals = [];
 
-    List<AnimalModel> animals =
-        await _animalRepository.getAllAnimalsInDb(propertyId);
-
-    saveAnimals(animals);
-
-    return _animalRepository.getAllAnimalsInDb(propertyId);
-    // } else {
-    //   return _animalRepository.getAllAnimals();
-    // }
+    if (connectivityResult == ConnectivityResult.none) {
+      return _animalRepository.getAllAnimalsInDb(propertyId);
+    } else {
+      List<AnimalModel> animals = await _animalRepository.getAllAnimals();
+      saveAnimals(animals);
+      return animals;
+    }
   }
 
   @override
@@ -60,8 +59,4 @@ class AnimalServiceImpl implements AnimalService {
   @override
   Future<bool> deleteAnimal(AnimalModel animal) =>
       _animalRepository.deleteAnimal(animal);
-
-  @override
-  Future<bool> deleteAnimalByKey(int key) =>
-      _animalRepository.deleteAnimalByKey(key);
 }

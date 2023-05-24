@@ -22,7 +22,16 @@ class PropertyServiceImpl implements PropertyService {
     // if (connectivityResult == ConnectivityResult.none) {
     return _propertyRepository.getAllPropertiesInDb();
     // } else {
-    //   return _propertyRepository.getAllProperties();
+    List<PropertyModel> properties =
+        await _propertyRepository.getAllProperties();
+
+    print("properties");
+    print(properties);
+    print("properties");
+
+    saveProperties(properties);
+
+    return properties;
     // }
   }
 

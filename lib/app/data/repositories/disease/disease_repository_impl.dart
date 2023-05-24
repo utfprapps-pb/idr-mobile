@@ -56,12 +56,6 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
   }
 
   @override
-  Future<bool> deleteDiseaseByKey(int key) {
-    // TODO: implement deleteDiseaseByKey
-    throw UnimplementedError();
-  }
-
-  @override
   Future<bool> editDiseaseInDb(DiseaseModel disease) async {
     var status = false;
     try {
