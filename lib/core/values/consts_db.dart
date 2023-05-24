@@ -6,3 +6,4 @@ const PARTS = 'parts';
 const INSEMINATIONS = 'inseminations';
 const MASTITIS = 'mastitis';
 const DISEASE = 'disease';
+const MEDICINE = 'medicamento';

@@ -12,4 +12,6 @@ abstract class Routes {
   static const MASTITIS_FORM = '/mastitis/form';
   static const DISEASE = '/disease';
   static const DISEASE_FORM = '/disease/form';
+  static const MEDICINE = '/medicine';
+  static const MEDICINE_FORM = '/medicine/form';
 }
