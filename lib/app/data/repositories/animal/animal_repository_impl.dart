@@ -37,8 +37,6 @@ class AnimalRepositoryImpl implements AnimalRepository {
               .map<AnimalModel>((p) => AnimalModel.fromMap(p))
               .toList();
 
-          saveAnimalsInDb(animalList);
-
           return animalList;
         } else {
           return <AnimalModel>[];
@@ -59,9 +57,9 @@ class AnimalRepositoryImpl implements AnimalRepository {
   Future<bool> saveAnimalsInDb(List<AnimalModel> animals) async {
     _box = await DatabaseInit().getInstance();
 
-    animals.forEach((e) => {
-          if (e.internalId == null) {e.internalId = uuid.v1()},
-        });
+    // animals.forEach((e) => {
+    //       if (e.internalId == null) {e.internalId = uuid.v1()},
+    //     });
 
     _box.put(ANIMALS, animals.toList());
 
