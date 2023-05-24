@@ -13,15 +13,12 @@ import 'package:uuid/uuid.dart';
 class AnimalRepositoryImpl implements AnimalRepository {
   final RestClient _restClient;
   final AuthService auth;
-  final Uuid uuid;
   late Box _box;
 
   AnimalRepositoryImpl({
     required RestClient restClient,
     required AuthService authService,
-    required Uuid uuid,
   })  : _restClient = restClient,
-        uuid = uuid,
         auth = authService;
 
   @override
@@ -143,28 +140,6 @@ class AnimalRepositoryImpl implements AnimalRepository {
       animalsList.remove(animal);
 
       _box.put(ANIMALS, animalsList);
-
-      status = true;
-    } catch (e) {
-      print(e);
-      status = false;
-    }
-
-    return status;
-  }
-
-  @override
-  Future<bool> deleteAnimalByKey(int key) async {
-    var status = false;
-
-    try {
-      var animals = _box.get(ANIMALS) ?? [];
-      List<AnimalModel> animalsList =
-          animals != null ? List<AnimalModel>.from(animals as List) : [];
-
-      animalsList.removeAt(key);
-
-      _box.put(ANIMALS, animals);
 
       status = true;
     } catch (e) {

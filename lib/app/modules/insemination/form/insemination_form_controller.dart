@@ -77,8 +77,7 @@ class InseminationFormController extends GetxController {
     print(insemination.value);
     print("insemination.value");
     var isSaved = idxInsemination != null
-        ? await _inseminationService!
-            .editInsemination(insemination.value, idxInsemination!)
+        ? await _inseminationService!.editInsemination(insemination.value)
         : await _inseminationService!.saveInsemination(insemination.value);
 
     Snack.show(

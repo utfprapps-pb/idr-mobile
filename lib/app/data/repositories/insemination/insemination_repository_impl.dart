@@ -49,14 +49,7 @@ class InseminationRepositoryImpl implements InseminationRepository {
   }
 
   @override
-  Future<bool> deleteInseminationByKey(int key) {
-    // TODO: implement deleteInseminationByKey
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> editInseminationInDb(
-      InseminationModel insemination, int pos) async {
+  Future<bool> editInseminationInDb(InseminationModel insemination) async {
     var status = false;
     try {
       var inseminations = _box.get(INSEMINATIONS) ?? [];

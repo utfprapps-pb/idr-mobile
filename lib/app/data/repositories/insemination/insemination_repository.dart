@@ -6,8 +6,7 @@ abstract class InseminationRepository {
   Future<List<InseminationModel>> getAllInseminationsInDb(
       String? animalIdentifier);
   Future<bool> saveInseminationInDb(InseminationModel insemination);
-  Future<bool> editInseminationInDb(InseminationModel insemination, int pos);
-  Future<bool> deleteInseminationByKey(int key);
+  Future<bool> editInseminationInDb(InseminationModel insemination);
   Future<bool> deleteInsemination(InseminationModel insemination);
   Future<bool> deleteAll();
 }

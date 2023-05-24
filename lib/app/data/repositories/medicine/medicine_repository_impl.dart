@@ -10,15 +10,12 @@ import 'package:uuid/uuid.dart';
 
 class MedicineRepositoryImpl implements MedicineRepository {
   final RestClient _restClient;
-  final Uuid _uuid;
 
   late Box _box;
 
   MedicineRepositoryImpl({
     required RestClient restClient,
-    required Uuid uuid,
-  })  : _restClient = restClient,
-        _uuid = uuid;
+  }) : _restClient = restClient;
 
   @override
   Future<bool> deleteAll() async {

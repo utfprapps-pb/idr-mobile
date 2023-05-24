@@ -31,14 +31,8 @@ class InseminationServiceImpl implements InseminationService {
       _inseminationRepository.deleteInsemination(insemination);
 
   @override
-  Future<bool> deleteInseminationByKey(int key) {
-    // TODO: implement deleteInseminationByKey
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> editInsemination(InseminationModel insemination, int pos) =>
-      _inseminationRepository.editInseminationInDb(insemination, pos);
+  Future<bool> editInsemination(InseminationModel insemination) =>
+      _inseminationRepository.editInseminationInDb(insemination);
 
   @override
   Future<List<InseminationModel>> getAllInseminations(
