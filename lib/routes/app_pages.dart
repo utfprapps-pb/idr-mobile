@@ -29,6 +29,10 @@ import 'package:idr_mobile/app/modules/pregnancy_diagnosis/pregnancy_diagnosis_b
 import 'package:idr_mobile/app/modules/pregnancy_diagnosis/pregnancy_diagnosis_page.dart';
 import 'package:idr_mobile/app/modules/property/property_binding.dart';
 import 'package:idr_mobile/app/modules/property/property_page.dart';
+import 'package:idr_mobile/app/modules/sale/form/sale_form_binding.dart';
+import 'package:idr_mobile/app/modules/sale/form/sale_form_page.dart';
+import 'package:idr_mobile/app/modules/sale/sale_binding.dart';
+import 'package:idr_mobile/app/modules/sale/sale_page.dart';
 
 part './routes.dart';
 
@@ -138,6 +142,20 @@ abstract class AppPages {
       page: () => PregnancyDiagnosisFormPage(),
       bindings: [
         PregnancyDiagnosisFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.SALE,
+      page: () => SalePage(),
+      bindings: [
+        SaleBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.SALE_FORM,
+      page: () => SaleFormPage(),
+      bindings: [
+        SaleFormBinding(),
       ],
     ),
   ];
