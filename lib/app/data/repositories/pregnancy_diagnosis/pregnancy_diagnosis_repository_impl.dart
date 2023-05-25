@@ -67,16 +67,14 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
       PregnancyDiagnosisModel? pdm =
           findPregnancyDiagnosis(pregnancyDiagnosesList, pregnancyDiagnosis);
 
-      int pos = 0;
+      int? pos = null;
       if (pdm != null) {
         pos = pregnancyDiagnosesList.indexOf(pdm);
       }
 
-      if (pos != 0) {
+      if (pos != null) {
         pregnancyDiagnosesList.replaceRange(pos, pos + 1, list);
       }
-
-      pregnancyDiagnosesList.replaceRange(pos, pos + 1, list);
 
       _box.put(PREGNANCY_DIAGNOSIS, pregnancyDiagnosesList);
       status = true;
@@ -98,9 +96,7 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
       String? animalIdentifier) async {
     _box = await DatabaseInit().getInstance();
     var pregnancyDiagnoses = _box.get(PREGNANCY_DIAGNOSIS) ?? [];
-    print('aaaaaaaaaaaaaaaaaaaaaaa');
-    print(pregnancyDiagnoses);
-    print('aaaaaaaaaaaaaaaaaaaaaaa');
+
     List<PregnancyDiagnosisModel> pregnancyDiagnosesList =
         pregnancyDiagnoses != null
             ? List<PregnancyDiagnosisModel>.from(pregnancyDiagnoses as List)

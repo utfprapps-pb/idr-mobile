@@ -63,16 +63,14 @@ class InseminationRepositoryImpl implements InseminationRepository {
 
       InseminationModel? im = findInsemination(inseminationsList, insemination);
 
-      int pos = 0;
+      int? pos = null;
       if (im != null) {
         pos = inseminationsList.indexOf(im);
       }
 
-      if (pos != 0) {
+      if (pos != null) {
         inseminationsList.replaceRange(pos, pos + 1, list);
       }
-
-      inseminationsList.replaceRange(pos, pos + 1, list);
 
       _box.put(INSEMINATIONS, inseminationsList);
       status = true;
