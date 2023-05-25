@@ -9,3 +9,4 @@ const DISEASE = 'disease';
 const MEDICINE = 'medicamento';
 const PREGNANCY_DIAGNOSIS = 'pregnancy_diagnosis';
 const SALES = 'sales';
+const PURCHASES = 'purchases';
