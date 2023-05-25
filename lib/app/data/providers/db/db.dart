@@ -8,6 +8,7 @@ import 'package:idr_mobile/app/data/models/pregnancy_diagnosis_model.dart';
 import 'package:idr_mobile/app/data/models/purchase_model.dart';
 import 'package:idr_mobile/app/data/models/sale_model.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
+import 'package:idr_mobile/app/data/models/vegetable_model.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class DatabaseInit {
@@ -33,5 +34,6 @@ class DatabaseInit {
     Hive.registerAdapter(PregnancyDiagnosisModelAdapter());
     Hive.registerAdapter(SaleModelAdapter());
     Hive.registerAdapter(PurchaseModelAdapter());
+    Hive.registerAdapter(VegetableModelAdapter());
   }
 }
