@@ -102,6 +102,10 @@ class AnimalPage extends GetView<AnimalController> {
                               case AnimalMenuType.sale:
                                 controller.goToNextPage(animal, Routes.SALE);
                                 break;
+                              case AnimalMenuType.acquisition:
+                                controller.goToNextPage(
+                                    animal, Routes.PURCHASE);
+                                break;
                               default:
                             }
                           },
@@ -208,6 +212,19 @@ class AnimalPage extends GetView<AnimalController> {
               padding: EdgeInsets.only(left: 10),
               child: Text(
                 'Venda',
+              ),
+            )
+          ],
+        ),
+      ),
+      PopupMenuItem<AnimalMenuType>(
+        value: AnimalMenuType.acquisition,
+        child: Row(
+          children: const [
+            Padding(
+              padding: EdgeInsets.only(left: 10),
+              child: Text(
+                'Compra',
               ),
             )
           ],

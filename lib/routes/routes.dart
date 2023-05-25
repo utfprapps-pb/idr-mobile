@@ -20,4 +20,6 @@ abstract class Routes {
   static const PREGNANCY_DIAGNOSIS_FORM = '/pregnancy-diagnosis/form';
   static const SALE = '/sale';
   static const SALE_FORM = '/sale/form';
+  static const PURCHASE = '/purchase';
+  static const PURCHASE_FORM = '/purchase/form';
 }

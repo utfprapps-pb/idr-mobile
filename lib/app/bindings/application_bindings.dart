@@ -18,6 +18,8 @@ import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_d
 import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/purchase/purchase_repository.dart';
+import 'package:idr_mobile/app/data/repositories/purchase/purchase_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/sale/sale_repository.dart';
 import 'package:idr_mobile/app/data/repositories/sale/sale_repository_impl.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
@@ -40,6 +42,8 @@ import 'package:idr_mobile/app/data/services/pregnancy_diagnosis/pregnancy_diagn
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service_impl.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:idr_mobile/app/data/services/purchase/purchase_service.dart';
+import 'package:idr_mobile/app/data/services/purchase/purchase_service_impl.dart';
 import 'package:idr_mobile/app/data/services/sale/sale_service.dart';
 import 'package:idr_mobile/app/data/services/sale/sale_service_impl.dart';
 import 'package:uuid/uuid.dart';
@@ -220,6 +224,23 @@ class ApplicationBindings implements Bindings {
       () => SaleServiceImpl(
         connectivity: Get.find(),
         saleRepository: Get.find(),
+        uuid: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<PurchaseRepository>(
+      () => PurchaseRepositoryImpl(
+        authService: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<PurchaseService>(
+      () => PurchaseServiceImpl(
+        connectivity: Get.find(),
+        purchaseRepository: Get.find(),
         uuid: Get.find(),
       ),
       fenix: true,
