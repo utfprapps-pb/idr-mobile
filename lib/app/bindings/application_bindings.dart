@@ -22,6 +22,8 @@ import 'package:idr_mobile/app/data/repositories/purchase/purchase_repository.da
 import 'package:idr_mobile/app/data/repositories/purchase/purchase_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/sale/sale_repository.dart';
 import 'package:idr_mobile/app/data/repositories/sale/sale_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/vegetable/vegetable_repository.dart';
+import 'package:idr_mobile/app/data/repositories/vegetable/vegetable_repository_impl.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service_impl.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
@@ -46,6 +48,8 @@ import 'package:idr_mobile/app/data/services/purchase/purchase_service.dart';
 import 'package:idr_mobile/app/data/services/purchase/purchase_service_impl.dart';
 import 'package:idr_mobile/app/data/services/sale/sale_service.dart';
 import 'package:idr_mobile/app/data/services/sale/sale_service_impl.dart';
+import 'package:idr_mobile/app/data/services/vegetable/vegetable_service.dart';
+import 'package:idr_mobile/app/data/services/vegetable/vegetable_service_impl.dart';
 import 'package:uuid/uuid.dart';
 
 class ApplicationBindings implements Bindings {
@@ -241,6 +245,23 @@ class ApplicationBindings implements Bindings {
       () => PurchaseServiceImpl(
         connectivity: Get.find(),
         purchaseRepository: Get.find(),
+        uuid: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<VegetableRepository>(
+      () => VegetableRepositoryImpl(
+        authService: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<VegetableService>(
+      () => VegetableServiceImpl(
+        connectivity: Get.find(),
+        vegetableRepository: Get.find(),
         uuid: Get.find(),
       ),
       fenix: true,
