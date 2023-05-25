@@ -163,12 +163,12 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
       AnimalModel? am = findAnimal(animalsList, animal);
 
-      int pos = 0;
+      int? pos = null;
       if (am != null) {
         pos = animalsList.indexOf(am);
       }
 
-      if (pos != 0) {
+      if (pos != null) {
         animalsList.replaceRange(pos, pos + 1, list);
       }
 

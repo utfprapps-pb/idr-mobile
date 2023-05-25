@@ -62,16 +62,14 @@ class SaleRepositoryImpl implements SaleRepository {
 
       SaleModel? sm = findSale(salesList, sale);
 
-      int pos = 0;
+      int? pos = null;
       if (sm != null) {
         pos = salesList.indexOf(sm);
       }
 
-      if (pos != 0) {
+      if (pos != null) {
         salesList.replaceRange(pos, pos + 1, list);
       }
-
-      salesList.replaceRange(pos, pos + 1, list);
 
       _box.put(SALES, salesList);
       status = true;

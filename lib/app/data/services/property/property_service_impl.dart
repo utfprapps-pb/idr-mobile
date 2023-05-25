@@ -25,10 +25,6 @@ class PropertyServiceImpl implements PropertyService {
     List<PropertyModel> properties =
         await _propertyRepository.getAllProperties();
 
-    print("properties");
-    print(properties);
-    print("properties");
-
     saveProperties(properties);
 
     return properties;

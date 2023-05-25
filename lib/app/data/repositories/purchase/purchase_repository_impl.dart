@@ -60,16 +60,14 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
 
       PurchaseModel? pm = findPurchase(purchasesList, purchase);
 
-      int pos = 0;
+      int? pos = null;
       if (pm != null) {
         pos = purchasesList.indexOf(pm);
       }
 
-      if (pos != 0) {
+      if (pos != null) {
         purchasesList.replaceRange(pos, pos + 1, list);
       }
-
-      purchasesList.replaceRange(pos, pos + 1, list);
 
       _box.put(PURCHASES, purchasesList);
       status = true;

@@ -66,16 +66,14 @@ class MastitisRepositoryImpl implements MastitisRepository {
 
       MastitisModel? mm = findMastitis(mastitisList, mastitis);
 
-      int pos = 0;
+      int? pos = null;
       if (mm != null) {
         pos = mastitisList.indexOf(mm);
       }
 
-      if (pos != 0) {
+      if (pos != null) {
         mastitisList.replaceRange(pos, pos + 1, list);
       }
-
-      mastitisList.replaceRange(pos, pos + 1, list);
 
       _box.put(MASTITIS, mastitisList);
       status = true;

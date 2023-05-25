@@ -69,16 +69,14 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
 
       DiseaseModel? im = findDisease(diseasesList, disease);
 
-      int pos = 0;
+      int? pos = null;
       if (im != null) {
         pos = diseasesList.indexOf(im);
       }
 
-      if (pos != 0) {
+      if (pos != null) {
         diseasesList.replaceRange(pos, pos + 1, list);
       }
-
-      diseasesList.replaceRange(pos, pos + 1, list);
 
       _box.put(DISEASE, diseasesList);
       status = true;

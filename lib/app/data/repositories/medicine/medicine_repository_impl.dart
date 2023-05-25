@@ -68,16 +68,14 @@ class MedicineRepositoryImpl implements MedicineRepository {
 
       MedicineModel? mm = findMedicine(medicinesList, medicine);
 
-      int pos = 0;
+      int? pos = null;
       if (mm != null) {
         pos = medicinesList.indexOf(mm);
       }
 
-      if (pos != 0) {
+      if (pos != null) {
         medicinesList.replaceRange(pos, pos + 1, list);
       }
-
-      medicinesList.replaceRange(pos, pos + 1, list);
 
       _box.put(MEDICINE, medicinesList);
       status = true;
