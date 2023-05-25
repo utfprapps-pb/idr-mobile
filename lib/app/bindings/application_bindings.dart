@@ -24,6 +24,8 @@ import 'package:idr_mobile/app/data/repositories/sale/sale_repository.dart';
 import 'package:idr_mobile/app/data/repositories/sale/sale_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/vegetable/vegetable_repository.dart';
 import 'package:idr_mobile/app/data/repositories/vegetable/vegetable_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/vegetable_disease/vegetable_disease_repository.dart';
+import 'package:idr_mobile/app/data/repositories/vegetable_disease/vegetable_disease_repository_impl.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service_impl.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
@@ -50,6 +52,8 @@ import 'package:idr_mobile/app/data/services/sale/sale_service.dart';
 import 'package:idr_mobile/app/data/services/sale/sale_service_impl.dart';
 import 'package:idr_mobile/app/data/services/vegetable/vegetable_service.dart';
 import 'package:idr_mobile/app/data/services/vegetable/vegetable_service_impl.dart';
+import 'package:idr_mobile/app/data/services/vegetable_disease/vegetable_disease_service.dart';
+import 'package:idr_mobile/app/data/services/vegetable_disease/vegetable_disease_service_impl.dart';
 import 'package:uuid/uuid.dart';
 
 class ApplicationBindings implements Bindings {
@@ -263,6 +267,22 @@ class ApplicationBindings implements Bindings {
         connectivity: Get.find(),
         vegetableRepository: Get.find(),
         uuid: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<VegetableDiseaseService>(
+      () => VegetableDiseaseServiceImpl(
+        connectivity: Get.find(),
+        vegetableDiseaseRepository: Get.find(),
+        uuid: Get.find(),
+      ),
+      fenix: true,
+    );
+    Get.lazyPut<VegetableDiseaseRepository>(
+      () => VegetableDiseaseRepositoryImpl(
+        authService: Get.find(),
+        restClient: Get.find(),
       ),
       fenix: true,
     );
