@@ -1,23 +1,23 @@
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
-import 'package:idr_mobile/app/data/models/disease_model.dart';
+import 'package:idr_mobile/app/data/models/disease_animal_model.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
-import 'package:idr_mobile/app/data/services/disease/disease_service.dart';
+import 'package:idr_mobile/app/data/services/disease_animal/disease_animal_service.dart';
 import 'package:idr_mobile/app/widgets/snackbar.dart';
 import 'package:idr_mobile/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
-class DiseaseController extends GetxController {
-  final DiseaseService _diseaseService;
+class DiseaseAnimalController extends GetxController {
+  final DiseaseAnimalService _diseaseAnimalService;
 
-  DiseaseController({
-    required DiseaseService diseaseService,
-  }) : _diseaseService = diseaseService;
+  DiseaseAnimalController({
+    required DiseaseAnimalService diseaseAnimalService,
+  }) : _diseaseAnimalService = diseaseAnimalService;
 
   Rx<AnimalModel> animal = AnimalModel().obs;
   RxString displayName = ''.obs;
-  final diseasesFinal = <DiseaseModel>[].obs;
+  final diseaseAnimalsFinal = <DiseaseAnimalModel>[].obs;
 
   @override
   void onInit() {
@@ -34,14 +34,14 @@ class DiseaseController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    loadDiseases();
+    loadDiseaseAnimals();
   }
 
-  void loadDiseases() async {
+  void loadDiseaseAnimals() async {
     try {
-      final diseasesData =
-          await _diseaseService.getAllDiseases(animal.value.identifier);
-      diseasesFinal.assignAll(diseasesData);
+      final diseaseAnimalsData = await _diseaseAnimalService
+          .getAllDiseaseAnimals(animal.value.identifier);
+      diseaseAnimalsFinal.assignAll(diseaseAnimalsData);
     } catch (e) {
       Snack.show(
         content:
@@ -52,21 +52,22 @@ class DiseaseController extends GetxController {
     }
   }
 
-  goToForm(DiseaseModel? disease, int? idx) async {
-    if (disease != null) {}
-    var result = await Get.toNamed(Routes.DISEASE_FORM, arguments: [
-      {'disease': disease},
+  goToForm(DiseaseAnimalModel? diseaseAnimal, int? idx) async {
+    if (diseaseAnimal != null) {}
+    var result = await Get.toNamed(Routes.DISEASE_ANIMAL_FORM, arguments: [
+      {'diseaseAnimal': diseaseAnimal},
       {'index': idx},
       {'animalIdentifier': animal.value.identifier},
     ]);
 
     if (result != null && result) {
-      loadDiseases();
+      loadDiseaseAnimals();
     }
   }
 
-  removeDisease(DiseaseModel disease) async {
-    var isRemoved = await _diseaseService.deleteDisease(disease);
+  removeDiseaseAnimal(DiseaseAnimalModel diseaseAnimal) async {
+    var isRemoved =
+        await _diseaseAnimalService.deleteDiseaseAnimal(diseaseAnimal);
     Snack.show(
       content: isRemoved
           ? 'Sucesso ao remover doença'
@@ -75,6 +76,6 @@ class DiseaseController extends GetxController {
       behavior: SnackBarBehavior.floating,
     );
 
-    loadDiseases();
+    loadDiseaseAnimals();
   }
 }

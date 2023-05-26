@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idr_mobile/app/modules/disease/disease_controller.dart';
+import 'package:idr_mobile/app/modules/disease_animal/disease_animal_controller.dart';
 import 'package:idr_mobile/app/widgets/side_menu.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
@@ -8,7 +8,7 @@ import 'package:idr_mobile/core/utils/functions/size_config.dart';
 import 'package:idr_mobile/app/widgets/custom_outlined_button.dart';
 import 'package:idr_mobile/app/widgets/custom_slidable.dart';
 
-class DiseasePage extends GetView<DiseaseController> {
+class DiseaseAnimalPage extends GetView<DiseaseAnimalController> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -73,27 +73,29 @@ class DiseasePage extends GetView<DiseaseController> {
                   ),
                   Expanded(
                     child: Obx(() {
-                      return controller.diseasesFinal.length > 0
+                      return controller.diseaseAnimalsFinal.length > 0
                           ? ListView.separated(
                               separatorBuilder: (context, index) => Divider(),
-                              itemCount: controller.diseasesFinal.length,
+                              itemCount: controller.diseaseAnimalsFinal.length,
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) {
-                                var disease = controller.diseasesFinal[index];
+                                var diseaseAnimal =
+                                    controller.diseaseAnimalsFinal[index];
                                 return CustomSlidable(
                                   identity: index,
                                   title:
-                                      '${disease.id ?? index} - ${disease.dateDiagnostic}',
-                                  content: '${disease.diagnostic}',
+                                      '${diseaseAnimal.id ?? index} - ${diseaseAnimal.dateDiagnostic}',
+                                  content: '${diseaseAnimal.diagnostic}',
                                   icon: Icons.child_friendly_rounded,
                                   onPressedEditCallBack:
                                       (BuildContext context) {
-                                    controller.goToForm(disease, index);
+                                    controller.goToForm(diseaseAnimal, index);
                                   },
                                   onPressedRemoveCallBack:
                                       (BuildContext context) {
-                                    controller.removeDisease(disease);
+                                    controller
+                                        .removeDiseaseAnimal(diseaseAnimal);
                                   },
                                 );
                               },

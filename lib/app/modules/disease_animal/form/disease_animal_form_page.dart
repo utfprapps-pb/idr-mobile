@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idr_mobile/app/modules/disease/form/disease_form_controller.dart';
+import 'package:idr_mobile/app/modules/disease_animal/form/disease_animal_form_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
 import 'package:idr_mobile/app/widgets/custom_input_field.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
 
-class DiseaseFormPage extends GetView<DiseaseFormController> {
+class DiseaseAnimalFormPage extends GetView<DiseaseAnimalFormController> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

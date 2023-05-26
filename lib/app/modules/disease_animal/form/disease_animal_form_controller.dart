@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
-import 'package:idr_mobile/app/data/models/disease_model.dart';
-import 'package:idr_mobile/app/data/services/disease/disease_service.dart';
+import 'package:idr_mobile/app/data/models/disease_animal_model.dart';
+import 'package:idr_mobile/app/data/services/disease_animal/disease_animal_service.dart';
 import 'package:idr_mobile/app/widgets/snackbar.dart';
 import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 
-class DiseaseFormController extends GetxController {
-  final DiseaseService? _diseaseService;
+class DiseaseAnimalFormController extends GetxController {
+  final DiseaseAnimalService? _diseaseService;
 
-  DiseaseFormController({
-    required DiseaseService diseaseService,
+  DiseaseAnimalFormController({
+    required DiseaseAnimalService diseaseService,
   }) : _diseaseService = diseaseService;
 
-  final disease = DiseaseModel().obs;
+  final disease = DiseaseAnimalModel().obs;
   RxString buttonText = ''.obs;
 
-  int? idxDisease = null;
+  int? idxDiseaseAnimal = null;
 
   final formKey = GlobalKey<FormState>();
   final diagnosticController = TextEditingController();
@@ -24,7 +24,7 @@ class DiseaseFormController extends GetxController {
 
   @override
   void onInit() async {
-    // _diseaseService = Get.find<DiseaseService>();
+    // _diseaseService = Get.find<DiseaseAnimalService>();
     super.onInit();
     buttonText.value = "Salvar";
 
@@ -51,7 +51,7 @@ class DiseaseFormController extends GetxController {
     }
 
     if (data[1]['index'] != null) {
-      idxDisease = data[1]['index'];
+      idxDiseaseAnimal = data[1]['index'];
     }
   }
 
@@ -61,7 +61,7 @@ class DiseaseFormController extends GetxController {
     super.onReady();
   }
 
-  void setFormValues(DiseaseModel values) {
+  void setFormValues(DiseaseAnimalModel values) {
     diagnosticController.text = values.diagnostic.toString();
     dateController.text = values.dateDiagnostic.toString();
 
@@ -74,9 +74,9 @@ class DiseaseFormController extends GetxController {
   }
 
   onFormSubmit() async {
-    var isSaved = idxDisease != null
-        ? await _diseaseService!.editDisease(disease.value)
-        : await _diseaseService!.saveDisease(disease.value);
+    var isSaved = idxDiseaseAnimal != null
+        ? await _diseaseService!.editDiseaseAnimal(disease.value)
+        : await _diseaseService!.saveDiseaseAnimal(disease.value);
 
     Snack.show(
       content: isSaved
