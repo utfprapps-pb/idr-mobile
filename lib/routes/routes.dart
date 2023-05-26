@@ -26,4 +26,6 @@ abstract class Routes {
   //Rotas módulo vegetable
   static const VEGETABLE_DISEASE = '/vegetable-disease';
   static const VEGETABLE_DISEASE_FORM = '/vegetable-disease/form';
+  static const VEGETABLE_PLAGUE = '/vegetable-plague';
+  static const VEGETABLE_PLAGUE_FORM = '/vegetable-plague/form';
 }
