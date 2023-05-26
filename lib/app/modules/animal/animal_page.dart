@@ -89,7 +89,8 @@ class AnimalPage extends GetView<AnimalController> {
                                     animal, Routes.MASTITIS);
                                 break;
                               case AnimalMenuType.disease:
-                                controller.goToNextPage(animal, Routes.DISEASE);
+                                controller.goToNextPage(
+                                    animal, Routes.DISEASE_ANIMAL);
                                 break;
                               case AnimalMenuType.medicines:
                                 controller.goToNextPage(
