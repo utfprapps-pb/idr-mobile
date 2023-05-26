@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-part 'vegetable_plague_model.g.dart';
+part 'vegetable_disease_model.g.dart';
 
-@HiveType(typeId: 16)
-class VegetablePlagueModel {
+@HiveType(typeId: 11)
+class VegetableDiseaseModel {
   @HiveField(1)
   String? internalId;
   @HiveField(2)
@@ -21,35 +21,34 @@ class VegetablePlagueModel {
   @HiveField(6)
   int? idCulture;
   @HiveField(7)
-  int? idPlague;
-
-  VegetablePlagueModel({
+  int? idDisease;
+  VegetableDiseaseModel({
     this.internalId,
     this.id,
     this.infestationType,
     this.date,
     this.idProperty,
     this.idCulture,
-    this.idPlague,
+    this.idDisease,
   });
 
-  VegetablePlagueModel copyWith({
+  VegetableDiseaseModel copyWith({
     String? internalId,
     int? id,
     String? infestationType,
     String? date,
     int? idProperty,
     int? idCulture,
-    int? idPlague,
+    int? idDisease,
   }) {
-    return VegetablePlagueModel(
+    return VegetableDiseaseModel(
       internalId: internalId ?? this.internalId,
       id: id ?? this.id,
       infestationType: infestationType ?? this.infestationType,
       date: date ?? this.date,
       idProperty: idProperty ?? this.idProperty,
       idCulture: idCulture ?? this.idCulture,
-      idPlague: idPlague ?? this.idPlague,
+      idDisease: idDisease ?? this.idDisease,
     );
   }
 
@@ -74,47 +73,47 @@ class VegetablePlagueModel {
     if (idCulture != null) {
       result.addAll({'idCulture': idCulture});
     }
-    if (idPlague != null) {
-      result.addAll({'idPlague': idPlague});
+    if (idDisease != null) {
+      result.addAll({'idDisease': idDisease});
     }
 
     return result;
   }
 
-  factory VegetablePlagueModel.fromMap(Map<String, dynamic> map) {
-    return VegetablePlagueModel(
+  factory VegetableDiseaseModel.fromMap(Map<String, dynamic> map) {
+    return VegetableDiseaseModel(
       internalId: map['internalId'],
       id: map['id']?.toInt(),
       infestationType: map['infestationType'],
       date: map['date'],
       idProperty: map['idProperty']?.toInt(),
       idCulture: map['idCulture']?.toInt(),
-      idPlague: map['idPlague']?.toInt(),
+      idDisease: map['idDisease']?.toInt(),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory VegetablePlagueModel.fromJson(String source) =>
-      VegetablePlagueModel.fromMap(json.decode(source));
+  factory VegetableDiseaseModel.fromJson(String source) =>
+      VegetableDiseaseModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return '$id - $infestationType';
+    return 'VegetableDiseaseModel(internalId: $internalId, id: $id, infestationType: $infestationType, date: $date, idProperty: $idProperty, idCulture: $idCulture, idDisease: $idDisease)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is VegetablePlagueModel &&
+    return other is VegetableDiseaseModel &&
         other.internalId == internalId &&
         other.id == id &&
         other.infestationType == infestationType &&
         other.date == date &&
         other.idProperty == idProperty &&
         other.idCulture == idCulture &&
-        other.idPlague == idPlague;
+        other.idDisease == idDisease;
   }
 
   @override
@@ -125,6 +124,6 @@ class VegetablePlagueModel {
         date.hashCode ^
         idProperty.hashCode ^
         idCulture.hashCode ^
-        idPlague.hashCode;
+        idDisease.hashCode;
   }
 }

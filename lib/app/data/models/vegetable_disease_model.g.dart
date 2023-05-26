@@ -1,34 +1,34 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'vegetable_plague_model.dart';
+part of 'vegetable_disease_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class VegetablePlagueModelAdapter extends TypeAdapter<VegetablePlagueModel> {
+class VegetableDiseaseModelAdapter extends TypeAdapter<VegetableDiseaseModel> {
   @override
-  final int typeId = 16;
+  final int typeId = 11;
 
   @override
-  VegetablePlagueModel read(BinaryReader reader) {
+  VegetableDiseaseModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return VegetablePlagueModel(
+    return VegetableDiseaseModel(
       internalId: fields[1] as String?,
       id: fields[2] as int?,
       infestationType: fields[3] as String?,
       date: fields[4] as String?,
       idProperty: fields[5] as int?,
       idCulture: fields[6] as int?,
-      idPlague: fields[7] as int?,
+      idDisease: fields[7] as int?,
     );
   }
 
   @override
-  void write(BinaryWriter writer, VegetablePlagueModel obj) {
+  void write(BinaryWriter writer, VegetableDiseaseModel obj) {
     writer
       ..writeByte(7)
       ..writeByte(1)
@@ -44,7 +44,7 @@ class VegetablePlagueModelAdapter extends TypeAdapter<VegetablePlagueModel> {
       ..writeByte(6)
       ..write(obj.idCulture)
       ..writeByte(7)
-      ..write(obj.idPlague);
+      ..write(obj.idDisease);
   }
 
   @override
@@ -53,7 +53,7 @@ class VegetablePlagueModelAdapter extends TypeAdapter<VegetablePlagueModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is VegetablePlagueModelAdapter &&
+      other is VegetableDiseaseModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
