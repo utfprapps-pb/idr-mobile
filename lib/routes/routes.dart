@@ -24,9 +24,6 @@ abstract class Routes {
   static const PURCHASE_FORM = '/purchase/form';
 
   //Rotas módulo vegetable
-  static const VEGETABLE = '/vegetable';
-  static const VEGETABLE_FORM = '/vegetable/form';
-  //Rotas módulo vegetable
   static const VEGETABLE_DISEASE = '/vegetable-disease';
   static const VEGETABLE_DISEASE_FORM = '/vegetable-disease/form';
 }

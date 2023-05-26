@@ -68,18 +68,6 @@ class _SideMenuState extends State<SideMenu> {
                     },
                     isSelected: Get.currentRoute == Routes.ANIMAL,
                   ),
-                  SideMenuTile(
-                    icon: Icons.local_florist_rounded,
-                    text: 'Vegetables',
-                    onTap: () {
-                      if (Get.currentRoute != Routes.VEGETABLE) {
-                        Get.offNamed(Routes.VEGETABLE);
-                      } else {
-                        Get.back();
-                      }
-                    },
-                    isSelected: Get.currentRoute == Routes.VEGETABLE,
-                  ),
                 ],
               ),
             ),
