@@ -4,6 +4,8 @@ import 'package:idr_mobile/app/data/repositories/animal/animal_repository.dart';
 import 'package:idr_mobile/app/data/repositories/animal/animal_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/breed/breed_repository.dart';
 import 'package:idr_mobile/app/data/repositories/breed/breed_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/culture/culture_repository.dart';
+import 'package:idr_mobile/app/data/repositories/culture/culture_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/disease/disease_repository.dart';
 import 'package:idr_mobile/app/data/repositories/disease/disease_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/disease_animal/disease_animal_repository.dart';
@@ -37,6 +39,8 @@ import 'package:idr_mobile/app/data/services/animal/animal_service_impl.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/app/data/services/breed/breed_service.dart';
 import 'package:idr_mobile/app/data/services/breed/breed_service_impl.dart';
+import 'package:idr_mobile/app/data/services/culture/culture_service.dart';
+import 'package:idr_mobile/app/data/services/culture/culture_service_impl.dart';
 import 'package:idr_mobile/app/data/services/disease/disease_service.dart';
 import 'package:idr_mobile/app/data/services/disease/disease_service_impl.dart';
 import 'package:idr_mobile/app/data/services/disease_animal/disease_animal_service.dart';
@@ -347,6 +351,23 @@ class ApplicationBindings implements Bindings {
         connectivity: Get.find(),
         uuid: Get.find(),
         plagueRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<CultureRepository>(
+      () => CultureRepositoryImpl(
+        authService: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<CultureService>(
+      () => CultureServiceImpl(
+        connectivity: Get.find(),
+        uuid: Get.find(),
+        cultureRepository: Get.find(),
       ),
       fenix: true,
     );
