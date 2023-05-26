@@ -97,11 +97,4 @@ class BreedRepositoryImpl implements BreedRepository {
 
     return status;
   }
-
-  BreedModel? findBreed(List<BreedModel> list, BreedModel breed) {
-    BreedModel? im = list
-        .firstWhereOrNull((element) => element.internalId == breed.internalId);
-
-    return im;
-  }
 }
