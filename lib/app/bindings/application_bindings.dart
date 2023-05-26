@@ -18,6 +18,8 @@ import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository.da
 import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/medicine/medicine_repository.dart';
 import 'package:idr_mobile/app/data/repositories/medicine/medicine_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/plague/plague_repository.dart';
+import 'package:idr_mobile/app/data/repositories/plague/plague_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository.dart';
 import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository.dart';
@@ -49,6 +51,8 @@ import 'package:idr_mobile/app/data/services/mastitis/mastitis_service.dart';
 import 'package:idr_mobile/app/data/services/mastitis/mastitis_service_impl.dart';
 import 'package:idr_mobile/app/data/services/medicine/medicine_service.dart';
 import 'package:idr_mobile/app/data/services/medicine/medicine_service_impl.dart';
+import 'package:idr_mobile/app/data/services/plague/plague_service.dart';
+import 'package:idr_mobile/app/data/services/plague/plague_service_impl.dart';
 import 'package:idr_mobile/app/data/services/pregnancy_diagnosis/pregnancy_diagnosis_service.dart';
 import 'package:idr_mobile/app/data/services/pregnancy_diagnosis/pregnancy_diagnosis_service_impl.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
@@ -326,6 +330,23 @@ class ApplicationBindings implements Bindings {
         connectivity: Get.find(),
         uuid: Get.find(),
         diseaseRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<PlagueRepository>(
+      () => PlagueRepositoryImpl(
+        authService: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<PlagueService>(
+      () => PlagueServiceImpl(
+        connectivity: Get.find(),
+        uuid: Get.find(),
+        plagueRepository: Get.find(),
       ),
       fenix: true,
     );
