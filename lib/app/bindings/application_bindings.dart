@@ -34,6 +34,8 @@ import 'package:idr_mobile/app/data/repositories/vegetable/vegetable_repository.
 import 'package:idr_mobile/app/data/repositories/vegetable/vegetable_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/vegetable_disease/vegetable_disease_repository.dart';
 import 'package:idr_mobile/app/data/repositories/vegetable_disease/vegetable_disease_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/vegetable_plague/vegetable_plague_repository.dart';
+import 'package:idr_mobile/app/data/repositories/vegetable_plague/vegetable_plague_repository_impl.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service_impl.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
@@ -70,6 +72,8 @@ import 'package:idr_mobile/app/data/services/vegetable/vegetable_service.dart';
 import 'package:idr_mobile/app/data/services/vegetable/vegetable_service_impl.dart';
 import 'package:idr_mobile/app/data/services/vegetable_disease/vegetable_disease_service.dart';
 import 'package:idr_mobile/app/data/services/vegetable_disease/vegetable_disease_service_impl.dart';
+import 'package:idr_mobile/app/data/services/vegetable_plague/vegetable_plague_service.dart';
+import 'package:idr_mobile/app/data/services/vegetable_plague/vegetable_plague_service_impl.dart';
 import 'package:uuid/uuid.dart';
 
 class ApplicationBindings implements Bindings {
@@ -368,6 +372,23 @@ class ApplicationBindings implements Bindings {
         connectivity: Get.find(),
         uuid: Get.find(),
         cultureRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<VegetablePlagueRepository>(
+      () => VegetablePlagueRepositoryImpl(
+        authService: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<VegetablePlagueService>(
+      () => VegetablePlagueServiceImpl(
+        connectivity: Get.find(),
+        uuid: Get.find(),
+        vegetablePlagueRepository: Get.find(),
       ),
       fenix: true,
     );
