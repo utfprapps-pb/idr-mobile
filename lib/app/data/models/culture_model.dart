@@ -4,32 +4,32 @@ import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-part 'disease_model.g.dart';
+part 'culture_model.g.dart';
 
-@HiveType(typeId: 13)
-class DiseaseModel {
+@HiveType(typeId: 15)
+class CultureModel {
   @HiveField(1)
   String? internalId;
   @HiveField(2)
   int? id;
   @HiveField(3)
-  String? diseaseName;
+  String? cultureName;
 
-  DiseaseModel({
+  CultureModel({
     this.internalId,
     this.id,
-    this.diseaseName,
+    this.cultureName,
   });
 
-  DiseaseModel copyWith({
+  CultureModel copyWith({
     String? internalId,
     int? id,
-    String? diseaseName,
+    String? cultureName,
   }) {
-    return DiseaseModel(
+    return CultureModel(
       internalId: internalId ?? this.internalId,
       id: id ?? this.id,
-      diseaseName: diseaseName ?? this.diseaseName,
+      cultureName: cultureName ?? this.cultureName,
     );
   }
 
@@ -42,39 +42,39 @@ class DiseaseModel {
     if (id != null) {
       result.addAll({'id': id});
     }
-    if (diseaseName != null) {
-      result.addAll({'diseaseName': diseaseName});
+    if (cultureName != null) {
+      result.addAll({'cultureName': cultureName});
     }
 
     return result;
   }
 
-  factory DiseaseModel.fromMap(Map<String, dynamic> map) {
-    return DiseaseModel(
+  factory CultureModel.fromMap(Map<String, dynamic> map) {
+    return CultureModel(
       internalId: map['internalId'],
       id: map['id']?.toInt(),
-      diseaseName: map['diseaseName'],
+      cultureName: map['cultureName'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory DiseaseModel.fromJson(String source) =>
-      DiseaseModel.fromMap(json.decode(source));
+  factory CultureModel.fromJson(String source) =>
+      CultureModel.fromMap(json.decode(source));
 
   @override
-  String toString() => '$id - $diseaseName';
+  String toString() => '$id - $cultureName';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is DiseaseModel &&
+    return other is CultureModel &&
         other.internalId == internalId &&
         other.id == id &&
-        other.diseaseName == diseaseName;
+        other.cultureName == cultureName;
   }
 
   @override
-  int get hashCode => internalId.hashCode ^ id.hashCode ^ diseaseName.hashCode;
+  int get hashCode => internalId.hashCode ^ id.hashCode ^ cultureName.hashCode;
 }

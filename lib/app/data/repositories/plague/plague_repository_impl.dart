@@ -1,20 +1,18 @@
-import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:idr_mobile/app/data/models/disease_model.dart';
+import 'package:idr_mobile/app/data/models/plague_model.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/providers/db/db.dart';
-import 'package:idr_mobile/app/data/repositories/disease/disease_repository.dart';
-import 'package:idr_mobile/app/data/repositories/disease/disease_repository.dart';
+import 'package:idr_mobile/app/data/repositories/plague/plague_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
-class DiseaseRepositoryImpl implements DiseaseRepository {
+class PlagueRepositoryImpl implements PlagueRepository {
   final RestClient _restClient;
   final AuthService auth;
   late Box _box;
 
-  DiseaseRepositoryImpl({
+  PlagueRepositoryImpl({
     required RestClient restClient,
     required AuthService authService,
   })  : _restClient = restClient,
@@ -27,21 +25,21 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
   }
 
   @override
-  Future<List<DiseaseModel>> getAllDiseases() async {
+  Future<List<PlagueModel>> getAllPlagues() async {
     final result = await _restClient.get(
-      'diseases',
+      'plagues',
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
         final resultData = data;
 
         if (resultData != null) {
-          var diseaseList = resultData
-              .map<DiseaseModel>((p) => DiseaseModel.fromMap(p))
+          var plagueList = resultData
+              .map<PlagueModel>((p) => PlagueModel.fromMap(p))
               .toList();
 
-          return diseaseList;
+          return plagueList;
         } else {
-          return <DiseaseModel>[];
+          return <PlagueModel>[];
         }
       },
     );
@@ -52,29 +50,29 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
       throw Exception('Error _');
     }
 
-    return result.body ?? <DiseaseModel>[];
+    return result.body ?? <PlagueModel>[];
   }
 
   @override
-  Future<List<DiseaseModel>> getAllDiseasesInDb() async {
+  Future<List<PlagueModel>> getAllPlaguesInDb() async {
     _box = await DatabaseInit().getInstance();
-    var diseases = _box.get(DISEASES) ?? [];
-    List<DiseaseModel> diseasesList =
-        diseases != null ? List<DiseaseModel>.from(diseases as List) : [];
+    var plagues = _box.get(PLAGUES) ?? [];
+    List<PlagueModel> plaguesList =
+        plagues != null ? List<PlagueModel>.from(plagues as List) : [];
 
-    return diseasesList;
+    return plaguesList;
   }
 
   @override
-  Future<bool> saveDiseaseInDb(DiseaseModel disease) async {
+  Future<bool> savePlagueInDb(PlagueModel plague) async {
     _box = await DatabaseInit().getInstance();
     var status = false;
 
     try {
-      var diseases = _box.get(DISEASES) ?? [];
-      diseases.add(disease);
+      var plagues = _box.get(PLAGUES) ?? [];
+      plagues.add(plague);
 
-      _box.put(DISEASES, diseases);
+      _box.put(PLAGUES, plagues);
       status = true;
     } catch (e) {
       print(e);
@@ -85,11 +83,11 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
   }
 
   @override
-  Future<bool> saveDiseasesInDb(List<DiseaseModel> diseases) async {
+  Future<bool> savePlaguesInDb(List<PlagueModel> plagues) async {
     var status = false;
 
     try {
-      _box.put(DISEASES, diseases);
+      _box.put(PLAGUES, plagues);
       status = true;
     } catch (e) {
       print(e);

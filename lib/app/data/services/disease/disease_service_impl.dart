@@ -1,33 +1,43 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:idr_mobile/app/data/models/disease_model.dart';
+import 'package:idr_mobile/app/data/models/disease_model.dart';
 import 'package:idr_mobile/app/data/repositories/disease/disease_repository.dart';
+import 'package:idr_mobile/app/data/repositories/disease/disease_repository.dart';
+import 'package:idr_mobile/app/data/services/disease/disease_service.dart';
 import 'package:idr_mobile/app/data/services/disease/disease_service.dart';
 import 'package:uuid/uuid.dart';
 
 class DiseaseServiceImpl implements DiseaseService {
-  DiseaseRepository _diseaseRepository;
-  Uuid _uuid;
+  final DiseaseRepository _diseaseRepository;
+  final Connectivity _connectivity;
+  final Uuid _uuid;
 
   DiseaseServiceImpl({
     required DiseaseRepository diseaseRepository,
+    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _diseaseRepository = diseaseRepository,
+  })  : _connectivity = connectivity,
+        _diseaseRepository = diseaseRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() => _diseaseRepository.deleteAll();
+  Future<bool> deleteAll() {
+    // TODO: implement deleteAll
+    throw UnimplementedError();
+  }
 
   @override
-  Future<bool> deleteDisease(DiseaseModel disease) =>
-      _diseaseRepository.deleteDisease(disease);
+  Future<List<DiseaseModel>> getAllDiseases() async {
+    // var connectivityResult = await (Connectivity().checkConnectivity());
 
-  @override
-  Future<bool> editDisease(DiseaseModel disease) =>
-      _diseaseRepository.editDiseaseInDb(disease);
-
-  @override
-  Future<List<DiseaseModel>> getAllDiseases(String? animalIdentifier) =>
-      _diseaseRepository.getAllDiseasesInDb(animalIdentifier);
+    // if (connectivityResult == ConnectivityResult.none) {
+    // return _diseaseRepository.getAllDiseasesInDb();
+    // } else {
+    List<DiseaseModel> diseases = await _diseaseRepository.getAllDiseases();
+    saveDiseases(diseases);
+    return diseases;
+    // }
+  }
 
   @override
   Future<bool> saveDisease(DiseaseModel disease) {

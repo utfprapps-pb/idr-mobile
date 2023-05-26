@@ -1,20 +1,19 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:idr_mobile/app/data/models/disease_model.dart';
+import 'package:idr_mobile/app/data/models/culture_model.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/providers/db/db.dart';
-import 'package:idr_mobile/app/data/repositories/disease/disease_repository.dart';
-import 'package:idr_mobile/app/data/repositories/disease/disease_repository.dart';
+import 'package:idr_mobile/app/data/repositories/culture/culture_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
-class DiseaseRepositoryImpl implements DiseaseRepository {
+class CultureRepositoryImpl implements CultureRepository {
   final RestClient _restClient;
   final AuthService auth;
   late Box _box;
 
-  DiseaseRepositoryImpl({
+  CultureRepositoryImpl({
     required RestClient restClient,
     required AuthService authService,
   })  : _restClient = restClient,
@@ -27,21 +26,21 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
   }
 
   @override
-  Future<List<DiseaseModel>> getAllDiseases() async {
+  Future<List<CultureModel>> getAllCultures() async {
     final result = await _restClient.get(
-      'diseases',
+      'cultures',
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
         final resultData = data;
 
         if (resultData != null) {
-          var diseaseList = resultData
-              .map<DiseaseModel>((p) => DiseaseModel.fromMap(p))
+          var cultureList = resultData
+              .map<CultureModel>((p) => CultureModel.fromMap(p))
               .toList();
 
-          return diseaseList;
+          return cultureList;
         } else {
-          return <DiseaseModel>[];
+          return <CultureModel>[];
         }
       },
     );
@@ -52,29 +51,29 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
       throw Exception('Error _');
     }
 
-    return result.body ?? <DiseaseModel>[];
+    return result.body ?? <CultureModel>[];
   }
 
   @override
-  Future<List<DiseaseModel>> getAllDiseasesInDb() async {
+  Future<List<CultureModel>> getAllCulturesInDb() async {
     _box = await DatabaseInit().getInstance();
-    var diseases = _box.get(DISEASES) ?? [];
-    List<DiseaseModel> diseasesList =
-        diseases != null ? List<DiseaseModel>.from(diseases as List) : [];
+    var cultures = _box.get(CULTURES) ?? [];
+    List<CultureModel> culturesList =
+        cultures != null ? List<CultureModel>.from(cultures as List) : [];
 
-    return diseasesList;
+    return culturesList;
   }
 
   @override
-  Future<bool> saveDiseaseInDb(DiseaseModel disease) async {
+  Future<bool> saveCultureInDb(CultureModel culture) async {
     _box = await DatabaseInit().getInstance();
     var status = false;
 
     try {
-      var diseases = _box.get(DISEASES) ?? [];
-      diseases.add(disease);
+      var cultures = _box.get(CULTURES) ?? [];
+      cultures.add(culture);
 
-      _box.put(DISEASES, diseases);
+      _box.put(CULTURES, cultures);
       status = true;
     } catch (e) {
       print(e);
@@ -85,11 +84,11 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
   }
 
   @override
-  Future<bool> saveDiseasesInDb(List<DiseaseModel> diseases) async {
+  Future<bool> saveCulturesInDb(List<CultureModel> cultures) async {
     var status = false;
 
     try {
-      _box.put(DISEASES, diseases);
+      _box.put(CULTURES, cultures);
       status = true;
     } catch (e) {
       print(e);

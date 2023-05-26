@@ -1,16 +1,20 @@
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/data/models/breed_model.dart';
+import 'package:idr_mobile/app/data/models/culture_model.dart';
+import 'package:idr_mobile/app/data/models/disease_animal_model.dart';
 import 'package:idr_mobile/app/data/models/disease_model.dart';
 import 'package:idr_mobile/app/data/models/insemination_model.dart';
 import 'package:idr_mobile/app/data/models/mastitis_model.dart';
 import 'package:idr_mobile/app/data/models/medicine_model.dart';
+import 'package:idr_mobile/app/data/models/plague_model.dart';
 import 'package:idr_mobile/app/data/models/pregnancy_diagnosis_model.dart';
 import 'package:idr_mobile/app/data/models/purchase_model.dart';
 import 'package:idr_mobile/app/data/models/sale_model.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/app/data/models/vegetable_disease_model.dart';
 import 'package:idr_mobile/app/data/models/vegetable_model.dart';
+import 'package:idr_mobile/app/data/models/vegetable_plague_model.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class DatabaseInit {
@@ -31,7 +35,7 @@ class DatabaseInit {
     Hive.registerAdapter(AnimalModelAdapter());
     Hive.registerAdapter(InseminationModelAdapter());
     Hive.registerAdapter(MastitisModelAdapter());
-    Hive.registerAdapter(DiseaseModelAdapter());
+    Hive.registerAdapter(DiseaseAnimalModelAdapter());
     Hive.registerAdapter(MedicineModelAdapter());
     Hive.registerAdapter(PregnancyDiagnosisModelAdapter());
     Hive.registerAdapter(SaleModelAdapter());
@@ -39,5 +43,9 @@ class DatabaseInit {
     Hive.registerAdapter(VegetableModelAdapter());
     Hive.registerAdapter(VegetableDiseaseModelAdapter());
     Hive.registerAdapter(BreedModelAdapter());
+    Hive.registerAdapter(DiseaseModelAdapter());
+    Hive.registerAdapter(PlagueModelAdapter());
+    Hive.registerAdapter(CultureModelAdapter());
+    Hive.registerAdapter(VegetablePlagueModelAdapter());
   }
 }
