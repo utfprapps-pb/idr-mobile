@@ -57,7 +57,7 @@ class BreedRepositoryImpl implements BreedRepository {
   @override
   Future<List<BreedModel>> getAllBreedsInDb() async {
     _box = await DatabaseInit().getInstance();
-    var breeds = _box.get(INSEMINATIONS) ?? [];
+    var breeds = _box.get(BREEDS) ?? [];
     List<BreedModel> breedsList =
         breeds != null ? List<BreedModel>.from(breeds as List) : [];
 
@@ -70,10 +70,10 @@ class BreedRepositoryImpl implements BreedRepository {
     var status = false;
 
     try {
-      var breeds = _box.get(INSEMINATIONS) ?? [];
+      var breeds = _box.get(BREEDS) ?? [];
       breeds.add(breed);
 
-      _box.put(INSEMINATIONS, breeds);
+      _box.put(BREEDS, breeds);
       status = true;
     } catch (e) {
       print(e);
@@ -88,7 +88,7 @@ class BreedRepositoryImpl implements BreedRepository {
     var status = false;
 
     try {
-      _box.put(INSEMINATIONS, breeds);
+      _box.put(BREEDS, breeds);
       status = true;
     } catch (e) {
       print(e);
