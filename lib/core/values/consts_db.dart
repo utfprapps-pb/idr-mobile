@@ -16,3 +16,4 @@ const BREEDS = 'breeds';
 const DISEASES = 'diseases';
 const PLAGUES = 'plagues';
 const CULTURES = 'cultures';
+const VEGETABLE_PLAGUES = 'vegetable_plagues';
