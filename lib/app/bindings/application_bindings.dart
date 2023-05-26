@@ -6,6 +6,8 @@ import 'package:idr_mobile/app/data/repositories/breed/breed_repository.dart';
 import 'package:idr_mobile/app/data/repositories/breed/breed_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/disease/disease_repository.dart';
 import 'package:idr_mobile/app/data/repositories/disease/disease_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/disease_animal/disease_animal_repository.dart';
+import 'package:idr_mobile/app/data/repositories/disease_animal/disease_animal_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/home/home_repository.dart';
 import 'package:idr_mobile/app/data/repositories/home/home_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/login/login_repository.dart';
@@ -35,6 +37,8 @@ import 'package:idr_mobile/app/data/services/breed/breed_service.dart';
 import 'package:idr_mobile/app/data/services/breed/breed_service_impl.dart';
 import 'package:idr_mobile/app/data/services/disease/disease_service.dart';
 import 'package:idr_mobile/app/data/services/disease/disease_service_impl.dart';
+import 'package:idr_mobile/app/data/services/disease_animal/disease_animal_service.dart';
+import 'package:idr_mobile/app/data/services/disease_animal/disease_animal_service_impl.dart';
 import 'package:idr_mobile/app/data/services/home/home_service.dart';
 import 'package:idr_mobile/app/data/services/home/home_service_impl.dart';
 import 'package:idr_mobile/app/data/services/login/login_service.dart';
@@ -177,17 +181,17 @@ class ApplicationBindings implements Bindings {
       fenix: true,
     );
 
-    Get.lazyPut<DiseaseRepository>(
-      () => DiseaseRepositoryImpl(
+    Get.lazyPut<DiseaseAnimalRepository>(
+      () => DiseaseAnimalRepositoryImpl(
         restClient: Get.find(),
       ),
       fenix: true,
     );
 
-    Get.lazyPut<DiseaseService>(
-      () => DiseaseServiceImpl(
+    Get.lazyPut<DiseaseAnimalService>(
+      () => DiseaseAnimalServiceImpl(
         uuid: Get.find(),
-        diseaseRepository: Get.find(),
+        diseaseAnimalRepository: Get.find(),
       ),
       fenix: true,
     );
@@ -305,6 +309,23 @@ class ApplicationBindings implements Bindings {
         connectivity: Get.find(),
         uuid: Get.find(),
         breedRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<DiseaseRepository>(
+      () => DiseaseRepositoryImpl(
+        authService: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<DiseaseService>(
+      () => DiseaseServiceImpl(
+        connectivity: Get.find(),
+        uuid: Get.find(),
+        diseaseRepository: Get.find(),
       ),
       fenix: true,
     );
