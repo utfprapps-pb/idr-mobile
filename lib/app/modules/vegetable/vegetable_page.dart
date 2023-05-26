@@ -8,6 +8,7 @@ import 'package:idr_mobile/app/widgets/side_menu.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
+import 'package:idr_mobile/routes/app_pages.dart';
 
 class VegetablePage extends GetView<VegetableController> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -83,10 +84,10 @@ class VegetablePage extends GetView<VegetableController> {
                               //   controller.goToNextPage(
                               //       vegetable, Routes.INSEMINATION);
                               //   break;
-                              // case VegetableMenuType.disease:
-                              //   controller.goToNextPage(
-                              //       vegetable, Routes.MASTITIS);
-                              //   break;
+                              case VegetableMenuType.disease:
+                                controller.goToNextPage(
+                                    vegetable, Routes.VEGETABLE_DISEASE);
+                                break;
                               default:
                             }
                           },

@@ -2,21 +2,27 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
+import 'package:idr_mobile/app/data/models/breed_model.dart';
 import 'package:idr_mobile/app/data/services/animal/animal_service.dart';
+import 'package:idr_mobile/app/data/services/breed/breed_service.dart';
 import 'package:idr_mobile/app/widgets/snackbar.dart';
 import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 import 'package:uuid/uuid.dart';
 
 class AnimalFormController extends GetxController {
   final AnimalService? _animalService;
+  final BreedService? _breedService;
   final Uuid? _uuid;
 
   AnimalFormController({
     required AnimalService animalService,
+    required BreedService breedService,
     required Uuid uuid,
   })  : _animalService = animalService,
+        _breedService = breedService,
         _uuid = uuid;
 
   final animal = AnimalModel().obs;
@@ -39,13 +45,20 @@ class AnimalFormController extends GetxController {
   final cowIdentifierController = TextEditingController();
   final deadDateController = TextEditingController();
 
+  final breedsFinal = <BreedModel>[].obs;
+  final breedSelected = BreedModel().obs;
+
+  RxBool isLoading = false.obs;
+
   @override
   void onInit() async {
-    // _animalService = Get.find<AnimalService>();
     super.onInit();
+    loadBreeds();
+
     buttonText.value = "Salvar";
     bornDateController.text = dateFormat.format(DateTime.now());
     deadDateController.text = dateFormat.format(DateTime.now());
+
     animal.update((val) => val!.bornDate = bornDateController.text);
 
     var data = Get.arguments;
@@ -61,6 +74,12 @@ class AnimalFormController extends GetxController {
     }
 
     if (data[0]['animal'] != null) {
+      var a = data[0]['animal'];
+
+      animal.value = a;
+
+      print(a);
+      print(animal.value);
       setFormValues(data[0]['animal']);
       buttonText.value = "Editar";
     } else {
@@ -101,31 +120,30 @@ class AnimalFormController extends GetxController {
       isDead.value = true;
     }
 
-    animal.update((val) {
-      if (values.previousWeight != null) {
-        val!.previousWeight = double.parse(values.previousWeight.toString());
-      }
-      val!.internalId = values.internalId.toString();
-      val.bornDate = values.bornDate.toString();
-      val.bornWeight = double.parse(values.previousWeight.toString());
-      val.breed = values.breed.toString();
-      val.currentWeight = double.parse(values.previousWeight.toString());
-      val.ecc = double.parse(values.previousWeight.toString());
-      val.identifier = values.identifier.toString();
-      val.previousWeight = double.parse(values.previousWeight.toString());
-      val.propertyId = int.parse(values.propertyId.toString());
+    // animal.update((val) {
+    //   if (values.previousWeight != null) {
+    //     val!.previousWeight = double.parse(values.previousWeight.toString());
+    //   }
+    //   val!.internalId = values.internalId.toString();
+    //   val.bornDate = values.bornDate.toString();
+    //   val.bornWeight = double.parse(values.previousWeight.toString());
+    //   val.currentWeight = double.parse(values.previousWeight.toString());
+    //   val.ecc = double.parse(values.previousWeight.toString());
+    //   val.identifier = values.identifier.toString();
+    //   val.previousWeight = double.parse(values.previousWeight.toString());
+    //   val.propertyId = int.parse(values.propertyId.toString());
 
-      if (values.id != null) {
-        val.id = values.id;
-      }
-      if (values.cowIdentifier != null) {
-        val.bornInProperty = values.bornInProperty;
-        val.cowIdentifier = values.cowIdentifier.toString();
-      }
-      if (values.deadDate != null) {
-        val.deadDate = values.deadDate.toString();
-      }
-    });
+    //   if (values.id != null) {
+    //     val.id = values.id;
+    //   }
+    //   if (values.cowIdentifier != null) {
+    //     val.bornInProperty = values.bornInProperty;
+    //     val.cowIdentifier = values.cowIdentifier.toString();
+    //   }
+    //   if (values.deadDate != null) {
+    //     val.deadDate = values.deadDate.toString();
+    //   }
+    // });
   }
 
   void onChangedDropdown(newValue) {
@@ -190,7 +208,37 @@ class AnimalFormController extends GetxController {
     });
   }
 
-  void clearFormFields() {
-    formKey.currentState!.reset();
+  void loadBreeds() async {
+    isLoading.value = true;
+    await Future.delayed(
+      const Duration(seconds: 2),
+    );
+    try {
+      final breedsData = await _breedService!.getAllBreeds();
+
+      breedsFinal.assignAll(breedsData);
+
+      setBreedSelected(breedsFinal.value);
+
+      isLoading.value = false;
+    } catch (e) {
+      isLoading.value = false;
+      Snack.show(
+        content: 'Ocorreu um erro ao buscar raças :(',
+        snackType: SnackType.error,
+        behavior: SnackBarBehavior.floating,
+      );
+    }
+  }
+
+  void setBreedSelected(List<BreedModel> list) {
+    if (animal.value.breed != null) {
+      BreedModel? b = list.firstWhereOrNull(
+          (element) => element.id == int.parse(animal.value.breed!));
+
+      b != null ? breedSelected.value = b : breedSelected.value = list[0];
+    } else {
+      breedSelected.value = breedsFinal.value[0];
+    }
   }
 }

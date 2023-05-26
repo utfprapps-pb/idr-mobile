@@ -11,3 +11,4 @@ const PREGNANCY_DIAGNOSIS = 'pregnancy_diagnosis';
 const SALES = 'sales';
 const PURCHASES = 'purchases';
 const VEGETABLES = 'vegetables';
+const VEGETABLE_DISEASES = 'vegetable_diseases';
