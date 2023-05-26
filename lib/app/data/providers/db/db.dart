@@ -12,6 +12,7 @@ import 'package:idr_mobile/app/data/models/pregnancy_diagnosis_model.dart';
 import 'package:idr_mobile/app/data/models/purchase_model.dart';
 import 'package:idr_mobile/app/data/models/sale_model.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
+import 'package:idr_mobile/app/data/models/vegetable_disease_model.dart';
 import 'package:idr_mobile/app/data/models/vegetable_plague_model.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
@@ -43,5 +44,6 @@ class DatabaseInit {
     Hive.registerAdapter(PlagueModelAdapter());
     Hive.registerAdapter(CultureModelAdapter());
     Hive.registerAdapter(VegetablePlagueModelAdapter());
+    Hive.registerAdapter(VegetableDiseaseModelAdapter());
   }
 }
