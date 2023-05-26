@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/modules/animal/form/animal_form_binding.dart';
-import 'package:idr_mobile/app/modules/disease/disease_binding.dart';
-import 'package:idr_mobile/app/modules/disease/disease_page.dart';
-import 'package:idr_mobile/app/modules/disease/form/disease_form_binding.dart';
-import 'package:idr_mobile/app/modules/disease/form/disease_form_page.dart';
+import 'package:idr_mobile/app/modules/disease_animal/disease_animal_binding.dart';
+import 'package:idr_mobile/app/modules/disease_animal/disease_animal_page.dart';
+import 'package:idr_mobile/app/modules/disease_animal/form/disease_animal_form_binding.dart';
+import 'package:idr_mobile/app/modules/disease_animal/form/disease_animal_form_page.dart';
 import 'package:idr_mobile/app/modules/home/home_binding.dart';
 import 'package:idr_mobile/app/modules/animal/animal_binding.dart';
 import 'package:idr_mobile/app/modules/animal/animal_page.dart';
@@ -115,17 +115,17 @@ abstract class AppPages {
       ],
     ),
     GetPage(
-      name: Routes.DISEASE,
-      page: () => DiseasePage(),
+      name: Routes.DISEASE_ANIMAL,
+      page: () => DiseaseAnimalPage(),
       bindings: [
-        DiseaseBinding(),
+        DiseaseAnimalBinding(),
       ],
     ),
     GetPage(
-      name: Routes.DISEASE_FORM,
-      page: () => DiseaseFormPage(),
+      name: Routes.DISEASE_ANIMAL_FORM,
+      page: () => DiseaseAnimalFormPage(),
       bindings: [
-        DiseaseFormBinding(),
+        DiseaseAnimalFormBinding(),
       ],
     ),
     GetPage(
