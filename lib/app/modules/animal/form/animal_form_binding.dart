@@ -7,6 +7,7 @@ class AnimalFormBinding implements Bindings {
     Get.lazyPut<AnimalFormController>(
       () => AnimalFormController(
         animalService: Get.find(),
+        breedService: Get.find(),
         uuid: Get.find(),
       ),
     );
