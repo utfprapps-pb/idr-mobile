@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/data/models/breed_model.dart';
+import 'package:idr_mobile/app/data/models/culture_model.dart';
 import 'package:idr_mobile/app/data/models/disease_animal_model.dart';
 import 'package:idr_mobile/app/data/models/disease_model.dart';
 import 'package:idr_mobile/app/data/models/insemination_model.dart';
@@ -43,5 +44,6 @@ class DatabaseInit {
     Hive.registerAdapter(BreedModelAdapter());
     Hive.registerAdapter(DiseaseModelAdapter());
     Hive.registerAdapter(PlagueModelAdapter());
+    Hive.registerAdapter(CultureModelAdapter());
   }
 }
