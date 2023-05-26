@@ -14,3 +14,4 @@ const VEGETABLES = 'vegetables';
 const VEGETABLE_DISEASES = 'vegetable_diseases';
 const BREEDS = 'breeds';
 const DISEASES = 'diseases';
+const PLAGUES = 'plagues';
