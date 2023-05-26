@@ -1,4 +1,3 @@
-import 'package:idr_mobile/app/data/models/vegetable_disease_model.dart';
 import 'package:idr_mobile/app/data/models/vegetable_plague_model.dart';
 
 abstract class VegetablePlagueRepository {
