@@ -5,6 +5,7 @@ import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/app/widgets/side_menu_tile.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
 import 'package:idr_mobile/routes/app_pages.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SideMenu extends StatefulWidget {
   SideMenu({
@@ -57,7 +58,7 @@ class _SideMenuState extends State<SideMenu> {
                     isSelected: Get.currentRoute == Routes.HOME,
                   ),
                   SideMenuTile(
-                    icon: Icons.pets_outlined,
+                    icon: FontAwesomeIcons.cow,
                     text: 'Animais',
                     onTap: () {
                       if (Get.currentRoute != Routes.ANIMAL) {
@@ -67,6 +68,30 @@ class _SideMenuState extends State<SideMenu> {
                       }
                     },
                     isSelected: Get.currentRoute == Routes.ANIMAL,
+                  ),
+                  SideMenuTile(
+                    icon: FontAwesomeIcons.bugs,
+                    text: 'Pragas Vegetais',
+                    onTap: () {
+                      if (Get.currentRoute != Routes.VEGETABLE_PLAGUE) {
+                        Get.offNamed(Routes.VEGETABLE_PLAGUE);
+                      } else {
+                        Get.back();
+                      }
+                    },
+                    isSelected: Get.currentRoute == Routes.VEGETABLE_PLAGUE,
+                  ),
+                  SideMenuTile(
+                    icon: Icons.coronavirus,
+                    text: 'Doenças Vegetais',
+                    onTap: () {
+                      if (Get.currentRoute != Routes.VEGETABLE_DISEASE) {
+                        Get.offNamed(Routes.VEGETABLE_DISEASE);
+                      } else {
+                        Get.back();
+                      }
+                    },
+                    isSelected: Get.currentRoute == Routes.VEGETABLE_DISEASE,
                   ),
                 ],
               ),
