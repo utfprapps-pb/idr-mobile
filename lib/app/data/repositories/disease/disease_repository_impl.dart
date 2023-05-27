@@ -21,9 +21,18 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<bool> deleteAll() async {
+    var status = false;
+
+    try {
+      _box.delete(DISEASES);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -35,11 +44,15 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
         final resultData = data;
 
         if (resultData != null) {
-          var diseaseList = resultData
-              .map<DiseaseModel>((p) => DiseaseModel.fromMap(p))
-              .toList();
+          try {
+            var diseaseList = resultData
+                .map<DiseaseModel>((p) => DiseaseModel.fromMap(p))
+                .toList();
 
-          return diseaseList;
+            return diseaseList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
         } else {
           return <DiseaseModel>[];
         }

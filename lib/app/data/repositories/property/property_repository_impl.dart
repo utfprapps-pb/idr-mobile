@@ -26,11 +26,14 @@ class PropertyRepositoryImpl implements PropertyRepository {
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
         final resultData = data;
-
         if (resultData != null) {
-          return resultData
-              .map<PropertyModel>((p) => PropertyModel.fromMap(p))
-              .toList();
+          try {
+            return resultData
+                .map<PropertyModel>((p) => PropertyModel.fromMap(p))
+                .toList();
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
         } else {
           return <PropertyModel>[];
         }
@@ -68,5 +71,20 @@ class PropertyRepositoryImpl implements PropertyRepository {
         properties != null ? List<PropertyModel>.from(properties as List) : [];
 
     return propertiesList;
+  }
+
+  @override
+  Future<bool> deleteAll() async {
+    var status = false;
+
+    try {
+      _box.delete(PROPERTIES);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 }

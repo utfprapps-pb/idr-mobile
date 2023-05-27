@@ -20,9 +20,18 @@ class CultureRepositoryImpl implements CultureRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<bool> deleteAll() async {
+    var status = false;
+
+    try {
+      _box.delete(CULTURES);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -34,11 +43,14 @@ class CultureRepositoryImpl implements CultureRepository {
         final resultData = data;
 
         if (resultData != null) {
-          var cultureList = resultData
-              .map<CultureModel>((p) => CultureModel.fromMap(p))
-              .toList();
-
-          return cultureList;
+          try {
+            var cultureList = resultData
+                .map<CultureModel>((p) => CultureModel.fromMap(p))
+                .toList();
+            return cultureList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
         } else {
           return <CultureModel>[];
         }
@@ -48,7 +60,6 @@ class CultureRepositoryImpl implements CultureRepository {
     // Caso houver erro
     if (result.hasError) {
       print('Error [${result.statusText}]');
-      throw Exception('Error _');
     }
 
     return result.body ?? <CultureModel>[];

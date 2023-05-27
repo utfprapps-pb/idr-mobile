@@ -6,6 +6,7 @@ import 'package:idr_mobile/app/data/providers/db/db.dart';
 import 'package:idr_mobile/app/data/repositories/insemination/insemination_repository.dart';
 import 'package:idr_mobile/app/data/repositories/insemination/insemination_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class InseminationRepositoryImpl implements InseminationRepository {
@@ -20,9 +21,51 @@ class InseminationRepositoryImpl implements InseminationRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<List<InseminationModel>> getAllInseminations() async {
+    final result = await _restClient.get(
+      'inseminations',
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        final resultData = data;
+
+        if (resultData != null) {
+          try {
+            var inseminationList = resultData
+                .map<InseminationModel>((p) => InseminationModel.fromMap(p))
+                .toList();
+
+            return inseminationList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
+        } else {
+          return <InseminationModel>[];
+        }
+      },
+    );
+
+    // Caso houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _');
+    }
+
+    return result.body ?? <InseminationModel>[];
+  }
+
+  @override
+  Future<bool> deleteAll() async {
+    var status = false;
+
+    try {
+      _box.delete(INSEMINATIONS);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -79,12 +122,6 @@ class InseminationRepositoryImpl implements InseminationRepository {
     }
 
     return status;
-  }
-
-  @override
-  Future<List<InseminationModel>> getAllInseminations() {
-    // TODO: implement getAllInseminations
-    throw UnimplementedError();
   }
 
   @override

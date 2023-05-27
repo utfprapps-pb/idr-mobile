@@ -7,6 +7,7 @@ import 'package:idr_mobile/app/data/providers/db/db.dart';
 import 'package:idr_mobile/app/data/repositories/vegetable_disease/vegetable_disease_repository.dart';
 import 'package:idr_mobile/app/data/repositories/vegetable_plague/vegetable_plague_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class VegetableDiseaseRepositoryImpl implements VegetableDiseaseRepository {
@@ -21,9 +22,18 @@ class VegetableDiseaseRepositoryImpl implements VegetableDiseaseRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<bool> deleteAll() async {
+    var status = false;
+
+    try {
+      _box.delete(VEGETABLE_DISEASES);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -88,9 +98,37 @@ class VegetableDiseaseRepositoryImpl implements VegetableDiseaseRepository {
   }
 
   @override
-  Future<List<VegetableDiseaseModel>> getAllVegetableDiseases() {
-    // TODO: implement getAllVegetableDiseases
-    throw UnimplementedError();
+  Future<List<VegetableDiseaseModel>> getAllVegetableDiseases() async {
+    final result = await _restClient.get(
+      'vegetablediseases',
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        final resultData = data;
+
+        if (resultData != null) {
+          try {
+            var vegetableDiseasesList = resultData
+                .map<VegetableDiseaseModel>(
+                    (p) => VegetableDiseaseModel.fromMap(p))
+                .toList();
+
+            return vegetableDiseasesList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
+        } else {
+          return <VegetableDiseaseModel>[];
+        }
+      },
+    );
+
+    // Caso houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _');
+    }
+
+    return result.body ?? <VegetableDiseaseModel>[];
   }
 
   @override

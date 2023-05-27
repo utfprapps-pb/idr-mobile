@@ -5,6 +5,7 @@ import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/providers/db/db.dart';
 import 'package:idr_mobile/app/data/repositories/purchase/purchase_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class PurchaseRepositoryImpl implements PurchaseRepository {
@@ -19,9 +20,18 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<bool> deleteAll() async {
+    var status = false;
+
+    try {
+      _box.delete(PURCHASES);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -79,9 +89,36 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
   }
 
   @override
-  Future<List<PurchaseModel>> getAllPurchases() {
-    // TODO: implement getAllPurchases
-    throw UnimplementedError();
+  Future<List<PurchaseModel>> getAllPurchases() async {
+    final result = await _restClient.get(
+      'purchases',
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        final resultData = data;
+
+        if (resultData != null) {
+          try {
+            var purchaseList = resultData
+                .map<PurchaseModel>((p) => PurchaseModel.fromMap(p))
+                .toList();
+
+            return purchaseList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
+        } else {
+          return <PurchaseModel>[];
+        }
+      },
+    );
+
+    // Caso houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _');
+    }
+
+    return result.body ?? <PurchaseModel>[];
   }
 
   @override

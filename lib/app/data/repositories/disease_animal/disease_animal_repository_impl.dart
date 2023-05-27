@@ -4,15 +4,50 @@ import 'package:idr_mobile/app/data/models/disease_animal_model.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/providers/db/db.dart';
 import 'package:idr_mobile/app/data/repositories/disease_animal/disease_animal_repository.dart';
+import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
   final RestClient _restClient;
+  final AuthService auth;
   late Box _box;
 
   DiseaseAnimalRepositoryImpl({
     required RestClient restClient,
-  }) : _restClient = restClient;
+    required AuthService authService,
+  })  : _restClient = restClient,
+        auth = authService;
+
+  @override
+  Future<List<DiseaseAnimalModel>> getAllDiseaseAnimals() async {
+    final result = await _restClient.get(
+      'diseasesanimal',
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        final resultData = data;
+        if (resultData != null) {
+          try {
+            return resultData
+                .map<DiseaseAnimalModel>((p) => DiseaseAnimalModel.fromMap(p))
+                .toList();
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
+        } else {
+          return <DiseaseAnimalModel>[];
+        }
+      },
+    );
+
+    // Cao houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _');
+    }
+
+    return result.body ?? <DiseaseAnimalModel>[];
+  }
 
   @override
   Future<bool> deleteAll() async {
@@ -84,12 +119,6 @@ class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
     }
 
     return status;
-  }
-
-  @override
-  Future<List<DiseaseAnimalModel>> getAllDiseaseAnimals() {
-    // TODO: implement getAllDiseaseAnimals
-    throw UnimplementedError();
   }
 
   @override

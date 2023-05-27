@@ -7,6 +7,7 @@ import 'package:idr_mobile/app/data/providers/db/db.dart';
 import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository.dart';
 import 'package:idr_mobile/app/data/repositories/sale/sale_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class SaleRepositoryImpl implements SaleRepository {
@@ -21,9 +22,18 @@ class SaleRepositoryImpl implements SaleRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<bool> deleteAll() async {
+    var status = false;
+
+    try {
+      _box.delete(SALES);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -81,9 +91,35 @@ class SaleRepositoryImpl implements SaleRepository {
   }
 
   @override
-  Future<List<SaleModel>> getAllSales() {
-    // TODO: implement getAllSales
-    throw UnimplementedError();
+  Future<List<SaleModel>> getAllSales() async {
+    final result = await _restClient.get(
+      'sales',
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        final resultData = data;
+
+        if (resultData != null) {
+          try {
+            var saleList =
+                resultData.map<SaleModel>((p) => SaleModel.fromMap(p)).toList();
+
+            return saleList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
+        } else {
+          return <SaleModel>[];
+        }
+      },
+    );
+
+    // Caso houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _');
+    }
+
+    return result.body ?? <SaleModel>[];
   }
 
   @override

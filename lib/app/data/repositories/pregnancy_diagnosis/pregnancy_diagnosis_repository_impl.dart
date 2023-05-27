@@ -5,6 +5,7 @@ import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/providers/db/db.dart';
 import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
@@ -19,9 +20,18 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<bool> deleteAll() async {
+    var status = false;
+
+    try {
+      _box.delete(PREGNANCY_DIAGNOSIS);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -86,9 +96,37 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
   }
 
   @override
-  Future<List<PregnancyDiagnosisModel>> getAllPregnancyDiagnoses() {
-    // TODO: implement getAllPregnancyDiagnoses
-    throw UnimplementedError();
+  Future<List<PregnancyDiagnosisModel>> getAllPregnancyDiagnoses() async {
+    final result = await _restClient.get(
+      'pregnancydiagnoses',
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        final resultData = data;
+
+        if (resultData != null) {
+          try {
+            var pregnancyDiagnosesList = resultData
+                .map<PregnancyDiagnosisModel>(
+                    (p) => PregnancyDiagnosisModel.fromMap(p))
+                .toList();
+
+            return pregnancyDiagnosesList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
+        } else {
+          return <PregnancyDiagnosisModel>[];
+        }
+      },
+    );
+
+    // Caso houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _');
+    }
+
+    return result.body ?? <PregnancyDiagnosisModel>[];
   }
 
   @override
