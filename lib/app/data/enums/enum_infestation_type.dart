@@ -1,7 +1,7 @@
-enum VegetableDiseaseType { mild, medium, high }
+enum VegetableInfestationType { mild, medium, high }
 
-var vegetableDiseaseType = {
-  VegetableDiseaseType.mild.name: "Branda",
-  VegetableDiseaseType.medium.name: "Média",
-  VegetableDiseaseType.high.name: "Alta",
+var vegetableInfestationType = {
+  VegetableInfestationType.mild.name: "Branda",
+  VegetableInfestationType.medium.name: "Média",
+  VegetableInfestationType.high.name: "Alta",
 };
