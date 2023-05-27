@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:idr_mobile/app/data/models/breed_model.dart';
@@ -48,7 +49,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                           controller.nameController,
                                       onTapCallBack: () {},
                                       labelText: 'Nome',
-                                      icon: Icons.text_fields_rounded,
+                                      icon: FontAwesomeIcons.signature,
                                       onChanged: (_) => controller.animal
                                           .update((val) => val!.name = _),
                                       // onValidate: (_) => controller.onValidate(_),
