@@ -34,7 +34,7 @@ class VegetablePlaguePage extends GetView<VegetablePlagueController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Animais',
+                          'Pragas Vegetais',
                           style: UIConfig.titleStyle,
                         ),
                       ],
@@ -57,7 +57,7 @@ class VegetablePlaguePage extends GetView<VegetablePlagueController> {
                       child: CustomOutlinedButton(
                         onPressedCallBack: () =>
                             controller.goToForm(null, null),
-                        title: "Adicionar animais",
+                        title: "Adicionar Praga",
                       ),
                     ),
                   ],
@@ -79,7 +79,7 @@ class VegetablePlaguePage extends GetView<VegetablePlagueController> {
                           identity: index,
                           title: '${vegetablePlague.id ?? index + 1}',
                           content: '${vegetablePlague.infestationType ?? ''}',
-                          icon: Icons.pets,
+                          icon: Icons.grass_rounded,
                           onPressedEditCallBack: (BuildContext context) {
                             controller.goToForm(vegetablePlague, index);
                           },

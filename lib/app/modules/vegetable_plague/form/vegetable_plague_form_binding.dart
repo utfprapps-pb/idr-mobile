@@ -7,7 +7,8 @@ class VegetablePlagueFormBinding implements Bindings {
     Get.lazyPut<VegetablePlagueFormController>(
       () => VegetablePlagueFormController(
         vegetablePlagueService: Get.find(),
-        breedService: Get.find(),
+        cultureService: Get.find(),
+        plagueService: Get.find(),
         uuid: Get.find(),
       ),
     );

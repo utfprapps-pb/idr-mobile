@@ -1,13 +1,11 @@
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
-import 'package:idr_mobile/app/data/models/insemination_model.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
 import 'package:idr_mobile/app/data/models/vegetable_plague_model.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
 import 'package:idr_mobile/app/data/services/vegetable_plague/vegetable_plague_service.dart';
 import 'package:idr_mobile/app/widgets/snackbar.dart';
-import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 import 'package:flutter/material.dart';
 import 'package:idr_mobile/routes/app_pages.dart';
 
@@ -34,6 +32,7 @@ class VegetablePlagueController extends GetxController {
   void onInit() async {
     auth = Get.find<AuthService>();
     super.onInit();
+
     var data = Get.arguments;
 
     var propertySaved = _authService.property();
@@ -82,7 +81,7 @@ class VegetablePlagueController extends GetxController {
 
   goToForm(VegetablePlagueModel? vegetablePlague, int? idx) async {
     if (vegetablePlague != null) {}
-    var result = await Get.toNamed(Routes.ANIMAL_FORM, arguments: [
+    var result = await Get.toNamed(Routes.VEGETABLE_PLAGUE_FORM, arguments: [
       {'vegetablePlague': vegetablePlague},
       {'propertySelected': property},
       {'index': idx},
