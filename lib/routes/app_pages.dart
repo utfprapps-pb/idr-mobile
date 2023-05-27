@@ -37,6 +37,10 @@ import 'package:idr_mobile/app/modules/sale/form/sale_form_binding.dart';
 import 'package:idr_mobile/app/modules/sale/form/sale_form_page.dart';
 import 'package:idr_mobile/app/modules/sale/sale_binding.dart';
 import 'package:idr_mobile/app/modules/sale/sale_page.dart';
+import 'package:idr_mobile/app/modules/vegetable_plague/form/vegetable_plague_form_binding.dart';
+import 'package:idr_mobile/app/modules/vegetable_plague/form/vegetable_plague_form_page.dart';
+import 'package:idr_mobile/app/modules/vegetable_plague/vegetable_plague_binding.dart';
+import 'package:idr_mobile/app/modules/vegetable_plague/vegetable_plague_page.dart';
 
 part './routes.dart';
 
@@ -174,6 +178,20 @@ abstract class AppPages {
       page: () => PurchaseFormPage(),
       bindings: [
         PurchaseFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.VEGETABLE_PLAGUE,
+      page: () => VegetablePlaguePage(),
+      bindings: [
+        VegetablePlagueBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.VEGETABLE_PLAGUE_FORM,
+      page: () => VegetablePlagueFormPage(),
+      bindings: [
+        VegetablePlagueFormBinding(),
       ],
     ),
   ];
