@@ -177,6 +177,7 @@ class ApplicationBindings implements Bindings {
     Get.lazyPut<MastitisRepository>(
       () => MastitisRepositoryImpl(
         restClient: Get.find(),
+        authService: Get.find(),
       ),
       fenix: true,
     );
@@ -192,6 +193,7 @@ class ApplicationBindings implements Bindings {
     Get.lazyPut<DiseaseAnimalRepository>(
       () => DiseaseAnimalRepositoryImpl(
         restClient: Get.find(),
+        authService: Get.find(),
       ),
       fenix: true,
     );
@@ -207,6 +209,7 @@ class ApplicationBindings implements Bindings {
     Get.lazyPut<MedicineRepository>(
       () => MedicineRepositoryImpl(
         restClient: Get.find(),
+        authService: Get.find(),
       ),
       fenix: true,
     );
