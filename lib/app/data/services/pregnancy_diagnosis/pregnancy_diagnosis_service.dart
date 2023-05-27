@@ -3,6 +3,7 @@ import 'package:idr_mobile/app/data/models/pregnancy_diagnosis_model.dart';
 abstract class PregnancyDiagnosisService {
   Future<List<PregnancyDiagnosisModel>> getAllPregnancyDiagnoses(
       String? animalIdentifier);
+  Future<List<PregnancyDiagnosisModel>> getAllPregnancyDiagnosesOnline();
   Future<bool> savePregnancyDiagnoses(
       List<PregnancyDiagnosisModel> pregnancyDiagnosis);
   Future<bool> savePregnancyDiagnosis(

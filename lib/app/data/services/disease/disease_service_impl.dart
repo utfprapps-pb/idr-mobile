@@ -9,22 +9,16 @@ import 'package:uuid/uuid.dart';
 
 class DiseaseServiceImpl implements DiseaseService {
   final DiseaseRepository _diseaseRepository;
-  final Connectivity _connectivity;
   final Uuid _uuid;
 
   DiseaseServiceImpl({
     required DiseaseRepository diseaseRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _diseaseRepository = diseaseRepository,
+  })  : _diseaseRepository = diseaseRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
+  Future<bool> deleteAll() => _diseaseRepository.deleteAll();
 
   @override
   Future<List<DiseaseModel>> getAllDiseases() async {
@@ -55,5 +49,12 @@ class DiseaseServiceImpl implements DiseaseService {
     }
 
     return _diseaseRepository.saveDiseasesInDb(diseases);
+  }
+
+  @override
+  Future<List<DiseaseModel>> getAllDiseasesOnline() async {
+    List<DiseaseModel> diseases = await _diseaseRepository.getAllDiseases();
+    saveDiseases(diseases);
+    return diseases;
   }
 }

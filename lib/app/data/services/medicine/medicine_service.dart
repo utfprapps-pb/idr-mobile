@@ -2,6 +2,7 @@ import 'package:idr_mobile/app/data/models/medicine_model.dart';
 
 abstract class MedicineService {
   Future<List<MedicineModel>> getAllMedicines(String? animalIdentifier);
+  Future<List<MedicineModel>> getAllMedicinesOnline();
   Future<bool> saveMedicines(List<MedicineModel> medicines);
   Future<bool> saveMedicine(MedicineModel medicine);
   Future<bool> editMedicine(MedicineModel medicine);

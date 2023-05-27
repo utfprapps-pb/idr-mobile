@@ -188,9 +188,18 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
 
   @override
   Future<bool> savePregnancyDiagnosesInDb(
-      List<PregnancyDiagnosisModel> pregnancyDiagnoses) {
-    // TODO: implement savePregnancyDiagnosesInDb
-    throw UnimplementedError();
+      List<PregnancyDiagnosisModel> pregnancyDiagnoses) async {
+    var status = false;
+
+    try {
+      _box.put(PREGNANCY_DIAGNOSIS, pregnancyDiagnoses);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   PregnancyDiagnosisModel? findPregnancyDiagnosis(

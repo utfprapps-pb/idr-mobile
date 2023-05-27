@@ -177,15 +177,17 @@ class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
   @override
   Future<bool> saveDiseaseAnimalsInDb(
       List<DiseaseAnimalModel> diseaseAnimals) async {
-    _box = await DatabaseInit().getInstance();
+    var status = false;
 
-    // diseaseAnimals.forEach((e) => {
-    //       if (e.internalId == null) {e.internalId = _uuid.v1()},
-    //     });
+    try {
+      _box.put(DISEASES_ANIMAL, diseaseAnimals);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
 
-    _box.put(DISEASES_ANIMAL, diseaseAnimals.toList());
-
-    return true;
+    return status;
   }
 
   DiseaseAnimalModel? findDiseaseAnimal(

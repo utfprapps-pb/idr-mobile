@@ -171,9 +171,18 @@ class SaleRepositoryImpl implements SaleRepository {
   }
 
   @override
-  Future<bool> saveSalesInDb(List<SaleModel> sales) {
-    // TODO: implement saveSalesInDb
-    throw UnimplementedError();
+  Future<bool> saveSalesInDb(List<SaleModel> sales) async {
+    var status = false;
+
+    try {
+      _box.put(SALES, sales);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   SaleModel? findSale(List<SaleModel> list, SaleModel sale) {

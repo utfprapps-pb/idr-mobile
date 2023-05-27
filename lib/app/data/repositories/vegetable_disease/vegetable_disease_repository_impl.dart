@@ -186,9 +186,18 @@ class VegetableDiseaseRepositoryImpl implements VegetableDiseaseRepository {
 
   @override
   Future<bool> saveVegetableDiseasesInDb(
-      List<VegetableDiseaseModel> vegetableDiseases) {
-    // TODO: implement saveVegetableDiseasesInDb
-    throw UnimplementedError();
+      List<VegetableDiseaseModel> vegetableDiseases) async {
+    var status = false;
+
+    try {
+      _box.put(VEGETABLE_DISEASES, vegetableDiseases);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   VegetableDiseaseModel? findVegetableDisease(List<VegetableDiseaseModel> list,

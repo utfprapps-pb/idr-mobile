@@ -52,15 +52,17 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
   @override
   Future<bool> saveAnimalsInDb(List<AnimalModel> animals) async {
-    _box = await DatabaseInit().getInstance();
+    var status = false;
 
-    // animals.forEach((e) => {
-    //       if (e.internalId == null) {e.internalId = uuid.v1()},
-    //     });
+    try {
+      _box.put(ANIMALS, animals);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
 
-    _box.put(ANIMALS, animals.toList());
-
-    return true;
+    return status;
   }
 
   @override

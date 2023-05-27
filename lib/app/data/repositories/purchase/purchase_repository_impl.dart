@@ -172,9 +172,18 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
   }
 
   @override
-  Future<bool> savePurchasesInDb(List<PurchaseModel> purchases) {
-    // TODO: implement savePurchasesInDb
-    throw UnimplementedError();
+  Future<bool> savePurchasesInDb(List<PurchaseModel> purchases) async {
+    var status = false;
+
+    try {
+      _box.put(PURCHASES, purchases);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   PurchaseModel? findPurchase(

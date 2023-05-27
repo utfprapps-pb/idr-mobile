@@ -51,12 +51,17 @@ class PropertyRepositoryImpl implements PropertyRepository {
 
   @override
   Future<bool> savePropertiesInDb(List<PropertyModel> properties) async {
-    _box = await DatabaseInit().getInstance();
+    var status = false;
 
-    _box.put(PROPERTIES, properties.toList());
-    var propertyBox = _box.get(PROPERTIES);
+    try {
+      _box.put(PROPERTIES, properties);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
 
-    return true;
+    return status;
   }
 
   @override

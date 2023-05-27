@@ -9,22 +9,16 @@ import 'package:uuid/uuid.dart';
 
 class BreedServiceImpl implements BreedService {
   final BreedRepository _breedRepository;
-  final Connectivity _connectivity;
   final Uuid _uuid;
 
   BreedServiceImpl({
     required BreedRepository breedRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _breedRepository = breedRepository,
+  })  : _breedRepository = breedRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
+  Future<bool> deleteAll() => _breedRepository.deleteAll();
 
   @override
   Future<List<BreedModel>> getAllBreeds() async {
@@ -55,5 +49,12 @@ class BreedServiceImpl implements BreedService {
     }
 
     return _breedRepository.saveBreedsInDb(breeds);
+  }
+
+  @override
+  Future<List<BreedModel>> getAllBreedsOnline() async {
+    List<BreedModel> breeds = await _breedRepository.getAllBreeds();
+    saveBreeds(breeds);
+    return breeds;
   }
 }

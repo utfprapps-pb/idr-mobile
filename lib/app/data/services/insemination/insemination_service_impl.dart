@@ -9,23 +9,16 @@ import 'package:uuid/uuid.dart';
 
 class InseminationServiceImpl implements InseminationService {
   InseminationRepository _inseminationRepository;
-  Connectivity _connectivity;
   Uuid _uuid;
 
   InseminationServiceImpl({
     required InseminationRepository inseminationRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _inseminationRepository = inseminationRepository,
+  })  : _inseminationRepository = inseminationRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
-
+  Future<bool> deleteAll() => _inseminationRepository.deleteAll();
   @override
   Future<bool> deleteInsemination(InseminationModel insemination) =>
       _inseminationRepository.deleteInsemination(insemination);
@@ -55,5 +48,13 @@ class InseminationServiceImpl implements InseminationService {
     }
 
     return _inseminationRepository.saveInseminationsInDb(inseminations);
+  }
+
+  @override
+  Future<List<InseminationModel>> getAllInseminationsOnline() async {
+    List<InseminationModel> inseminations =
+        await _inseminationRepository.getAllInseminations();
+    saveInseminations(inseminations);
+    return inseminations;
   }
 }

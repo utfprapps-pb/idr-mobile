@@ -26,7 +26,7 @@ class MedicineRepositoryImpl implements MedicineRepository {
     var status = false;
 
     try {
-      _box.delete(MEDICINE);
+      _box.delete(MEDICINES);
       status = true;
     } catch (e) {
       print(e);
@@ -41,13 +41,13 @@ class MedicineRepositoryImpl implements MedicineRepository {
     var status = false;
 
     try {
-      var medicines = _box.get(MEDICINE) ?? [];
+      var medicines = _box.get(MEDICINES) ?? [];
       List<MedicineModel> medicinesList =
           medicines != null ? List<MedicineModel>.from(medicines as List) : [];
 
       medicinesList.remove(medicine);
 
-      _box.put(MEDICINE, medicinesList);
+      _box.put(MEDICINES, medicinesList);
 
       status = true;
     } catch (e) {
@@ -62,7 +62,7 @@ class MedicineRepositoryImpl implements MedicineRepository {
   Future<bool> editMedicineInDb(MedicineModel medicine) async {
     var status = false;
     try {
-      var medicines = _box.get(MEDICINE) ?? [];
+      var medicines = _box.get(MEDICINES) ?? [];
 
       List<MedicineModel> medicinesList =
           medicines != null ? List<MedicineModel>.from(medicines as List) : [];
@@ -81,7 +81,7 @@ class MedicineRepositoryImpl implements MedicineRepository {
         medicinesList.replaceRange(pos, pos + 1, list);
       }
 
-      _box.put(MEDICINE, medicinesList);
+      _box.put(MEDICINES, medicinesList);
       status = true;
     } catch (e) {
       status = false;
@@ -128,7 +128,7 @@ class MedicineRepositoryImpl implements MedicineRepository {
   Future<List<MedicineModel>> getAllMedicinesInDb(
       String? animalIdentifier) async {
     _box = await DatabaseInit().getInstance();
-    var medicines = _box.get(MEDICINE) ?? [];
+    var medicines = _box.get(MEDICINES) ?? [];
     List<MedicineModel> medicinesList =
         medicines != null ? List<MedicineModel>.from(medicines as List) : [];
 
@@ -162,10 +162,10 @@ class MedicineRepositoryImpl implements MedicineRepository {
     var status = false;
 
     try {
-      var medicines = _box.get(MEDICINE) ?? [];
+      var medicines = _box.get(MEDICINES) ?? [];
       medicines.add(medicine);
 
-      _box.put(MEDICINE, medicines);
+      _box.put(MEDICINES, medicines);
       status = true;
     } catch (e) {
       print(e);
@@ -176,9 +176,18 @@ class MedicineRepositoryImpl implements MedicineRepository {
   }
 
   @override
-  Future<bool> saveMedicinesInDb(List<MedicineModel> medicines) {
-    // TODO: implement saveMedicinesInDb
-    throw UnimplementedError();
+  Future<bool> saveMedicinesInDb(List<MedicineModel> medicines) async {
+    var status = false;
+
+    try {
+      _box.put(MEDICINES, medicines);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   MedicineModel? findMedicine(

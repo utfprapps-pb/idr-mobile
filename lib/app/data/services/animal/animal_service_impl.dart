@@ -7,15 +7,12 @@ import 'package:uuid/uuid.dart';
 
 class AnimalServiceImpl implements AnimalService {
   AnimalRepository _animalRepository;
-  Connectivity _connectivity;
   Uuid _uuid;
 
   AnimalServiceImpl({
     required AnimalRepository animalRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _animalRepository = animalRepository,
+  })  : _animalRepository = animalRepository,
         _uuid = uuid;
 
   @override
@@ -23,7 +20,20 @@ class AnimalServiceImpl implements AnimalService {
     // var connectivityResult = await (Connectivity().checkConnectivity());
 
     // if (connectivityResult == ConnectivityResult.none) {
+    // return _animalRepository.getAllAnimalsInDb(propertyId);
+    // } else {
+    List<AnimalModel> animals = await _animalRepository.getAllAnimals();
+    saveAnimals(animals);
     return _animalRepository.getAllAnimalsInDb(propertyId);
+    // }
+  }
+
+  @override
+  Future<List<AnimalModel>> getAllAnimalsOnline() async {
+    // var connectivityResult = await (Connectivity().checkConnectivity());
+
+    // if (connectivityResult == ConnectivityResult.none) {
+    // return _animalRepository.getAllAnimalsInDb(propertyId);
     // } else {
     List<AnimalModel> animals = await _animalRepository.getAllAnimals();
     saveAnimals(animals);

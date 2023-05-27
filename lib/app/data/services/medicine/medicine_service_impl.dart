@@ -45,4 +45,11 @@ class MedicineServiceImpl implements MedicineService {
 
     return _medicineRepository.saveMedicinesInDb(medicines);
   }
+
+  @override
+  Future<List<MedicineModel>> getAllMedicinesOnline() async {
+    List<MedicineModel> medicines = await _medicineRepository.getAllMedicines();
+    saveMedicines(medicines);
+    return medicines;
+  }
 }

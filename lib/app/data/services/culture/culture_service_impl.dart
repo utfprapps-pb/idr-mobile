@@ -6,22 +6,16 @@ import 'package:uuid/uuid.dart';
 
 class CultureServiceImpl implements CultureService {
   final CultureRepository _cultureRepository;
-  final Connectivity _connectivity;
   final Uuid _uuid;
 
   CultureServiceImpl({
     required CultureRepository cultureRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _cultureRepository = cultureRepository,
+  })  : _cultureRepository = cultureRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
+  Future<bool> deleteAll() => _cultureRepository.deleteAll();
 
   @override
   Future<List<CultureModel>> getAllCultures() async {
@@ -52,5 +46,12 @@ class CultureServiceImpl implements CultureService {
     }
 
     return _cultureRepository.saveCulturesInDb(cultures);
+  }
+
+  @override
+  Future<List<CultureModel>> getAllCulturesOnline() async {
+    List<CultureModel> cultures = await _cultureRepository.getAllCultures();
+    saveCultures(cultures);
+    return cultures;
   }
 }

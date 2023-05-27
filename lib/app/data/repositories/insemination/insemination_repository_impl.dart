@@ -178,9 +178,19 @@ class InseminationRepositoryImpl implements InseminationRepository {
   }
 
   @override
-  Future<bool> saveInseminationsInDb(List<InseminationModel> inseminations) {
-    // TODO: implement saveInseminationsInDb
-    throw UnimplementedError();
+  Future<bool> saveInseminationsInDb(
+      List<InseminationModel> inseminations) async {
+    var status = false;
+
+    try {
+      _box.put(INSEMINATIONS, inseminations);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   InseminationModel? findInsemination(

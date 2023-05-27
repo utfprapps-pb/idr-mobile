@@ -6,22 +6,16 @@ import 'package:uuid/uuid.dart';
 
 class VegetablePlagueServiceImpl implements VegetablePlagueService {
   final VegetablePlagueRepository _vegetablePlagueRepository;
-  final Connectivity _connectivity;
   final Uuid _uuid;
 
   VegetablePlagueServiceImpl({
     required VegetablePlagueRepository vegetablePlagueRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _vegetablePlagueRepository = vegetablePlagueRepository,
+  })  : _vegetablePlagueRepository = vegetablePlagueRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
+  Future<bool> deleteAll() => _vegetablePlagueRepository.deleteAll();
 
   @override
   Future<bool> deleteVegetablePlague(VegetablePlagueModel vegetablePlague) =>
@@ -53,5 +47,13 @@ class VegetablePlagueServiceImpl implements VegetablePlagueService {
 
     return _vegetablePlagueRepository
         .saveVegetablePlaguesInDb(vegetablePlagues);
+  }
+
+  @override
+  Future<List<VegetablePlagueModel>> getAllVegetablePlaguesOnline() async {
+    List<VegetablePlagueModel> vegetablePlagues =
+        await _vegetablePlagueRepository.getAllVegetablePlagues();
+    saveVegetablePlagues(vegetablePlagues);
+    return vegetablePlagues;
   }
 }

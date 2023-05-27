@@ -174,17 +174,26 @@ class MastitisRepositoryImpl implements MastitisRepository {
     return status;
   }
 
-  @override
-  Future<bool> saveMastitissInDb(List<MastitisModel> mastitiss) {
-    // TODO: implement saveMastitissInDb
-    throw UnimplementedError();
-  }
-
   MastitisModel? findMastitis(
       List<MastitisModel> list, MastitisModel mastitis) {
     MastitisModel? im = list.firstWhereOrNull(
         (element) => element.internalId == mastitis.internalId);
 
     return im;
+  }
+
+  @override
+  Future<bool> saveMastitisListInDb(List<MastitisModel> mastitisList) async {
+    var status = false;
+
+    try {
+      _box.put(MASTITIS, mastitisList);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 }
