@@ -92,7 +92,7 @@ class HomePage extends GetView<HomeController> {
                               content: '${property.ocupationArea}',
                               title:
                                   '${property.id} - ${property.ocupationArea}',
-                              icon: Icons.terrain,
+                              icon: Icons.agriculture_rounded,
                             ),
                           );
                         },
