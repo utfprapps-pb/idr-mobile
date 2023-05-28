@@ -24,21 +24,19 @@ class MastitisFormController extends GetxController {
   RxString selectedProperty = ''.obs;
   RxString buttonText = ''.obs;
   RxString typeMastitis = ''.obs;
-  RxString mastitisType = 'mastitisType'.obs;
+  RxString mastitisType = 'clinic'.obs;
+  RxString resultCmtADGroup = 'absent'.obs;
+  RxString resultCmtAEGroup = 'absent'.obs;
+  RxString resultCmtPDGroup = 'absent'.obs;
+  RxString resultCmtPEGroup = 'absent'.obs;
 
   int? idxMastitis = null;
 
   final formKey = GlobalKey<FormState>();
-  final aeController = TextEditingController();
-  final adController = TextEditingController();
-  final peController = TextEditingController();
-  final pdController = TextEditingController();
-  final cmtController = TextEditingController();
   final dateController = TextEditingController();
 
   @override
   void onInit() async {
-    // _mastitisService = Get.find<MastitisService>();
     super.onInit();
     buttonText.value = "Salvar";
     typeMastitis.value = AnimalMastitisType.clinic.name.toString();
@@ -53,10 +51,8 @@ class MastitisFormController extends GetxController {
 
     if (data[0]['mastitis'] != null) {
       setFormValues(data[0]['mastitis']);
-      // mastitis.update((val) {
-      //   val!.animalIdentifier =
-      //       data[0]['mastitis'].animalIdentifier.toString();
-      // });
+      mastitis.value = data[0]['mastitis'];
+
       buttonText.value = "Editar";
     } else {
       dateController.text = dateFormat.format(DateTime.now());
@@ -80,23 +76,13 @@ class MastitisFormController extends GetxController {
   }
 
   void setFormValues(MastitisModel values) {
-    adController.text = values.ad.toString();
-    aeController.text = values.ae.toString();
-    pdController.text = values.pd.toString();
-    peController.text = values.pe.toString();
-    cmtController.text = values.resultCmt.toString();
     dateController.text = values.dateDiagnostic.toString();
 
-    mastitis.update((val) {
-      val!.ae = values.ae.toString();
-      val.ad = values.ad.toString();
-      val.pd = values.pd.toString();
-      val.pe = values.pe.toString();
-      val.resultCmt = values.resultCmt.toString();
-      val.dateDiagnostic = values.dateDiagnostic.toString();
-      val.animalIdentifier = values.animalIdentifier.toString();
-      val.internalId = values.internalId.toString();
-    });
+    resultCmtADGroup.value = values.ad.toString();
+    resultCmtAEGroup.value = values.ae.toString();
+    resultCmtPDGroup.value = values.pd.toString();
+    resultCmtPEGroup.value = values.pe.toString();
+    typeMastitis.value = values.type.toString();
   }
 
   onFormSubmit() async {

@@ -4,7 +4,9 @@ import 'package:idr_mobile/app/data/enums/enum_animal_mastitis_type.dart';
 import 'package:idr_mobile/app/modules/mastitis/form/mastitis_form_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
 import 'package:idr_mobile/app/widgets/custom_input_field.dart';
+import 'package:idr_mobile/app/widgets/custom_radio.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
+import 'package:idr_mobile/core/theme/ui_config.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
 
 class MastitisFormPage extends GetView<MastitisFormController> {
@@ -15,7 +17,7 @@ class MastitisFormPage extends GetView<MastitisFormController> {
       backgroundColor: UIColors.whiteColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cadastrar inseminação"),
+        title: Text("Cadastrar mastite"),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -45,7 +47,10 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Tipo de mastite'),
+                          Text(
+                            'Tipo de mastite',
+                            style: UIConfig.textLabelStyle,
+                          ),
                           Row(
                             children: [
                               Expanded(
@@ -60,6 +65,8 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                                       groupValue: controller.typeMastitis.value,
                                       onChanged: (String? value) {
                                         controller.typeMastitis.value = value!;
+                                        controller.mastitis
+                                            .update((val) => val!.type = value);
                                       },
                                     ),
                                   ),
@@ -77,6 +84,8 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                                       groupValue: controller.typeMastitis.value,
                                       onChanged: (String? value) {
                                         controller.typeMastitis.value = value!;
+                                        controller.mastitis
+                                            .update((val) => val!.type = value);
                                       },
                                     ),
                                   ),
@@ -86,130 +95,352 @@ class MastitisFormPage extends GetView<MastitisFormController> {
                           ),
                         ],
                       ),
-                      Row(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: CustomInputField(
-                              maxLines: 1,
-                              inputController: controller.cmtController,
-                              onTapCallBack: () {},
-                              labelText: 'CMT',
-                              icon: Icons.more,
-                              onChanged: (_) => controller.mastitis
-                                  .update((val) => val!.resultCmt = _),
-                              // onValidate: (_) => controller.onValidate(_),
-                              validator: (value) {
-                                if (value == null ||
-                                    value.toString().trim().isEmpty) {
-                                  return "Campo não pode ser vazio";
-                                }
-
-                                return null;
-                              },
-                            ),
+                          Text(
+                            'Resultado CMT',
+                            style: UIConfig.textLabelStyle,
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const SizedBox(
+                                width: 60,
+                              ),
+                              SizedBox(
+                                width: 20,
+                                child: Text(
+                                  '+',
+                                  style: UIConfig.textLabelBoldStyle,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                                child: VerticalDivider(
+                                  color: UIColors.blackColor24,
+                                  thickness: 1,
+                                  width: 1,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                                child: Text(
+                                  '++',
+                                  style: UIConfig.textLabelBoldStyle,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                                child: VerticalDivider(
+                                  color: UIColors.blackColor24,
+                                  thickness: 1,
+                                  width: 1,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 30,
+                                child: Text(
+                                  '+++',
+                                  style: UIConfig.textLabelBoldStyle,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                                child: VerticalDivider(
+                                  color: UIColors.blackColor24,
+                                  thickness: 1,
+                                  width: 1,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 60,
+                                child: Text(
+                                  'Ausente',
+                                  style: UIConfig.textLabelBoldStyle,
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                       const SizedBox(
                         height: 12,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: CustomInputField(
-                              maxLines: 1,
-                              inputController: controller.adController,
-                              onTapCallBack: () {},
-                              labelText: 'AD',
-                              onChanged: (_) => controller.mastitis
-                                  .update((val) => val!.ad = _),
-                              // onValidate: (_) => controller.onValidate(_),
-                              validator: (value) {
-                                if (value == null ||
-                                    value.toString().trim().isEmpty) {
-                                  return "Campo não pode ser vazio";
-                                }
-
-                                return null;
-                              },
+                          SizedBox(
+                            width: 25,
+                            child: Text(
+                              'AD:',
+                              style: UIConfig.textLabelStyle,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '+',
+                                groupValue: controller.resultCmtADGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtADGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.ad = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '++',
+                                groupValue: controller.resultCmtADGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtADGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.ad = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '+++',
+                                groupValue: controller.resultCmtADGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtADGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.ad = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 60,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: 'absent',
+                                groupValue: controller.resultCmtADGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtADGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.ad = value);
+                                },
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: CustomInputField(
-                              maxLines: 1,
-                              inputController: controller.aeController,
-                              onTapCallBack: () {},
-                              labelText: 'AE',
-                              onChanged: (_) => controller.mastitis
-                                  .update((val) => val!.ae = _),
-                              // onValidate: (_) => controller.onValidate(_),
-                              validator: (value) {
-                                if (value == null ||
-                                    value.toString().trim().isEmpty) {
-                                  return "Campo não pode ser vazio";
-                                }
-
-                                return null;
-                              },
+                          SizedBox(
+                            width: 25,
+                            child: Text(
+                              'AE:',
+                              style: UIConfig.textLabelStyle,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '+',
+                                groupValue: controller.resultCmtAEGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtAEGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.ae = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '++',
+                                groupValue: controller.resultCmtAEGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtAEGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.ae = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '+++',
+                                groupValue: controller.resultCmtAEGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtAEGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.ae = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 60,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: 'absent',
+                                groupValue: controller.resultCmtAEGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtAEGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.ae = value);
+                                },
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: CustomInputField(
-                              maxLines: 1,
-                              inputController: controller.pdController,
-                              onTapCallBack: () {},
-                              labelText: 'PD',
-                              onChanged: (_) => controller.mastitis
-                                  .update((val) => val!.pd = _),
-                              // onValidate: (_) => controller.onValidate(_),
-                              validator: (value) {
-                                if (value == null ||
-                                    value.toString().trim().isEmpty) {
-                                  return "Campo não pode ser vazio";
-                                }
-
-                                return null;
-                              },
+                          SizedBox(
+                            width: 25,
+                            child: Text(
+                              'PD:',
+                              style: UIConfig.textLabelStyle,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '+',
+                                groupValue: controller.resultCmtPDGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtPDGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.pd = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '++',
+                                groupValue: controller.resultCmtPDGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtPDGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.pd = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '+++',
+                                groupValue: controller.resultCmtPDGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtPDGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.pd = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 60,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: 'absent',
+                                groupValue: controller.resultCmtPDGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtPDGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.pd = value);
+                                },
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: CustomInputField(
-                              maxLines: 1,
-                              inputController: controller.peController,
-                              onTapCallBack: () {},
-                              labelText: 'PE',
-                              onChanged: (_) => controller.mastitis
-                                  .update((val) => val!.pe = _),
-                              // onValidate: (_) => controller.onValidate(_),
-                              validator: (value) {
-                                if (value == null ||
-                                    value.toString().trim().isEmpty) {
-                                  return "Campo não pode ser vazio";
-                                }
-
-                                return null;
-                              },
+                          SizedBox(
+                            width: 25,
+                            child: Text(
+                              'PE:',
+                              style: UIConfig.textLabelStyle,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '+',
+                                groupValue: controller.resultCmtPEGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtPEGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.pe = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '++',
+                                groupValue: controller.resultCmtPEGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtPEGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.pe = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: '+++',
+                                groupValue: controller.resultCmtPEGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtPEGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.pe = value);
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 60,
+                            child: Obx(
+                              () => CustomRadio(
+                                value: 'absent',
+                                groupValue: controller.resultCmtPEGroup.value,
+                                onChanged: (value) {
+                                  controller.resultCmtPEGroup.value = value!;
+                                  controller.mastitis
+                                      .update((val) => val!.pe = value);
+                                },
+                              ),
                             ),
                           ),
                         ],

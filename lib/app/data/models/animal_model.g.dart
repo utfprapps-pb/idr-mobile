@@ -16,25 +16,26 @@ class AnimalModelAdapter extends TypeAdapter<AnimalModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return AnimalModel()
-      ..internalId = fields[1] as String?
-      ..id = fields[2] as int?
-      ..bornDate = fields[3] as String?
-      ..bornWeight = fields[4] as double?
-      ..breed = fields[5] as String?
-      ..currentWeight = fields[6] as double?
-      ..ecc = fields[7] as double?
-      ..identifier = fields[8] as String?
-      ..name = fields[9] as String?
-      ..previousWeight = fields[10] as double?
-      ..type = fields[11] as String?
-      ..idProperty = fields[12] as int?
-      ..bornInProperty = fields[13] as bool?
-      ..animalMotherIdentifier = fields[14] as String?
-      ..dead = fields[15] as bool?
-      ..deadDate = fields[16] as String?
-      ..bornCondition = fields[17] as String?
-      ..gender = fields[18] as String?;
+    return AnimalModel(
+      internalId: fields[1] as String?,
+      id: fields[2] as int?,
+      bornDate: fields[3] as String?,
+      bornWeight: fields[4] as double?,
+      breed: fields[5] as String?,
+      currentWeight: fields[6] as double?,
+      ecc: fields[7] as double?,
+      identifier: fields[8] as String?,
+      name: fields[9] as String?,
+      previousWeight: fields[10] as double?,
+      type: fields[11] as String?,
+      idProperty: fields[12] as int?,
+      bornInProperty: fields[13] as bool?,
+      animalMotherIdentifier: fields[14] as String?,
+      dead: fields[15] as bool?,
+      deadDate: fields[16] as String?,
+      bornCondition: fields[17] as String?,
+      gender: fields[18] as String?,
+    );
   }
 
   @override
