@@ -3,41 +3,47 @@ import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_animal_medication_application_type.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 import 'package:idr_mobile/app/data/models/medication_model.dart';
+import 'package:idr_mobile/app/data/models/product_model.dart';
 import 'package:idr_mobile/app/data/services/medication/medication_service.dart';
+import 'package:idr_mobile/app/data/services/product/product_service.dart';
 import 'package:idr_mobile/app/widgets/snackbar.dart';
 import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 
 class MedicationFormController extends GetxController {
   final MedicationService? _medicationService;
+  final ProductService? _productService;
 
   MedicationFormController({
     required MedicationService medicationService,
-  }) : _medicationService = medicationService;
+    required ProductService productService,
+  })  : _medicationService = medicationService,
+        _productService = productService;
 
   final medication = MedicationModel().obs;
   RxString buttonText = ''.obs;
-  RxString applicationType = ''.obs;
-  List<String> applicationTypesList = [];
+  RxString applicationWay = ''.obs;
+  List<String> applicationWaysList = [];
 
   int? idxMedication = null;
 
-  final formKey = GlobalKey<FormState>();
-
   final activePrincipleController = TextEditingController();
-  final nameController = TextEditingController();
-  final doseController = TextEditingController();
-  final dateController = TextEditingController();
+  final appliedDoseController = TextEditingController();
+  final applicationDateController = TextEditingController();
+
+  final productsFinal = <ProductModel>[].obs;
+  final productSelected = ProductModel().obs;
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() async {
     // _medicationService = Get.find<MedicationService>();
     super.onInit();
     buttonText.value = "Salvar";
-    applicationType.value =
+    applicationWay.value =
         typesApplication[AnimalMedicationApplicationType.im.name].toString();
 
     typesApplication.forEach((key, value) {
-      applicationTypesList.add(value);
+      applicationWaysList.add(value);
     });
 
     var data = Get.arguments;
@@ -49,6 +55,7 @@ class MedicationFormController extends GetxController {
     }
 
     if (data[0]['medication'] != null) {
+      medication.value = data[0]['medication'];
       setFormValues(data[0]['medication']);
       // medication.update((val) {
       //   val!.animalIdentifier =
@@ -56,15 +63,17 @@ class MedicationFormController extends GetxController {
       // });
       buttonText.value = "Editar";
     } else {
-      dateController.text = dateFormat.format(DateTime.now());
+      applicationDateController.text = dateFormat.format(DateTime.now());
       medication.update((val) {
-        val!.date = dateController.text.toString();
+        val!.applicationDate = applicationDateController.text.toString();
       });
     }
 
     if (data[1]['index'] != null) {
       idxMedication = data[1]['index'];
     }
+
+    loadProducts();
   }
 
   @override
@@ -75,19 +84,9 @@ class MedicationFormController extends GetxController {
 
   void setFormValues(MedicationModel values) {
     activePrincipleController.text = values.activePrinciple.toString();
-    nameController.text = values.name.toString();
-    doseController.text = values.dose.toString();
-    dateController.text = values.date.toString();
-
-    medication.update((val) {
-      val!.activePrinciple = values.activePrinciple;
-      val.name = values.name;
-      val.applicationType = values.applicationType;
-      val.dose = values.dose;
-      val.internalId = values.internalId;
-      val.date = values.date.toString();
-      val.animalIdentifier = values.animalIdentifier;
-    });
+    appliedDoseController.text = values.appliedDose.toString();
+    applicationDateController.text = values.applicationDate.toString();
+    applicationWay.value = values.applicationWay.toString();
   }
 
   onFormSubmit() async {
@@ -107,7 +106,7 @@ class MedicationFormController extends GetxController {
   }
 
   void showCalendar(BuildContext context) {
-    final dataFormatted = dateController.text;
+    final dataFormatted = applicationDateController.text;
 
     var data = DateTime.now();
     if (dataFormatted.isNotEmpty) {
@@ -120,10 +119,55 @@ class MedicationFormController extends GetxController {
       lastDate: data.add(Duration(days: 365 * 5)),
     ).then((DateTime? dataSelected) {
       if (dataSelected != null) {
-        medication.update((val) => val!.date = dateFormat.format(dataSelected));
+        medication.update(
+            (val) => val!.applicationDate = dateFormat.format(dataSelected));
 
-        dateController.text = dateFormat.format(dataSelected);
+        applicationDateController.text = dateFormat.format(dataSelected);
       }
     });
+  }
+
+  void loadProducts() async {
+    isLoading.value = true;
+    await Future.delayed(
+      const Duration(seconds: 2),
+    );
+    try {
+      final productsData = await _productService!.getAllProducts();
+
+      productsFinal.assignAll(productsData);
+
+      setProductSelected(productsFinal.value);
+
+      isLoading.value = false;
+    } catch (e) {
+      isLoading.value = false;
+      Snack.show(
+        content: 'Ocorreu um erro ao buscar produtos :(',
+        snackType: SnackType.error,
+        behavior: SnackBarBehavior.floating,
+      );
+    }
+  }
+
+  void setProductSelected(List<ProductModel> list) {
+    if (medication.value.idProduct != null) {
+      ProductModel? pm = list.firstWhereOrNull(
+          (element) => element.id == medication.value.idProduct!);
+
+      pm != null ? productSelected.value = pm : productSelected.value = list[0];
+    } else {
+      productSelected.value = productsFinal.value[0];
+      medication.update((val) {
+        val!.idProduct = productSelected.value.id;
+        val.activePrinciple = productSelected.value.activePrincipleName;
+      });
+      activePrincipleController.text =
+          productSelected.value.activePrincipleName.toString();
+    }
+  }
+
+  Future<List<ProductModel>> getData(filter) async {
+    return productsFinal;
   }
 }

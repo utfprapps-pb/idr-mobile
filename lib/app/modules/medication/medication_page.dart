@@ -63,7 +63,7 @@ class MedicationPage extends GetView<MedicationController> {
                         child: CustomOutlinedButton(
                           onPressedCallBack: () =>
                               controller.goToForm(null, null),
-                          title: "Registrar Doença",
+                          title: "Registrar Medicamento",
                         ),
                       ),
                     ],
@@ -85,8 +85,8 @@ class MedicationPage extends GetView<MedicationController> {
                                 return CustomSlidable(
                                   identity: index,
                                   title:
-                                      '${medication.id ?? index} - ${medication.date}',
-                                  content: '${medication.name}',
+                                      '${medication.id ?? index + 1} - ${medication.applicationDate}',
+                                  content: '${medication.activePrinciple}',
                                   icon: Icons.child_friendly_rounded,
                                   onPressedEditCallBack:
                                       (BuildContext context) {

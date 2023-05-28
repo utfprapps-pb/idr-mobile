@@ -20,11 +20,11 @@ class MedicationModelAdapter extends TypeAdapter<MedicationModel> {
       internalId: fields[1] as String?,
       id: fields[2] as int?,
       animalIdentifier: fields[3] as String?,
-      date: fields[4] as String?,
+      applicationDate: fields[4] as String?,
       activePrinciple: fields[5] as String?,
-      name: fields[6] as String?,
-      dose: fields[7] as String?,
-      applicationType: fields[8] as String?,
+      appliedDose: fields[6] as String?,
+      applicationWay: fields[7] as String?,
+      idProduct: fields[8] as int?,
     );
   }
 
@@ -39,15 +39,15 @@ class MedicationModelAdapter extends TypeAdapter<MedicationModel> {
       ..writeByte(3)
       ..write(obj.animalIdentifier)
       ..writeByte(4)
-      ..write(obj.date)
+      ..write(obj.applicationDate)
       ..writeByte(5)
       ..write(obj.activePrinciple)
       ..writeByte(6)
-      ..write(obj.name)
+      ..write(obj.appliedDose)
       ..writeByte(7)
-      ..write(obj.dose)
+      ..write(obj.applicationWay)
       ..writeByte(8)
-      ..write(obj.applicationType);
+      ..write(obj.idProduct);
   }
 
   @override

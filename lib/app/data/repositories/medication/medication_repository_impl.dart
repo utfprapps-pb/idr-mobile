@@ -23,6 +23,8 @@ class MedicationRepositoryImpl implements MedicationRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -38,6 +40,8 @@ class MedicationRepositoryImpl implements MedicationRepository {
 
   @override
   Future<bool> deleteMedication(MedicationModel medication) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -61,6 +65,8 @@ class MedicationRepositoryImpl implements MedicationRepository {
 
   @override
   Future<bool> editMedicationInDb(MedicationModel medication) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var medications = _box.get(MEDICATIONS) ?? [];
@@ -94,7 +100,6 @@ class MedicationRepositoryImpl implements MedicationRepository {
 
   @override
   Future<List<MedicationModel>> getAllMedications() async {
-    //todo alterar o nome do module de medications para medications
     final result = await _restClient.get(
       'medications',
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
@@ -120,7 +125,7 @@ class MedicationRepositoryImpl implements MedicationRepository {
     // Caso houver erro
     if (result.hasError) {
       print('Error [${result.statusText}]');
-      throw Exception('Error _');
+      throw Exception('Error _ ${result.hasError}');
     }
 
     return result.body ?? <MedicationModel>[];
@@ -181,6 +186,8 @@ class MedicationRepositoryImpl implements MedicationRepository {
 
   @override
   Future<bool> saveMedicationsInDb(List<MedicationModel> medications) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

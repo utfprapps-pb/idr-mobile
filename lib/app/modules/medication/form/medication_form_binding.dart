@@ -7,6 +7,7 @@ class MedicationFormBinding implements Bindings {
     Get.lazyPut<MedicationFormController>(
       () => MedicationFormController(
         medicationService: Get.find(),
+        productService: Get.find(),
       ),
     );
   }

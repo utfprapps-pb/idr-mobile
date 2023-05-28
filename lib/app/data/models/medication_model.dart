@@ -15,46 +15,46 @@ class MedicationModel {
   @HiveField(3)
   String? animalIdentifier;
   @HiveField(4)
-  String? date;
+  String? applicationDate;
   @HiveField(5)
   String? activePrinciple;
   @HiveField(6)
-  String? name;
+  String? appliedDose;
   @HiveField(7)
-  String? dose;
+  String? applicationWay;
   @HiveField(8)
-  String? applicationType;
+  int? idProduct;
 
   MedicationModel({
     this.internalId,
     this.id,
     this.animalIdentifier,
-    this.date,
+    this.applicationDate,
     this.activePrinciple,
-    this.name,
-    this.dose,
-    this.applicationType,
+    this.appliedDose,
+    this.applicationWay,
+    this.idProduct,
   });
 
   MedicationModel copyWith({
     String? internalId,
     int? id,
     String? animalIdentifier,
-    String? date,
+    String? applicationDate,
     String? activePrinciple,
-    String? name,
-    String? dose,
-    String? applicationType,
+    String? appliedDose,
+    String? applicationWay,
+    int? idProduct,
   }) {
     return MedicationModel(
       internalId: internalId ?? this.internalId,
       id: id ?? this.id,
       animalIdentifier: animalIdentifier ?? this.animalIdentifier,
-      date: date ?? this.date,
+      applicationDate: applicationDate ?? this.applicationDate,
       activePrinciple: activePrinciple ?? this.activePrinciple,
-      name: name ?? this.name,
-      dose: dose ?? this.dose,
-      applicationType: applicationType ?? this.applicationType,
+      appliedDose: appliedDose ?? this.appliedDose,
+      applicationWay: applicationWay ?? this.applicationWay,
+      idProduct: idProduct ?? this.idProduct,
     );
   }
 
@@ -70,20 +70,20 @@ class MedicationModel {
     if (animalIdentifier != null) {
       result.addAll({'animalIdentifier': animalIdentifier});
     }
-    if (date != null) {
-      result.addAll({'date': date});
+    if (applicationDate != null) {
+      result.addAll({'applicationDate': applicationDate});
     }
     if (activePrinciple != null) {
       result.addAll({'activePrinciple': activePrinciple});
     }
-    if (name != null) {
-      result.addAll({'name': name});
+    if (appliedDose != null) {
+      result.addAll({'appliedDose': appliedDose});
     }
-    if (dose != null) {
-      result.addAll({'dose': dose});
+    if (applicationWay != null) {
+      result.addAll({'applicationWay': applicationWay});
     }
-    if (applicationType != null) {
-      result.addAll({'applicationType': applicationType});
+    if (idProduct != null) {
+      result.addAll({'idProduct': idProduct});
     }
 
     return result;
@@ -93,12 +93,12 @@ class MedicationModel {
     return MedicationModel(
       internalId: map['internalId'],
       id: map['id']?.toInt(),
-      animalIdentifier: map['animalIdentifier'],
-      date: map['date'],
+      animalIdentifier: map['animal']['animalIdentifier'],
+      applicationDate: '',
       activePrinciple: map['activePrinciple'],
-      name: map['name'],
-      dose: map['dose'],
-      applicationType: map['applicationType'],
+      appliedDose: map['appliedDose'],
+      applicationWay: map['applicationWay'],
+      idProduct: map['product']['id']?.toInt(),
     );
   }
 
@@ -109,7 +109,7 @@ class MedicationModel {
 
   @override
   String toString() {
-    return 'MedicationModel(internalId: $internalId, id: $id, animalIdentifier: $animalIdentifier, date: $date, activePrinciple: $activePrinciple, name: $name, dose: $dose, applicationType: $applicationType)';
+    return '$id - $applicationDate, $activePrinciple';
   }
 
   @override
@@ -120,11 +120,11 @@ class MedicationModel {
         other.internalId == internalId &&
         other.id == id &&
         other.animalIdentifier == animalIdentifier &&
-        other.date == date &&
+        other.applicationDate == applicationDate &&
         other.activePrinciple == activePrinciple &&
-        other.name == name &&
-        other.dose == dose &&
-        other.applicationType == applicationType;
+        other.appliedDose == appliedDose &&
+        other.applicationWay == applicationWay &&
+        other.idProduct == idProduct;
   }
 
   @override
@@ -132,10 +132,10 @@ class MedicationModel {
     return internalId.hashCode ^
         id.hashCode ^
         animalIdentifier.hashCode ^
-        date.hashCode ^
+        applicationDate.hashCode ^
         activePrinciple.hashCode ^
-        name.hashCode ^
-        dose.hashCode ^
-        applicationType.hashCode;
+        appliedDose.hashCode ^
+        applicationWay.hashCode ^
+        idProduct.hashCode;
   }
 }
