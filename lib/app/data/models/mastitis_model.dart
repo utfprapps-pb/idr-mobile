@@ -14,51 +14,51 @@ class MastitisModel {
   @HiveField(3)
   String? animalIdentifier;
   @HiveField(4)
-  String? resultCmt;
-  @HiveField(5)
   String? ad;
-  @HiveField(6)
+  @HiveField(5)
   String? ae;
-  @HiveField(7)
+  @HiveField(6)
   String? pd;
-  @HiveField(8)
+  @HiveField(7)
   String? pe;
-  @HiveField(9)
+  @HiveField(8)
   String? dateDiagnostic;
+  @HiveField(9)
+  String? type;
 
   MastitisModel({
     this.internalId,
     this.id,
     this.animalIdentifier,
-    this.resultCmt,
     this.ad,
     this.ae,
     this.pd,
     this.pe,
     this.dateDiagnostic,
+    this.type,
   });
 
   MastitisModel copyWith({
     String? internalId,
     int? id,
     String? animalIdentifier,
-    String? resultCmt,
     String? ad,
     String? ae,
     String? pd,
     String? pe,
     String? dateDiagnostic,
+    String? type,
   }) {
     return MastitisModel(
       internalId: internalId ?? this.internalId,
       id: id ?? this.id,
       animalIdentifier: animalIdentifier ?? this.animalIdentifier,
-      resultCmt: resultCmt ?? this.resultCmt,
       ad: ad ?? this.ad,
       ae: ae ?? this.ae,
       pd: pd ?? this.pd,
       pe: pe ?? this.pe,
       dateDiagnostic: dateDiagnostic ?? this.dateDiagnostic,
+      type: type ?? this.type,
     );
   }
 
@@ -73,9 +73,6 @@ class MastitisModel {
     }
     if (animalIdentifier != null) {
       result.addAll({'animalIdentifier': animalIdentifier});
-    }
-    if (resultCmt != null) {
-      result.addAll({'resultCmt': resultCmt});
     }
     if (ad != null) {
       result.addAll({'ad': ad});
@@ -92,6 +89,9 @@ class MastitisModel {
     if (dateDiagnostic != null) {
       result.addAll({'dateDiagnostic': dateDiagnostic});
     }
+    if (type != null) {
+      result.addAll({'type': type});
+    }
 
     return result;
   }
@@ -101,12 +101,12 @@ class MastitisModel {
       internalId: map['internalId'],
       id: map['id']?.toInt(),
       animalIdentifier: map['animalIdentifier'],
-      resultCmt: map['resultCmt'],
       ad: map['ad'],
       ae: map['ae'],
       pd: map['pd'],
       pe: map['pe'],
       dateDiagnostic: map['dateDiagnostic'],
+      type: map['type'],
     );
   }
 
@@ -117,7 +117,7 @@ class MastitisModel {
 
   @override
   String toString() {
-    return 'MastitisModel(internalId: $internalId, id: $id, animalIdentifier: $animalIdentifier, resultCmt: $resultCmt, ad: $ad, ae: $ae, pd: $pd, pe: $pe, dateDiagnostic: $dateDiagnostic)';
+    return 'MastitisModel(internalId: $internalId, id: $id, animalIdentifier: $animalIdentifier, ad: $ad, ae: $ae, pd: $pd, pe: $pe, dateDiagnostic: $dateDiagnostic, type: $type)';
   }
 
   @override
@@ -128,12 +128,12 @@ class MastitisModel {
         other.internalId == internalId &&
         other.id == id &&
         other.animalIdentifier == animalIdentifier &&
-        other.resultCmt == resultCmt &&
         other.ad == ad &&
         other.ae == ae &&
         other.pd == pd &&
         other.pe == pe &&
-        other.dateDiagnostic == dateDiagnostic;
+        other.dateDiagnostic == dateDiagnostic &&
+        other.type == type;
   }
 
   @override
@@ -141,11 +141,11 @@ class MastitisModel {
     return internalId.hashCode ^
         id.hashCode ^
         animalIdentifier.hashCode ^
-        resultCmt.hashCode ^
         ad.hashCode ^
         ae.hashCode ^
         pd.hashCode ^
         pe.hashCode ^
-        dateDiagnostic.hashCode;
+        dateDiagnostic.hashCode ^
+        type.hashCode;
   }
 }

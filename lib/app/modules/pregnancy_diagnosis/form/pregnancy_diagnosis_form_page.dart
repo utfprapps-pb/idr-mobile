@@ -35,9 +35,9 @@ class PregnancyDiagnosisFormPage
                         maxLines: 1,
                         inputController: controller.dateController,
                         onTapCallBack: () => controller.showCalendar(
-                            context, controller.dateController),
+                            context, controller.dateController, 'date'),
                         onPressedIcon: () => controller.showCalendar(
-                            context, controller.dateController),
+                            context, controller.dateController, 'date'),
                         labelText: 'Data diagnóstico',
                         icon: Icons.calendar_today,
                       ),
@@ -49,9 +49,13 @@ class PregnancyDiagnosisFormPage
                         inputController:
                             controller.dateLastInseminationController,
                         onTapCallBack: () => controller.showCalendar(
-                            context, controller.dateLastInseminationController),
+                            context,
+                            controller.dateLastInseminationController,
+                            'dateLast'),
                         onPressedIcon: () => controller.showCalendar(
-                            context, controller.dateLastInseminationController),
+                            context,
+                            controller.dateLastInseminationController,
+                            'dateLast'),
                         labelText: 'Data ultima diagnóstico de prenhez',
                         icon: Icons.calendar_today,
                       ),

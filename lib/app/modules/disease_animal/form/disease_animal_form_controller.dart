@@ -7,13 +7,13 @@ import 'package:idr_mobile/app/widgets/snackbar.dart';
 import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 
 class DiseaseAnimalFormController extends GetxController {
-  final DiseaseAnimalService? _diseaseService;
+  final DiseaseAnimalService? _diseaseAnimalService;
 
   DiseaseAnimalFormController({
-    required DiseaseAnimalService diseaseService,
-  }) : _diseaseService = diseaseService;
+    required DiseaseAnimalService diseaseAnimalService,
+  }) : _diseaseAnimalService = diseaseAnimalService;
 
-  final disease = DiseaseAnimalModel().obs;
+  final diseaseAnimal = DiseaseAnimalModel().obs;
   RxString buttonText = ''.obs;
 
   int? idxDiseaseAnimal = null;
@@ -24,28 +24,26 @@ class DiseaseAnimalFormController extends GetxController {
 
   @override
   void onInit() async {
-    // _diseaseService = Get.find<DiseaseAnimalService>();
+    // _diseaseAnimalService = Get.find<DiseaseAnimalService>();
     super.onInit();
     buttonText.value = "Salvar";
 
     var data = Get.arguments;
 
     if (data[2]['animalIdentifier'] != null) {
-      disease.update((val) {
+      diseaseAnimal.update((val) {
         val!.animalIdentifier = data[2]['animalIdentifier'].toString();
       });
     }
 
-    if (data[0]['disease'] != null) {
-      setFormValues(data[0]['disease']);
-      // disease.update((val) {
-      //   val!.animalIdentifier =
-      //       data[0]['disease'].animalIdentifier.toString();
-      // });
+    if (data[0]['diseaseAnimal'] != null) {
+      setFormValues(data[0]['diseaseAnimal']);
+      diseaseAnimal.value = data[0]['diseaseAnimal'];
+
       buttonText.value = "Editar";
     } else {
       dateController.text = dateFormat.format(DateTime.now());
-      disease.update((val) {
+      diseaseAnimal.update((val) {
         val!.dateDiagnostic = dateController.text.toString();
       });
     }
@@ -64,24 +62,17 @@ class DiseaseAnimalFormController extends GetxController {
   void setFormValues(DiseaseAnimalModel values) {
     diagnosticController.text = values.diagnostic.toString();
     dateController.text = values.dateDiagnostic.toString();
-
-    disease.update((val) {
-      val!.diagnostic = values.diagnostic.toString();
-      val.internalId = values.internalId.toString();
-      val.dateDiagnostic = values.dateDiagnostic.toString();
-      val.animalIdentifier = values.animalIdentifier.toString();
-    });
   }
 
   onFormSubmit() async {
     var isSaved = idxDiseaseAnimal != null
-        ? await _diseaseService!.editDiseaseAnimal(disease.value)
-        : await _diseaseService!.saveDiseaseAnimal(disease.value);
+        ? await _diseaseAnimalService!.editDiseaseAnimal(diseaseAnimal.value)
+        : await _diseaseAnimalService!.saveDiseaseAnimal(diseaseAnimal.value);
 
     Snack.show(
       content: isSaved
-          ? 'Sucesso ao salvar diseaseo'
-          : 'Ocorreu um erro ao salvar diseaseo',
+          ? 'Sucesso ao salvar diseaseAnimalo'
+          : 'Ocorreu um erro ao salvar diseaseAnimalo',
       snackType: isSaved ? SnackType.success : SnackType.error,
       behavior: SnackBarBehavior.floating,
     );
@@ -103,7 +94,7 @@ class DiseaseAnimalFormController extends GetxController {
       lastDate: data.add(Duration(days: 365 * 5)),
     ).then((DateTime? dataSelected) {
       if (dataSelected != null) {
-        disease.update(
+        diseaseAnimal.update(
             (val) => val!.dateDiagnostic = dateFormat.format(dataSelected));
 
         dateController.text = dateFormat.format(dataSelected);

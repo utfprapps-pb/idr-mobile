@@ -65,4 +65,20 @@ class UIConfig {
         fontWeight: FontWeight.bold,
         letterSpacing: 0.5,
       );
+
+  static TextStyle get textLabelStyle => TextStyle(
+        color: UIColors.blackColor24,
+        fontFamily: 'Segoe-UI',
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+        letterSpacing: 0.5,
+      );
+
+  static TextStyle get textLabelBoldStyle => TextStyle(
+        color: UIColors.blackColor24,
+        fontFamily: 'Segoe-UI',
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 0.5,
+      );
 }

@@ -110,31 +110,7 @@ class VegetablePlagueFormController extends GetxController {
 
   void setFormValues(VegetablePlagueModel values) {
     dateController.text = values.date.toString();
-
-    // vegetablePlague.update((val) {
-    //   if (values.previousWeight != null) {
-    //     val!.previousWeight = double.parse(values.previousWeight.toString());
-    //   }
-    //   val!.internalId = values.internalId.toString();
-    //   val.bornDate = values.bornDate.toString();
-    //   val.bornWeight = double.parse(values.previousWeight.toString());
-    //   val.currentWeight = double.parse(values.previousWeight.toString());
-    //   val.ecc = double.parse(values.previousWeight.toString());
-    //   val.identifier = values.identifier.toString();
-    //   val.previousWeight = double.parse(values.previousWeight.toString());
-    //   val.propertyId = int.parse(values.propertyId.toString());
-
-    //   if (values.id != null) {
-    //     val.id = values.id;
-    //   }
-    //   if (values.cowIdentifier != null) {
-    //     val.bornInProperty = values.bornInProperty;
-    //     val.cowIdentifier = values.cowIdentifier.toString();
-    //   }
-    //   if (values.deadDate != null) {
-    //     val.deadDate = values.deadDate.toString();
-    //   }
-    // });
+    infestationTypeSelected.value = values.infestationType.toString();
   }
 
   void onChangedDropdown(newValue) {

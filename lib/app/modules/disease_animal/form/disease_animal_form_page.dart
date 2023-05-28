@@ -39,7 +39,7 @@ class DiseaseAnimalFormPage extends GetView<DiseaseAnimalFormController> {
                               maxLines: 5,
                               labelText: 'Diagnóstico',
                               icon: Icons.medication,
-                              onChanged: (_) => controller.disease
+                              onChanged: (_) => controller.diseaseAnimal
                                   .update((val) => val!.diagnostic = _),
                               // onValidate: (_) => controller.onValidate(_),
                               validator: (value) {

@@ -16,8 +16,8 @@ class AnimalServiceImpl implements AnimalService {
         _uuid = uuid;
 
   @override
-  Future<List<AnimalModel>> getAllAnimals(int? propertyId) async {
-    return _animalRepository.getAllAnimalsInDb(propertyId);
+  Future<List<AnimalModel>> getAllAnimals(int? idProperty) async {
+    return _animalRepository.getAllAnimalsInDb(idProperty);
   }
 
   @override

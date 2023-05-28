@@ -40,6 +40,7 @@ class PurchaseFormController extends GetxController {
 
     if (data[0]['purchase'] != null) {
       setFormValues(data[0]['purchase']);
+      purchase.value = data[0]['purchase'];
       // purchase.update((val) {
       //   val!.animalIdentifier =
       //       data[0]['purchase'].animalIdentifier.toString();
@@ -72,16 +73,6 @@ class PurchaseFormController extends GetxController {
     weightController.text =
         values.weight != null ? values.weight.toString() : '';
     valueController.text = values.value != null ? values.value.toString() : '';
-
-    purchase.update((val) {
-      val!.dateBirth = values.dateBirth.toString();
-      val.datePurchase = values.datePurchase.toString();
-      val.internalId = values.internalId;
-      val.id = values.id;
-      val.animalIdentifier = values.animalIdentifier;
-      val.weight = values.weight;
-      val.value = values.value;
-    });
   }
 
   onFormSubmit() async {

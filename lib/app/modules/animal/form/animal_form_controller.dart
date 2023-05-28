@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:idr_mobile/app/data/enums/enum_animal_gender.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/data/models/breed_model.dart';
@@ -35,18 +36,22 @@ class AnimalFormController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final bornDateController = TextEditingController();
   final nameController = TextEditingController();
-  final bornWeightdController = TextEditingController();
+  final bornWeightController = TextEditingController();
+  final typeController = TextEditingController();
   final breedController = TextEditingController();
   final currentWeightController = TextEditingController();
   final eccController = TextEditingController();
   final identifierController = TextEditingController();
   final previousWeightController = TextEditingController();
   final propertyController = TextEditingController();
-  final cowIdentifierController = TextEditingController();
+  final animalMotherIdentifierController = TextEditingController();
   final deadDateController = TextEditingController();
 
   final breedsFinal = <BreedModel>[].obs;
   final breedSelected = BreedModel().obs;
+
+  RxString genderTypeSelected = ''.obs;
+  List<String> genderTypeList = [];
 
   RxBool isLoading = false.obs;
 
@@ -54,6 +59,12 @@ class AnimalFormController extends GetxController {
   void onInit() async {
     super.onInit();
     loadBreeds();
+
+    genderTypeSelected.value = gendersType[AnimalGenderType.m.name].toString();
+
+    gendersType.forEach((key, value) {
+      genderTypeList.add(value);
+    });
 
     buttonText.value = "Salvar";
     bornDateController.text = dateFormat.format(DateTime.now());
@@ -68,7 +79,7 @@ class AnimalFormController extends GetxController {
       selectedProperty.value = propertySaved.value.getNamed();
       propertyController.text = selectedProperty.value;
       animal.update(
-        (val) => val!.propertyId = int.parse(
+        (val) => val!.idProperty = int.parse(
             propertyController.text.replaceAll('Propriedade', '').trim()),
       );
     }
@@ -98,16 +109,25 @@ class AnimalFormController extends GetxController {
   void setFormValues(AnimalModel values) {
     bornDateController.text = values.bornDate.toString();
     nameController.text = values.name ?? '';
-    bornWeightdController.text = values.bornWeight.toString();
+
+    if (values.bornWeight != null) {
+      bornWeightController.text = values.bornWeight.toString();
+    }
+    if (values.currentWeight != null) {
+      currentWeightController.text = values.currentWeight.toString();
+    }
+    if (values.previousWeight != null) {
+      previousWeightController.text = values.previousWeight.toString();
+    }
+    typeController.text = values.type ?? '';
     breedController.text = values.breed.toString();
-    currentWeightController.text = values.currentWeight.toString();
     eccController.text = values.ecc.toString();
     identifierController.text = values.identifier.toString();
-    previousWeightController.text = values.previousWeight.toString();
     isBornInProperty.value = values.bornInProperty ?? false;
 
-    if (values.cowIdentifier != null) {
-      cowIdentifierController.text = values.cowIdentifier.toString();
+    if (values.animalMotherIdentifier != null) {
+      animalMotherIdentifierController.text =
+          values.animalMotherIdentifier.toString();
       isBornInProperty.value = true;
     }
 
@@ -115,39 +135,6 @@ class AnimalFormController extends GetxController {
       deadDateController.text = values.deadDate.toString();
       isDead.value = true;
     }
-
-    // animal.update((val) {
-    //   if (values.previousWeight != null) {
-    //     val!.previousWeight = double.parse(values.previousWeight.toString());
-    //   }
-    //   val!.internalId = values.internalId.toString();
-    //   val.bornDate = values.bornDate.toString();
-    //   val.bornWeight = double.parse(values.previousWeight.toString());
-    //   val.currentWeight = double.parse(values.previousWeight.toString());
-    //   val.ecc = double.parse(values.previousWeight.toString());
-    //   val.identifier = values.identifier.toString();
-    //   val.previousWeight = double.parse(values.previousWeight.toString());
-    //   val.propertyId = int.parse(values.propertyId.toString());
-
-    //   if (values.id != null) {
-    //     val.id = values.id;
-    //   }
-    //   if (values.cowIdentifier != null) {
-    //     val.bornInProperty = values.bornInProperty;
-    //     val.cowIdentifier = values.cowIdentifier.toString();
-    //   }
-    //   if (values.deadDate != null) {
-    //     val.deadDate = values.deadDate.toString();
-    //   }
-    // });
-  }
-
-  void onChangedDropdown(newValue) {
-    selectedProperty.value = newValue;
-    animal.update(
-      (val) => val!.propertyId =
-          int.parse(newValue.replaceAll('Propriedade', '').trim()),
-    );
   }
 
   onFormSubmit() async {
@@ -157,7 +144,7 @@ class AnimalFormController extends GetxController {
       }
 
       if (isBornInProperty.value) {
-        val!.cowIdentifier = cowIdentifierController.text;
+        val!.animalMotherIdentifier = animalMotherIdentifierController.text;
       }
     });
 

@@ -41,6 +41,10 @@ import 'package:idr_mobile/app/modules/sync/sync_binding.dart';
 import 'package:idr_mobile/app/modules/sync/sync_page.dart';
 import 'package:idr_mobile/app/modules/sync_forced/sync_forced_binding.dart';
 import 'package:idr_mobile/app/modules/sync_forced/sync_forced_page.dart';
+import 'package:idr_mobile/app/modules/vegetable_disease/form/vegetable_disease_form_binding.dart';
+import 'package:idr_mobile/app/modules/vegetable_disease/form/vegetable_disease_form_page.dart';
+import 'package:idr_mobile/app/modules/vegetable_disease/vegetable_disease_binding.dart';
+import 'package:idr_mobile/app/modules/vegetable_disease/vegetable_disease_page.dart';
 import 'package:idr_mobile/app/modules/vegetable_plague/form/vegetable_plague_form_binding.dart';
 import 'package:idr_mobile/app/modules/vegetable_plague/form/vegetable_plague_form_page.dart';
 import 'package:idr_mobile/app/modules/vegetable_plague/vegetable_plague_binding.dart';
@@ -196,6 +200,20 @@ abstract class AppPages {
       page: () => VegetablePlagueFormPage(),
       bindings: [
         VegetablePlagueFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.VEGETABLE_DISEASE,
+      page: () => VegetableDiseasePage(),
+      bindings: [
+        VegetableDiseaseBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.VEGETABLE_DISEASE_FORM,
+      page: () => VegetableDiseaseFormPage(),
+      bindings: [
+        VegetableDiseaseFormBinding(),
       ],
     ),
     GetPage(

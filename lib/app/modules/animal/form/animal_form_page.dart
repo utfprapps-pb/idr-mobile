@@ -12,6 +12,7 @@ import 'package:idr_mobile/app/widgets/custom_input_field.dart';
 import 'package:idr_mobile/app/widgets/custom_loading.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
+import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 
 class AnimalPageForm extends GetView<AnimalFormController> {
   @override
@@ -38,6 +39,24 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               const SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomInputField(
+                                      maxLines: 1,
+                                      inputController:
+                                          controller.propertyController,
+                                      onTapCallBack: () {},
+                                      isEnable: false,
+                                      labelText: 'Propriedade',
+                                      icon: Icons.agriculture_rounded,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
                                 height: 20,
                               ),
                               Row(
@@ -53,7 +72,14 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                       onChanged: (_) => controller.animal
                                           .update((val) => val!.name = _),
                                       // onValidate: (_) => controller.onValidate(_),
-                                      // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.toString().trim().isEmpty) {
+                                          return "Campo não pode ser vazio";
+                                        }
+
+                                        return null;
+                                      },
                                     ),
                                   ),
                                 ],
@@ -65,75 +91,25 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                 children: [
                                   Expanded(
                                     child: CustomInputField(
-                                      maxLines: 1,
-                                      inputController:
-                                          controller.bornWeightdController,
-                                      onTapCallBack: () {},
-                                      keyboardType: TextInputType.number,
-                                      labelText: 'Peso nascido',
-                                      icon: Icons.balance_rounded,
-                                      onChanged: (_) => controller.animal
-                                          .update((val) => val!.bornWeight =
-                                              _ != "" ? double.parse(_) : null),
+                                        maxLines: 1,
+                                        inputController:
+                                            controller.bornWeightController,
+                                        onTapCallBack: () {},
+                                        keyboardType: TextInputType.number,
+                                        labelText: 'Peso nascido',
+                                        icon: Icons.balance_rounded,
+                                        onChanged: (_) {
+                                          if (_.toString().trim().isNotEmpty) {
+                                            controller.animal.update((val) =>
+                                                val!.bornWeight = _ != ""
+                                                    ? double.parse(_)
+                                                    : null);
+                                          }
+                                        }
 
-                                      // onValidate: (_) => controller.onValidate(_),
-                                      // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Obx(
-                                () => CustomDropdownButton<BreedModel>(
-                                  items: controller.breedsFinal,
-                                  selectedValue: controller.breedSelected.value,
-                                  onChanged: (BreedModel value) {
-                                    controller.animal.update((val) =>
-                                        val!.breed = value.id.toString());
-
-                                    print(controller.animal.value);
-                                    print(controller.animal.value);
-                                  },
-                                ),
-                              ),
-                              // Row(
-                              //   children: [
-                              //     Expanded(
-                              //       child: CustomInputField(
-                              //         maxLines: 1,
-                              //         inputController: controller.breedController,
-                              //         onTapCallBack: () {},
-                              //         labelText: 'Raça',
-                              //         icon: Icons.auto_awesome,
-                              //         onChanged: (_) => controller.animal
-                              //             .update((val) => val!.breed = _),
-                              //         // onValidate: (_) => controller.onValidate(_),
-                              //         // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: CustomInputField(
-                                      maxLines: 1,
-                                      inputController: controller.eccController,
-                                      onTapCallBack: () {},
-                                      labelText: 'Ecc',
-                                      keyboardType: TextInputType.number,
-                                      icon: Icons.eco,
-                                      onChanged: (_) => controller.animal
-                                          .update((val) =>
-                                              val!.ecc = double.parse(_)),
-                                      // onValidate: (_) => controller.onValidate(_),
-                                      // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
-                                    ),
+                                        // onValidate: (_) => controller.onValidate(_),
+                                        // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
+                                        ),
                                   ),
                                 ],
                               ),
@@ -151,11 +127,130 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                       labelText: 'Peso atual',
                                       keyboardType: TextInputType.number,
                                       icon: Icons.balance_rounded,
-                                      onChanged: (_) => controller.animal
-                                          .update((val) => val!.currentWeight =
-                                              double.parse(_)),
+                                      onChanged: (_) {
+                                        if (_.toString().trim().isNotEmpty) {
+                                          controller.animal.update((val) => val!
+                                              .currentWeight = double.parse(_));
+                                        }
+                                      },
                                       // onValidate: (_) => controller.onValidate(_),
                                       // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomInputField(
+                                      maxLines: 1,
+                                      inputController:
+                                          controller.previousWeightController,
+                                      onTapCallBack: () {},
+                                      labelText: 'Peso previsto',
+                                      keyboardType: TextInputType.number,
+                                      icon: Icons.balance_rounded,
+                                      onChanged: (_) {
+                                        if (_.toString().trim().isNotEmpty) {
+                                          controller.animal.update((val) =>
+                                              val!.previousWeight =
+                                                  double.parse(_));
+                                        }
+                                      },
+                                      // onValidate: (_) => controller.onValidate(_),
+                                      // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Obx(
+                                () => CustomDropdownButton<BreedModel>(
+                                  items: controller.breedsFinal,
+                                  label: 'Raça',
+                                  selectedValue: controller.breedSelected.value,
+                                  onChanged: (BreedModel value) {
+                                    controller.animal.update((val) =>
+                                        val!.breed = value.id.toString());
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Obx(
+                                () => CustomDropdownButton<String>(
+                                  label: "Gênero",
+                                  items: controller.genderTypeList,
+                                  selectedValue: controller
+                                      .genderTypeSelected.value
+                                      .toString(),
+                                  onChanged: (String value) {
+                                    controller.genderTypeSelected.value = value;
+                                    controller.animal
+                                        .update((val) => val!.gender = value);
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomInputField(
+                                      maxLines: 1,
+                                      inputController:
+                                          controller.typeController,
+                                      onTapCallBack: () {},
+                                      labelText: 'Tipo',
+                                      keyboardType: TextInputType.text,
+                                      icon: Icons.balance_rounded,
+                                      onChanged: (_) => controller.animal
+                                          .update((val) => val!.type = _),
+                                      // onValidate: (_) => controller.onValidate(_),
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.toString().trim().isEmpty) {
+                                          return "Campo não pode ser vazio";
+                                        }
+
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomInputField(
+                                      maxLines: 1,
+                                      inputController: controller.eccController,
+                                      onTapCallBack: () {},
+                                      labelText: 'Ecc',
+                                      keyboardType: TextInputType.number,
+                                      icon: Icons.eco,
+                                      onChanged: (_) => controller.animal
+                                          .update((val) =>
+                                              val!.ecc = double.parse(_)),
+                                      // onValidate: (_) => controller.onValidate(_),
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.toString().trim().isEmpty) {
+                                          return "Campo não pode ser vazio";
+                                        }
+
+                                        return null;
+                                      },
                                     ),
                                   ),
                                 ],
@@ -177,7 +272,14 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                       onChanged: (_) => controller.animal
                                           .update((val) => val!.identifier = _),
                                       // onValidate: (_) => controller.onValidate(_),
-                                      // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.toString().trim().isEmpty) {
+                                          return "Campo não pode ser vazio";
+                                        }
+
+                                        return null;
+                                      },
                                     ),
                                   ),
                                 ],
@@ -194,29 +296,6 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                     controller.showCalendar(context, 'born'),
                                 labelText: 'Data nascimento',
                                 icon: Icons.calendar_today,
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: CustomInputField(
-                                      maxLines: 1,
-                                      inputController:
-                                          controller.previousWeightController,
-                                      onTapCallBack: () {},
-                                      labelText: 'Peso previsto',
-                                      keyboardType: TextInputType.number,
-                                      icon: Icons.balance_rounded,
-                                      onChanged: (_) => controller.animal
-                                          .update((val) => val!.previousWeight =
-                                              double.parse(_)),
-                                      // onValidate: (_) => controller.onValidate(_),
-                                      // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
-                                    ),
-                                  ),
-                                ],
                               ),
                               const SizedBox(
                                 height: 12,
@@ -257,15 +336,27 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                         child: CustomInputField(
                                           maxLines: 1,
                                           inputController: controller
-                                              .cowIdentifierController,
+                                              .animalMotherIdentifierController,
                                           onTapCallBack: () {},
-                                          labelText: 'Identificar animal',
+                                          labelText: 'Identificar animal mãe',
                                           keyboardType: TextInputType.number,
                                           icon: Icons.pets_rounded,
                                           onChanged: (_) =>
                                               controller.animal.update(
-                                            (val) => val!.cowIdentifier = _,
+                                            (val) =>
+                                                val!.animalMotherIdentifier = _,
                                           ),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value
+                                                    .toString()
+                                                    .trim()
+                                                    .isEmpty) {
+                                              return "Campo não pode ser vazio";
+                                            }
+
+                                            return null;
+                                          },
                                           // onValidate: (_) => controller.onValidate(_),
                                           // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
                                         ),
@@ -273,37 +364,6 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                     ],
                                   ),
                                 ),
-                              ),
-
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              // CustomDropdownButton<String>(
-                              //   items: controller.propertiesStringList,
-                              //   selectedValue: controller.selectedProperty.toString(),
-                              //   onChanged: (String newValue) {
-                              //     controller.selectedProperty.value = newValue;
-                              //     controller.animal.update(
-                              //       (val) => val!.propertyId = int.parse(
-                              //           newValue.replaceAll('Propriedade', '').trim()),
-                              //     );
-                              //     controller.onSaved(newValue);
-                              //   },
-                              // ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: CustomInputField(
-                                      maxLines: 1,
-                                      inputController:
-                                          controller.propertyController,
-                                      onTapCallBack: () {},
-                                      isEnable: false,
-                                      labelText: 'Propriedade',
-                                      icon: Icons.agriculture_rounded,
-                                    ),
-                                  ),
-                                ],
                               ),
                               const SizedBox(
                                 height: 12,
@@ -316,9 +376,11 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                         value: controller.isDead.value,
                                         onChanged: (value) {
                                           controller.isDead.value = value!;
-                                          controller.animal.update(
-                                            (val) => val!.dead = value,
-                                          );
+                                          controller.animal.update((val) {
+                                            val!.dead = value;
+                                            val.deadDate = dateFormat
+                                                .format(DateTime.now());
+                                          });
                                         }),
                                   ),
                                   Text('Morreu?')

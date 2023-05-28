@@ -4,6 +4,6 @@ var typesApplication = {
   AnimalMedicationApplicationType.im.name: "Intramuscular",
   AnimalMedicationApplicationType.iv.name: "Intravenoso",
   AnimalMedicationApplicationType.sc.name: "Subcutânea",
-  AnimalMedicationApplicationType.imm.name: "intramamária",
+  AnimalMedicationApplicationType.imm.name: "Intramamária",
   AnimalMedicationApplicationType.pourOn.name: "Pourn On",
 };

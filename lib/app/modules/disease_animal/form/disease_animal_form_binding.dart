@@ -6,7 +6,7 @@ class DiseaseAnimalFormBinding implements Bindings {
   void dependencies() {
     Get.lazyPut<DiseaseAnimalFormController>(
       () => DiseaseAnimalFormController(
-        diseaseService: Get.find(),
+        diseaseAnimalService: Get.find(),
       ),
     );
   }

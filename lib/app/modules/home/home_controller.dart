@@ -39,7 +39,6 @@ class HomeController extends GetxController {
     super.onReady();
     try {
       final propertiesData = await _propertyService.getAllProperties();
-      final r = await _propertyService.saveProperties(propertiesData);
       propertiesFinal.assignAll(propertiesData);
       propertiesShowList.assignAll(propertiesFinal);
     } on Exception catch (e, s) {
