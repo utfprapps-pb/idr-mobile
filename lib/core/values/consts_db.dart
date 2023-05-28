@@ -17,3 +17,4 @@ const PLAGUES = 'plagues';
 const CULTURES = 'cultures';
 const VEGETABLE_DISEASES = 'vegetable_diseases';
 const VEGETABLE_PLAGUES = 'vegetable_plagues';
+const PRODUCTS = 'products';

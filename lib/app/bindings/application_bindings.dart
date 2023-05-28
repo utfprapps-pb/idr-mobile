@@ -24,6 +24,8 @@ import 'package:idr_mobile/app/data/repositories/plague/plague_repository.dart';
 import 'package:idr_mobile/app/data/repositories/plague/plague_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository.dart';
 import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/product/product_repository.dart';
+import 'package:idr_mobile/app/data/repositories/product/product_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository.dart';
 import 'package:idr_mobile/app/data/repositories/property/property_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/purchase/purchase_repository.dart';
@@ -59,6 +61,8 @@ import 'package:idr_mobile/app/data/services/plague/plague_service.dart';
 import 'package:idr_mobile/app/data/services/plague/plague_service_impl.dart';
 import 'package:idr_mobile/app/data/services/pregnancy_diagnosis/pregnancy_diagnosis_service.dart';
 import 'package:idr_mobile/app/data/services/pregnancy_diagnosis/pregnancy_diagnosis_service_impl.dart';
+import 'package:idr_mobile/app/data/services/product/product_service.dart';
+import 'package:idr_mobile/app/data/services/product/product_service_impl.dart';
 import 'package:idr_mobile/app/data/services/property/property_service.dart';
 import 'package:idr_mobile/app/data/services/property/property_service_impl.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -359,6 +363,22 @@ class ApplicationBindings implements Bindings {
       () => VegetableDiseaseServiceImpl(
         uuid: Get.find(),
         vegetableDiseaseRepository: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<ProductRepository>(
+      () => ProductRepositoryImpl(
+        authService: Get.find(),
+        restClient: Get.find(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<ProductService>(
+      () => ProductServiceImpl(
+        uuid: Get.find(),
+        productRepository: Get.find(),
       ),
       fenix: true,
     );
