@@ -39,10 +39,8 @@ class PregnancyDiagnosisFormController extends GetxController {
 
     if (data[0]['pregnancyDiagnosis'] != null) {
       setFormValues(data[0]['pregnancyDiagnosis']);
-      // pregnancyDiagnosis.update((val) {
-      //   val!.animalIdentifier =
-      //       data[0]['pregnancyDiagnosis'].animalIdentifier.toString();
-      // });
+      pregnancyDiagnosis.value = data[0]['pregnancyDiagnosis'];
+
       buttonText.value = "Editar";
     } else {
       dateController.text = dateFormat.format(DateTime.now());
@@ -71,14 +69,6 @@ class PregnancyDiagnosisFormController extends GetxController {
     dateLastInseminationController.text =
         values.dateLastInsemination.toString();
     dateController.text = values.date.toString();
-
-    pregnancyDiagnosis.update((val) {
-      val!.dateLastInsemination = values.dateLastInsemination.toString();
-      val.date = values.date.toString();
-      val.internalId = values.internalId;
-      val.id = values.id;
-      val.animalIdentifier = values.animalIdentifier;
-    });
   }
 
   onFormSubmit() async {
@@ -101,7 +91,8 @@ class PregnancyDiagnosisFormController extends GetxController {
     Get.back(result: isSaved);
   }
 
-  void showCalendar(BuildContext context, TextEditingController controller) {
+  void showCalendar(
+      BuildContext context, TextEditingController controller, String field) {
     final dataFormatted = dateController.text;
 
     var data = DateTime.now();
@@ -115,8 +106,13 @@ class PregnancyDiagnosisFormController extends GetxController {
       lastDate: data.add(Duration(days: 365 * 5)),
     ).then((DateTime? dataSelected) {
       if (dataSelected != null) {
-        pregnancyDiagnosis
-            .update((val) => val!.date = dateFormat.format(dataSelected));
+        if (field == 'dateLast') {
+          pregnancyDiagnosis.update((val) =>
+              val!.dateLastInsemination = dateFormat.format(dataSelected));
+        } else {
+          pregnancyDiagnosis
+              .update((val) => val!.date = dateFormat.format(dataSelected));
+        }
 
         controller.text = dateFormat.format(dataSelected);
       }
