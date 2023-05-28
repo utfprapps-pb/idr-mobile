@@ -86,9 +86,9 @@ class VegetableDiseaseModel {
       id: map['id']?.toInt(),
       infestationType: map['infestationType'],
       date: map['date'],
-      idProperty: map['idProperty']?.toInt(),
-      idCulture: map['idCulture']?.toInt(),
-      idDisease: map['idDisease']?.toInt(),
+      idProperty: map['property']['id']?.toInt(),
+      idCulture: map['culture']['id']?.toInt(),
+      idDisease: map['disease']['id']?.toInt(),
     );
   }
 
