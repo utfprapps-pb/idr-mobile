@@ -21,6 +21,7 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
     var status = false;
 
     try {
@@ -36,6 +37,8 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
 
   @override
   Future<bool> deletePurchase(PurchaseModel purchase) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -58,6 +61,8 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
 
   @override
   Future<bool> editPurchaseInDb(PurchaseModel purchase) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var purchases = _box.get(PURCHASES) ?? [];
@@ -173,6 +178,8 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
 
   @override
   Future<bool> savePurchasesInDb(List<PurchaseModel> purchases) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

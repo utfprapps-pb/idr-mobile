@@ -21,6 +21,8 @@ class MastitisRepositoryImpl implements MastitisRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -36,6 +38,8 @@ class MastitisRepositoryImpl implements MastitisRepository {
 
   @override
   Future<bool> deleteMastitis(MastitisModel mastitis) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -58,6 +62,8 @@ class MastitisRepositoryImpl implements MastitisRepository {
 
   @override
   Future<bool> editMastitisInDb(MastitisModel mastitis) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var mastitisBox = _box.get(MASTITIS) ?? [];
@@ -184,6 +190,8 @@ class MastitisRepositoryImpl implements MastitisRepository {
 
   @override
   Future<bool> saveMastitisListInDb(List<MastitisModel> mastitisList) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

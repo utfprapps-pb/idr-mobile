@@ -51,6 +51,8 @@ class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -66,6 +68,8 @@ class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
 
   @override
   Future<bool> deleteDiseaseAnimal(DiseaseAnimalModel diseaseAnimal) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -89,6 +93,8 @@ class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
 
   @override
   Future<bool> editDiseaseAnimalInDb(DiseaseAnimalModel diseaseAnimal) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var diseaseAnimals = _box.get(DISEASES_ANIMAL) ?? [];
@@ -177,6 +183,8 @@ class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
   @override
   Future<bool> saveDiseaseAnimalsInDb(
       List<DiseaseAnimalModel> diseaseAnimals) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

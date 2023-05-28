@@ -19,15 +19,7 @@ class CultureServiceImpl implements CultureService {
 
   @override
   Future<List<CultureModel>> getAllCultures() async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.none) {
-    // return _cultureRepository.getAllCulturesInDb();
-    // } else {
-    List<CultureModel> cultures = await _cultureRepository.getAllCultures();
-    saveCultures(cultures);
-    return cultures;
-    // }
+    return _cultureRepository.getAllCulturesInDb();
   }
 
   @override

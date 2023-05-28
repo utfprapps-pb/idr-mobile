@@ -22,15 +22,7 @@ class BreedServiceImpl implements BreedService {
 
   @override
   Future<List<BreedModel>> getAllBreeds() async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.none) {
-    // return _breedRepository.getAllBreedsInDb();
-    // } else {
-    List<BreedModel> breeds = await _breedRepository.getAllBreeds();
-    saveBreeds(breeds);
-    return breeds;
-    // }
+    return _breedRepository.getAllBreedsInDb();
   }
 
   @override

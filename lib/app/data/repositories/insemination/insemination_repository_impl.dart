@@ -55,6 +55,8 @@ class InseminationRepositoryImpl implements InseminationRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -70,6 +72,8 @@ class InseminationRepositoryImpl implements InseminationRepository {
 
   @override
   Future<bool> deleteInsemination(InseminationModel insemination) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -93,6 +97,8 @@ class InseminationRepositoryImpl implements InseminationRepository {
 
   @override
   Future<bool> editInseminationInDb(InseminationModel insemination) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var inseminations = _box.get(INSEMINATIONS) ?? [];
@@ -180,6 +186,8 @@ class InseminationRepositoryImpl implements InseminationRepository {
   @override
   Future<bool> saveInseminationsInDb(
       List<InseminationModel> inseminations) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

@@ -21,6 +21,8 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -37,6 +39,8 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
   @override
   Future<bool> deletePregnancyDiagnosis(
       PregnancyDiagnosisModel pregnancyDiagnosis) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -62,6 +66,8 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
   @override
   Future<bool> editPregnancyDiagnosisInDb(
       PregnancyDiagnosisModel pregnancyDiagnosis) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var pregnancyDiagnoses = _box.get(PREGNANCY_DIAGNOSIS) ?? [];
@@ -189,6 +195,8 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
   @override
   Future<bool> savePregnancyDiagnosesInDb(
       List<PregnancyDiagnosisModel> pregnancyDiagnoses) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

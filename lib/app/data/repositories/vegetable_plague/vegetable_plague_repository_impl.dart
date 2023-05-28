@@ -23,6 +23,8 @@ class VegetablePlagueRepositoryImpl implements VegetablePlagueRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -39,6 +41,8 @@ class VegetablePlagueRepositoryImpl implements VegetablePlagueRepository {
   @override
   Future<bool> deleteVegetablePlague(
       VegetablePlagueModel vegetablePlague) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -63,6 +67,8 @@ class VegetablePlagueRepositoryImpl implements VegetablePlagueRepository {
   @override
   Future<bool> editVegetablePlagueInDb(
       VegetablePlagueModel vegetablePlague) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var vegetablePlagues = _box.get(VEGETABLE_PLAGUES) ?? [];
@@ -184,6 +190,8 @@ class VegetablePlagueRepositoryImpl implements VegetablePlagueRepository {
   @override
   Future<bool> saveVegetablePlaguesInDb(
       List<VegetablePlagueModel> vegetablePlagues) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

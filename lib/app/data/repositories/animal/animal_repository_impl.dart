@@ -52,6 +52,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
   @override
   Future<bool> saveAnimalsInDb(List<AnimalModel> animals) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -117,6 +119,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -132,6 +136,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
   @override
   Future<bool> deleteAnimal(AnimalModel animal) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -154,6 +160,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
   @override
   Future<bool> editAnimalInDb(AnimalModel animal) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var animals = _box.get(ANIMALS) ?? [];

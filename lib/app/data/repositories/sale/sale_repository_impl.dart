@@ -23,6 +23,8 @@ class SaleRepositoryImpl implements SaleRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -38,6 +40,8 @@ class SaleRepositoryImpl implements SaleRepository {
 
   @override
   Future<bool> deleteSale(SaleModel sale) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -60,6 +64,8 @@ class SaleRepositoryImpl implements SaleRepository {
 
   @override
   Future<bool> editSaleInDb(SaleModel sale) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var sales = _box.get(SALES) ?? [];
@@ -172,6 +178,8 @@ class SaleRepositoryImpl implements SaleRepository {
 
   @override
   Future<bool> saveSalesInDb(List<SaleModel> sales) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

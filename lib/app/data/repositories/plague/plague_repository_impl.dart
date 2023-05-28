@@ -20,6 +20,8 @@ class PlagueRepositoryImpl implements PlagueRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -97,6 +99,8 @@ class PlagueRepositoryImpl implements PlagueRepository {
 
   @override
   Future<bool> savePlaguesInDb(List<PlagueModel> plagues) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

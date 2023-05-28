@@ -19,15 +19,7 @@ class PlagueServiceImpl implements PlagueService {
 
   @override
   Future<List<PlagueModel>> getAllPlagues() async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.none) {
-    // return _plagueRepository.getAllPlaguesInDb();
-    // } else {
-    List<PlagueModel> plagues = await _plagueRepository.getAllPlagues();
-    savePlagues(plagues);
-    return plagues;
-    // }
+    return _plagueRepository.getAllPlaguesInDb();
   }
 
   @override

@@ -22,6 +22,8 @@ class BreedRepositoryImpl implements BreedRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -99,6 +101,8 @@ class BreedRepositoryImpl implements BreedRepository {
 
   @override
   Future<bool> saveBreedsInDb(List<BreedModel> breeds) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

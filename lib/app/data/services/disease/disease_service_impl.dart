@@ -22,15 +22,7 @@ class DiseaseServiceImpl implements DiseaseService {
 
   @override
   Future<List<DiseaseModel>> getAllDiseases() async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.none) {
-    // return _diseaseRepository.getAllDiseasesInDb();
-    // } else {
-    List<DiseaseModel> diseases = await _diseaseRepository.getAllDiseases();
-    saveDiseases(diseases);
-    return diseases;
-    // }
+    return _diseaseRepository.getAllDiseasesInDb();
   }
 
   @override

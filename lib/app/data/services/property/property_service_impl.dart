@@ -15,18 +15,7 @@ class PropertyServiceImpl implements PropertyService {
 
   @override
   Future<List<PropertyModel>> getAllProperties() async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-    // if (connectivityResult == ConnectivityResult.none) {
-    // return _propertyRepository.getAllPropertiesInDb();
-    // } else {
-    List<PropertyModel> properties =
-        await _propertyRepository.getAllProperties();
-
-    saveProperties(properties);
     return _propertyRepository.getAllPropertiesInDb();
-
-    return properties;
-    // }
   }
 
   @override

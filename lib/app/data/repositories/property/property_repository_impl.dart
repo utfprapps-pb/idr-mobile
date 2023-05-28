@@ -51,6 +51,8 @@ class PropertyRepositoryImpl implements PropertyRepository {
 
   @override
   Future<bool> savePropertiesInDb(List<PropertyModel> properties) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -80,6 +82,8 @@ class PropertyRepositoryImpl implements PropertyRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

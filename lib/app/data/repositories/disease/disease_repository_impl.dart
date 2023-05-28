@@ -22,6 +22,8 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -99,6 +101,8 @@ class DiseaseRepositoryImpl implements DiseaseRepository {
 
   @override
   Future<bool> saveDiseasesInDb(List<DiseaseModel> diseases) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

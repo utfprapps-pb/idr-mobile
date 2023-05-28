@@ -17,28 +17,14 @@ class AnimalServiceImpl implements AnimalService {
 
   @override
   Future<List<AnimalModel>> getAllAnimals(int? propertyId) async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.none) {
-    // return _animalRepository.getAllAnimalsInDb(propertyId);
-    // } else {
-    List<AnimalModel> animals = await _animalRepository.getAllAnimals();
-    saveAnimals(animals);
     return _animalRepository.getAllAnimalsInDb(propertyId);
-    // }
   }
 
   @override
   Future<List<AnimalModel>> getAllAnimalsOnline() async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.none) {
-    // return _animalRepository.getAllAnimalsInDb(propertyId);
-    // } else {
     List<AnimalModel> animals = await _animalRepository.getAllAnimals();
     saveAnimals(animals);
     return animals;
-    // }
   }
 
   @override

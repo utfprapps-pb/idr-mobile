@@ -21,6 +21,8 @@ class CultureRepositoryImpl implements CultureRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -96,6 +98,8 @@ class CultureRepositoryImpl implements CultureRepository {
 
   @override
   Future<bool> saveCulturesInDb(List<CultureModel> cultures) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
