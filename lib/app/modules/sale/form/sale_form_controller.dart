@@ -32,7 +32,6 @@ class SaleFormController extends GetxController {
 
   @override
   void onInit() async {
-    // _saleService = Get.find<SaleService>();
     super.onInit();
     buttonText.value = "Salvar";
 
@@ -60,10 +59,8 @@ class SaleFormController extends GetxController {
 
     if (data[0]['sale'] != null) {
       setFormValues(data[0]['sale']);
-      // sale.update((val) {
-      //   val!.animalIdentifier =
-      //       data[0]['sale'].animalIdentifier.toString();
-      // });
+      sale.value = data[0]['sale'];
+
       buttonText.value = "Editar";
     } else {
       dateController.text = dateFormat.format(DateTime.now());
@@ -91,17 +88,6 @@ class SaleFormController extends GetxController {
     valueController.text = values.value != null ? values.value.toString() : '';
     reasonSaleSelected.value = values.reason ?? values.reason.toString();
     destinySelected.value = values.destiny ?? values.destiny.toString();
-
-    sale.update((val) {
-      val!.date = values.date.toString();
-      val.internalId = values.internalId;
-      val.id = values.id;
-      val.animalIdentifier = values.animalIdentifier;
-      val.weight = values.weight;
-      val.value = values.value;
-      val.destiny = values.destiny;
-      val.reason = values.reason;
-    });
   }
 
   onFormSubmit() async {
