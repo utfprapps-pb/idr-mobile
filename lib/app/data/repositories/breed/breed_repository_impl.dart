@@ -64,7 +64,7 @@ class BreedRepositoryImpl implements BreedRepository {
     // Caso houver erro
     if (result.hasError) {
       print('Error [${result.statusText}]');
-      throw Exception('Error _');
+      throw Exception('Error _ ${result.body}');
     }
 
     return result.body ?? <BreedModel>[];

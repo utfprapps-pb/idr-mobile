@@ -122,7 +122,7 @@ class SaleRepositoryImpl implements SaleRepository {
     // Caso houver erro
     if (result.hasError) {
       print('Error [${result.statusText}]');
-      throw Exception('Error _');
+      throw Exception('Error _ ${result.body}');
     }
 
     return result.body ?? <SaleModel>[];
