@@ -93,9 +93,9 @@ class AnimalPage extends GetView<AnimalController> {
                                 controller.goToNextPage(
                                     animal, Routes.DISEASE_ANIMAL);
                                 break;
-                              case AnimalMenuType.medicines:
+                              case AnimalMenuType.medications:
                                 controller.goToNextPage(
-                                    animal, Routes.MEDICINE);
+                                    animal, Routes.MEDICATION);
                                 break;
                               case AnimalMenuType.pregnancyDiagnosis:
                                 controller.goToNextPage(
@@ -181,7 +181,7 @@ class AnimalPage extends GetView<AnimalController> {
         ),
       ),
       PopupMenuItem<AnimalMenuType>(
-        value: AnimalMenuType.medicines,
+        value: AnimalMenuType.medications,
         child: Row(
           children: const [
             Padding(
