@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_animal_menu.dart';
+import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/modules/animal/animal_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_outlined_button.dart';
 import 'package:idr_mobile/app/widgets/custom_slidable.dart';
@@ -112,7 +113,9 @@ class AnimalPage extends GetView<AnimalController> {
                             }
                           },
                           itemBuilder: (BuildContext context) =>
-                              _itemsPopMenu(),
+                              (animal.dead != null && animal.dead == true)
+                                  ? []
+                                  : _itemsPopMenu(),
                           child: CustomSlidable(
                             identity: index,
                             content:
