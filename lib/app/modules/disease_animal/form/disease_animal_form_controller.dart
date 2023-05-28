@@ -39,10 +39,7 @@ class DiseaseAnimalFormController extends GetxController {
     if (data[0]['diseaseAnimal'] != null) {
       setFormValues(data[0]['diseaseAnimal']);
       diseaseAnimal.value = data[0]['diseaseAnimal'];
-      // diseaseAnimal.update((val) {
-      //   val!.animalIdentifier =
-      //       data[0]['diseaseAnimal'].animalIdentifier.toString();
-      // });
+
       buttonText.value = "Editar";
     } else {
       dateController.text = dateFormat.format(DateTime.now());
@@ -65,13 +62,6 @@ class DiseaseAnimalFormController extends GetxController {
   void setFormValues(DiseaseAnimalModel values) {
     diagnosticController.text = values.diagnostic.toString();
     dateController.text = values.dateDiagnostic.toString();
-
-    diseaseAnimal.update((val) {
-      val!.diagnostic = values.diagnostic.toString();
-      val.internalId = values.internalId.toString();
-      val.dateDiagnostic = values.dateDiagnostic.toString();
-      val.animalIdentifier = values.animalIdentifier.toString();
-    });
   }
 
   onFormSubmit() async {
