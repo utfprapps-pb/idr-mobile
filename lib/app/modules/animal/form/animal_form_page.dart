@@ -12,6 +12,7 @@ import 'package:idr_mobile/app/widgets/custom_input_field.dart';
 import 'package:idr_mobile/app/widgets/custom_loading.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
+import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 
 class AnimalPageForm extends GetView<AnimalFormController> {
   @override
@@ -337,7 +338,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                           inputController: controller
                                               .animalMotherIdentifierController,
                                           onTapCallBack: () {},
-                                          labelText: 'Identificar animal',
+                                          labelText: 'Identificar animal mãe',
                                           keyboardType: TextInputType.number,
                                           icon: Icons.pets_rounded,
                                           onChanged: (_) =>
@@ -345,6 +346,17 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                             (val) =>
                                                 val!.animalMotherIdentifier = _,
                                           ),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value
+                                                    .toString()
+                                                    .trim()
+                                                    .isEmpty) {
+                                              return "Campo não pode ser vazio";
+                                            }
+
+                                            return null;
+                                          },
                                           // onValidate: (_) => controller.onValidate(_),
                                           // validator: (_) => GetUtils.isNull(_) ? null : 'Insira um valor',
                                         ),
@@ -364,9 +376,11 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                         value: controller.isDead.value,
                                         onChanged: (value) {
                                           controller.isDead.value = value!;
-                                          controller.animal.update(
-                                            (val) => val!.dead = value,
-                                          );
+                                          controller.animal.update((val) {
+                                            val!.dead = value;
+                                            val.deadDate = dateFormat
+                                                .format(DateTime.now());
+                                          });
                                         }),
                                   ),
                                   Text('Morreu?')
