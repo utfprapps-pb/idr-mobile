@@ -36,7 +36,6 @@ class MedicationFormController extends GetxController {
 
   @override
   void onInit() async {
-    // _medicationService = Get.find<MedicationService>();
     super.onInit();
     buttonText.value = "Salvar";
     applicationWay.value =
@@ -57,10 +56,7 @@ class MedicationFormController extends GetxController {
     if (data[0]['medication'] != null) {
       medication.value = data[0]['medication'];
       setFormValues(data[0]['medication']);
-      // medication.update((val) {
-      //   val!.animalIdentifier =
-      //       data[0]['medication'].animalIdentifier.toString();
-      // });
+
       buttonText.value = "Editar";
     } else {
       applicationDateController.text = dateFormat.format(DateTime.now());
