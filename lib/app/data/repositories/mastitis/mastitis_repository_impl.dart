@@ -4,18 +4,25 @@ import 'package:idr_mobile/app/data/models/mastitis_model.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/providers/db/db.dart';
 import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository.dart';
+import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class MastitisRepositoryImpl implements MastitisRepository {
   final RestClient _restClient;
+  final AuthService auth;
   late Box _box;
 
   MastitisRepositoryImpl({
     required RestClient restClient,
-  }) : _restClient = restClient;
+    required AuthService authService,
+  })  : _restClient = restClient,
+        auth = authService;
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -31,6 +38,8 @@ class MastitisRepositoryImpl implements MastitisRepository {
 
   @override
   Future<bool> deleteMastitis(MastitisModel mastitis) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -53,6 +62,8 @@ class MastitisRepositoryImpl implements MastitisRepository {
 
   @override
   Future<bool> editMastitisInDb(MastitisModel mastitis) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var mastitisBox = _box.get(MASTITIS) ?? [];
@@ -85,9 +96,36 @@ class MastitisRepositoryImpl implements MastitisRepository {
   }
 
   @override
-  Future<List<MastitisModel>> getAllMastitis() {
-    // TODO: implement getAllMastitis
-    throw UnimplementedError();
+  Future<List<MastitisModel>> getAllMastitis() async {
+    final result = await _restClient.get(
+      'mastitis',
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        final resultData = data;
+
+        if (resultData != null) {
+          try {
+            var mastitisList = resultData
+                .map<MastitisModel>((p) => MastitisModel.fromMap(p))
+                .toList();
+
+            return mastitisList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
+        } else {
+          return <MastitisModel>[];
+        }
+      },
+    );
+
+    // Caso houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _ ${result.body}');
+    }
+
+    return result.body ?? <MastitisModel>[];
   }
 
   @override
@@ -142,17 +180,28 @@ class MastitisRepositoryImpl implements MastitisRepository {
     return status;
   }
 
-  @override
-  Future<bool> saveMastitissInDb(List<MastitisModel> mastitiss) {
-    // TODO: implement saveMastitissInDb
-    throw UnimplementedError();
-  }
-
   MastitisModel? findMastitis(
       List<MastitisModel> list, MastitisModel mastitis) {
     MastitisModel? im = list.firstWhereOrNull(
         (element) => element.internalId == mastitis.internalId);
 
     return im;
+  }
+
+  @override
+  Future<bool> saveMastitisListInDb(List<MastitisModel> mastitisList) async {
+    _box = await DatabaseInit().getInstance();
+
+    var status = false;
+
+    try {
+      _box.put(MASTITIS, mastitisList);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 }

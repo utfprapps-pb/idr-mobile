@@ -9,22 +9,16 @@ import 'package:uuid/uuid.dart';
 
 class PregnancyDiagnosisServiceImpl implements PregnancyDiagnosisService {
   PregnancyDiagnosisRepository _pregnancyDiagnosisRepository;
-  Connectivity _connectivity;
   Uuid _uuid;
 
   PregnancyDiagnosisServiceImpl({
     required PregnancyDiagnosisRepository pregnancyDiagnosisRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _pregnancyDiagnosisRepository = pregnancyDiagnosisRepository,
+  })  : _pregnancyDiagnosisRepository = pregnancyDiagnosisRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
+  Future<bool> deleteAll() => _pregnancyDiagnosisRepository.deleteAll();
 
   @override
   Future<bool> deletePregnancyDiagnosis(
@@ -64,5 +58,13 @@ class PregnancyDiagnosisServiceImpl implements PregnancyDiagnosisService {
 
     return _pregnancyDiagnosisRepository
         .savePregnancyDiagnosesInDb(pregnancyDiagnoses);
+  }
+
+  @override
+  Future<List<PregnancyDiagnosisModel>> getAllPregnancyDiagnosesOnline() async {
+    List<PregnancyDiagnosisModel> pregnancyDiagnoses =
+        await _pregnancyDiagnosisRepository.getAllPregnancyDiagnoses();
+    savePregnancyDiagnoses(pregnancyDiagnoses);
+    return pregnancyDiagnoses;
   }
 }

@@ -44,7 +44,7 @@ class AnimalRepositoryImpl implements AnimalRepository {
     // Caso houver erro
     if (result.hasError) {
       print('Error [${result.statusText}]');
-      throw Exception('Error _');
+      throw Exception('Error _ ${result.body}');
     }
 
     return result.body ?? <AnimalModel>[];
@@ -54,13 +54,17 @@ class AnimalRepositoryImpl implements AnimalRepository {
   Future<bool> saveAnimalsInDb(List<AnimalModel> animals) async {
     _box = await DatabaseInit().getInstance();
 
-    // animals.forEach((e) => {
-    //       if (e.internalId == null) {e.internalId = uuid.v1()},
-    //     });
+    var status = false;
 
-    _box.put(ANIMALS, animals.toList());
+    try {
+      _box.put(ANIMALS, animals);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
 
-    return true;
+    return status;
   }
 
   @override
@@ -115,6 +119,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
   @override
   Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -130,6 +136,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
   @override
   Future<bool> deleteAnimal(AnimalModel animal) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -152,6 +160,8 @@ class AnimalRepositoryImpl implements AnimalRepository {
 
   @override
   Future<bool> editAnimalInDb(AnimalModel animal) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var animals = _box.get(ANIMALS) ?? [];

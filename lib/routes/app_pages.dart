@@ -19,10 +19,10 @@ import 'package:idr_mobile/app/modules/mastitis/form/mastitis_form_binding.dart'
 import 'package:idr_mobile/app/modules/mastitis/form/mastitis_form_page.dart';
 import 'package:idr_mobile/app/modules/mastitis/mastitis_binding.dart';
 import 'package:idr_mobile/app/modules/mastitis/mastitis_page.dart';
-import 'package:idr_mobile/app/modules/medicine/form/medicine_form_binding.dart';
-import 'package:idr_mobile/app/modules/medicine/form/medicine_form_page.dart';
-import 'package:idr_mobile/app/modules/medicine/medicine_binding.dart';
-import 'package:idr_mobile/app/modules/medicine/medicine_page.dart';
+import 'package:idr_mobile/app/modules/medication/form/medication_form_binding.dart';
+import 'package:idr_mobile/app/modules/medication/form/medication_form_page.dart';
+import 'package:idr_mobile/app/modules/medication/medication_binding.dart';
+import 'package:idr_mobile/app/modules/medication/medication_page.dart';
 import 'package:idr_mobile/app/modules/pregnancy_diagnosis/form/pregnancy_diagnosis_form_binding.dart';
 import 'package:idr_mobile/app/modules/pregnancy_diagnosis/form/pregnancy_diagnosis_form_page.dart';
 import 'package:idr_mobile/app/modules/pregnancy_diagnosis/pregnancy_diagnosis_binding.dart';
@@ -37,6 +37,14 @@ import 'package:idr_mobile/app/modules/sale/form/sale_form_binding.dart';
 import 'package:idr_mobile/app/modules/sale/form/sale_form_page.dart';
 import 'package:idr_mobile/app/modules/sale/sale_binding.dart';
 import 'package:idr_mobile/app/modules/sale/sale_page.dart';
+import 'package:idr_mobile/app/modules/sync/sync_binding.dart';
+import 'package:idr_mobile/app/modules/sync/sync_page.dart';
+import 'package:idr_mobile/app/modules/sync_forced/sync_forced_binding.dart';
+import 'package:idr_mobile/app/modules/sync_forced/sync_forced_page.dart';
+import 'package:idr_mobile/app/modules/vegetable_plague/form/vegetable_plague_form_binding.dart';
+import 'package:idr_mobile/app/modules/vegetable_plague/form/vegetable_plague_form_page.dart';
+import 'package:idr_mobile/app/modules/vegetable_plague/vegetable_plague_binding.dart';
+import 'package:idr_mobile/app/modules/vegetable_plague/vegetable_plague_page.dart';
 
 part './routes.dart';
 
@@ -121,17 +129,17 @@ abstract class AppPages {
       ],
     ),
     GetPage(
-      name: Routes.MEDICINE,
-      page: () => MedicinePage(),
+      name: Routes.MEDICATION,
+      page: () => MedicationPage(),
       bindings: [
-        MedicineBinding(),
+        MedicationBinding(),
       ],
     ),
     GetPage(
-      name: Routes.MEDICINE_FORM,
-      page: () => MedicineFormPage(),
+      name: Routes.MEDICATION_FORM,
+      page: () => MedicationFormPage(),
       bindings: [
-        MedicineFormBinding(),
+        MedicationFormBinding(),
       ],
     ),
     GetPage(
@@ -174,6 +182,34 @@ abstract class AppPages {
       page: () => PurchaseFormPage(),
       bindings: [
         PurchaseFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.VEGETABLE_PLAGUE,
+      page: () => VegetablePlaguePage(),
+      bindings: [
+        VegetablePlagueBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.VEGETABLE_PLAGUE_FORM,
+      page: () => VegetablePlagueFormPage(),
+      bindings: [
+        VegetablePlagueFormBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.SYNC,
+      page: () => SyncPage(),
+      bindings: [
+        SyncBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.FORCED_SYNC,
+      page: () => SyncForcedPage(),
+      bindings: [
+        SyncForcedBinding(),
       ],
     ),
   ];

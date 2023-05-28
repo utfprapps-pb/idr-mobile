@@ -19,9 +19,20 @@ class PlagueRepositoryImpl implements PlagueRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
+    var status = false;
+
+    try {
+      _box.delete(PLAGUES);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -33,11 +44,15 @@ class PlagueRepositoryImpl implements PlagueRepository {
         final resultData = data;
 
         if (resultData != null) {
-          var plagueList = resultData
-              .map<PlagueModel>((p) => PlagueModel.fromMap(p))
-              .toList();
+          try {
+            var plagueList = resultData
+                .map<PlagueModel>((p) => PlagueModel.fromMap(p))
+                .toList();
 
-          return plagueList;
+            return plagueList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
         } else {
           return <PlagueModel>[];
         }
@@ -47,7 +62,7 @@ class PlagueRepositoryImpl implements PlagueRepository {
     // Caso houver erro
     if (result.hasError) {
       print('Error [${result.statusText}]');
-      throw Exception('Error _');
+      throw Exception('Error _ ${result.body}');
     }
 
     return result.body ?? <PlagueModel>[];
@@ -84,6 +99,8 @@ class PlagueRepositoryImpl implements PlagueRepository {
 
   @override
   Future<bool> savePlaguesInDb(List<PlagueModel> plagues) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

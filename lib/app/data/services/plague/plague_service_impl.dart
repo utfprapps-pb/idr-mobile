@@ -6,34 +6,20 @@ import 'package:uuid/uuid.dart';
 
 class PlagueServiceImpl implements PlagueService {
   final PlagueRepository _plagueRepository;
-  final Connectivity _connectivity;
   final Uuid _uuid;
 
   PlagueServiceImpl({
     required PlagueRepository plagueRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _plagueRepository = plagueRepository,
+  })  : _plagueRepository = plagueRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
+  Future<bool> deleteAll() => _plagueRepository.deleteAll();
 
   @override
   Future<List<PlagueModel>> getAllPlagues() async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.none) {
-    // return _plagueRepository.getAllPlaguesInDb();
-    // } else {
-    List<PlagueModel> plagues = await _plagueRepository.getAllPlagues();
-    savePlagues(plagues);
-    return plagues;
-    // }
+    return _plagueRepository.getAllPlaguesInDb();
   }
 
   @override
@@ -52,5 +38,12 @@ class PlagueServiceImpl implements PlagueService {
     }
 
     return _plagueRepository.savePlaguesInDb(plagues);
+  }
+
+  @override
+  Future<List<PlagueModel>> getAllPlaguesOnline() async {
+    List<PlagueModel> plagues = await _plagueRepository.getAllPlagues();
+    savePlagues(plagues);
+    return plagues;
   }
 }

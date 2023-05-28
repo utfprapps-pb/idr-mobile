@@ -6,22 +6,16 @@ import 'package:uuid/uuid.dart';
 
 class SaleServiceImpl implements SaleService {
   SaleRepository _saleRepository;
-  Connectivity _connectivity;
   Uuid _uuid;
 
   SaleServiceImpl({
     required SaleRepository saleRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _saleRepository = saleRepository,
+  })  : _saleRepository = saleRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
+  Future<bool> deleteAll() => _saleRepository.deleteAll();
 
   @override
   Future<bool> deleteSale(SaleModel sale) => _saleRepository.deleteSale(sale);
@@ -49,5 +43,12 @@ class SaleServiceImpl implements SaleService {
     }
 
     return _saleRepository.saveSalesInDb(sales);
+  }
+
+  @override
+  Future<List<SaleModel>> getAllSalesOnline() async {
+    List<SaleModel> sales = await _saleRepository.getAllSales();
+    saveSales(sales);
+    return sales;
   }
 }

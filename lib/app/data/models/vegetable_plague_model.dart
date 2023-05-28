@@ -6,7 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'vegetable_plague_model.g.dart';
 
-@HiveType(typeId: 12)
+@HiveType(typeId: 16)
 class VegetablePlagueModel {
   @HiveField(1)
   String? internalId;
@@ -87,9 +87,9 @@ class VegetablePlagueModel {
       id: map['id']?.toInt(),
       infestationType: map['infestationType'],
       date: map['date'],
-      idProperty: map['idProperty']?.toInt(),
-      idCulture: map['idCulture']?.toInt(),
-      idPlague: map['idPlague']?.toInt(),
+      idProperty: map['property']['id']?.toInt(),
+      idCulture: map['culture']['id']?.toInt(),
+      idPlague: map['plague']['id']?.toInt(),
     );
   }
 

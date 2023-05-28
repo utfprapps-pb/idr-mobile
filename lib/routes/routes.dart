@@ -2,6 +2,8 @@ part of 'app_pages.dart';
 
 abstract class Routes {
   static const HOME = '/home';
+  static const SYNC = '/sync';
+  static const FORCED_SYNC = '/forced-sync';
   static const LOGIN = '/login';
   static const PROPERTY = '/property';
 
@@ -14,8 +16,8 @@ abstract class Routes {
   static const MASTITIS_FORM = '/mastitis/form';
   static const DISEASE_ANIMAL = '/disease-animal';
   static const DISEASE_ANIMAL_FORM = '/disease-animal/form';
-  static const MEDICINE = '/medicine';
-  static const MEDICINE_FORM = '/medicine/form';
+  static const MEDICATION = '/medication';
+  static const MEDICATION_FORM = '/medication/form';
   static const PREGNANCY_DIAGNOSIS = '/pregnancy-diagnosis';
   static const PREGNANCY_DIAGNOSIS_FORM = '/pregnancy-diagnosis/form';
   static const SALE = '/sale';
@@ -26,4 +28,6 @@ abstract class Routes {
   //Rotas módulo vegetable
   static const VEGETABLE_DISEASE = '/vegetable-disease';
   static const VEGETABLE_DISEASE_FORM = '/vegetable-disease/form';
+  static const VEGETABLE_PLAGUE = '/vegetable-plague';
+  static const VEGETABLE_PLAGUE_FORM = '/vegetable-plague/form';
 }

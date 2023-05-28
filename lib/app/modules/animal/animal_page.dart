@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_animal_menu.dart';
 import 'package:idr_mobile/app/modules/animal/animal_controller.dart';
@@ -92,9 +93,9 @@ class AnimalPage extends GetView<AnimalController> {
                                 controller.goToNextPage(
                                     animal, Routes.DISEASE_ANIMAL);
                                 break;
-                              case AnimalMenuType.medicines:
+                              case AnimalMenuType.medications:
                                 controller.goToNextPage(
-                                    animal, Routes.MEDICINE);
+                                    animal, Routes.MEDICATION);
                                 break;
                               case AnimalMenuType.pregnancyDiagnosis:
                                 controller.goToNextPage(
@@ -117,7 +118,7 @@ class AnimalPage extends GetView<AnimalController> {
                             content:
                                 '${animal.name ?? animal.identifier ?? ''}',
                             title: '${animal.id ?? index} - ${animal.bornDate}',
-                            icon: Icons.pets,
+                            icon: FontAwesomeIcons.cow,
                             onPressedEditCallBack: (BuildContext context) {
                               controller.goToForm(animal, index);
                             },
@@ -180,7 +181,7 @@ class AnimalPage extends GetView<AnimalController> {
         ),
       ),
       PopupMenuItem<AnimalMenuType>(
-        value: AnimalMenuType.medicines,
+        value: AnimalMenuType.medications,
         child: Row(
           children: const [
             Padding(

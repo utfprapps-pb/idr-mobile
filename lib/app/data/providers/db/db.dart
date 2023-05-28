@@ -6,12 +6,14 @@ import 'package:idr_mobile/app/data/models/disease_animal_model.dart';
 import 'package:idr_mobile/app/data/models/disease_model.dart';
 import 'package:idr_mobile/app/data/models/insemination_model.dart';
 import 'package:idr_mobile/app/data/models/mastitis_model.dart';
-import 'package:idr_mobile/app/data/models/medicine_model.dart';
+import 'package:idr_mobile/app/data/models/medication_model.dart';
 import 'package:idr_mobile/app/data/models/plague_model.dart';
 import 'package:idr_mobile/app/data/models/pregnancy_diagnosis_model.dart';
+import 'package:idr_mobile/app/data/models/product_model.dart';
 import 'package:idr_mobile/app/data/models/purchase_model.dart';
 import 'package:idr_mobile/app/data/models/sale_model.dart';
 import 'package:idr_mobile/app/data/models/property_model.dart';
+import 'package:idr_mobile/app/data/models/vegetable_disease_model.dart';
 import 'package:idr_mobile/app/data/models/vegetable_plague_model.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
@@ -34,7 +36,7 @@ class DatabaseInit {
     Hive.registerAdapter(InseminationModelAdapter());
     Hive.registerAdapter(MastitisModelAdapter());
     Hive.registerAdapter(DiseaseAnimalModelAdapter());
-    Hive.registerAdapter(MedicineModelAdapter());
+    Hive.registerAdapter(MedicationModelAdapter());
     Hive.registerAdapter(PregnancyDiagnosisModelAdapter());
     Hive.registerAdapter(SaleModelAdapter());
     Hive.registerAdapter(PurchaseModelAdapter());
@@ -43,5 +45,7 @@ class DatabaseInit {
     Hive.registerAdapter(PlagueModelAdapter());
     Hive.registerAdapter(CultureModelAdapter());
     Hive.registerAdapter(VegetablePlagueModelAdapter());
+    Hive.registerAdapter(VegetableDiseaseModelAdapter());
+    Hive.registerAdapter(ProductModelAdapter());
   }
 }

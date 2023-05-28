@@ -41,4 +41,22 @@ class MastitisServiceImpl implements MastitisService {
 
     return _mastitisRepository.saveMastitisInDb(mastitis);
   }
+
+  @override
+  Future<bool> saveMastitisList(List<MastitisModel> mastitisList) {
+    for (var e in mastitisList) {
+      {
+        e.internalId ??= _uuid.v1();
+      }
+    }
+
+    return _mastitisRepository.saveMastitisListInDb(mastitisList);
+  }
+
+  @override
+  Future<List<MastitisModel>> getAllMastitisOnline() async {
+    List<MastitisModel> mastitis = await _mastitisRepository.getAllMastitis();
+    saveMastitisList(mastitis);
+    return mastitis;
+  }
 }

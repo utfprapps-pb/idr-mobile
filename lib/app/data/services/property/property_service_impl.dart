@@ -8,30 +8,28 @@ import 'package:idr_mobile/app/data/services/property/property_service.dart';
 
 class PropertyServiceImpl implements PropertyService {
   PropertyRepository _propertyRepository;
-  Connectivity _connectivity;
 
   PropertyServiceImpl({
     required PropertyRepository propertyRepository,
-    required Connectivity connectivity,
-  })  : _propertyRepository = propertyRepository,
-        _connectivity = connectivity;
+  }) : _propertyRepository = propertyRepository;
 
   @override
   Future<List<PropertyModel>> getAllProperties() async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-    // if (connectivityResult == ConnectivityResult.none) {
     return _propertyRepository.getAllPropertiesInDb();
-    // } else {
-    List<PropertyModel> properties =
-        await _propertyRepository.getAllProperties();
-
-    saveProperties(properties);
-
-    return properties;
-    // }
   }
 
   @override
   Future<bool> saveProperties(List<PropertyModel> properties) =>
       _propertyRepository.savePropertiesInDb(properties);
+
+  @override
+  Future<List<PropertyModel>> getAllPropertiesOnline() async {
+    List<PropertyModel> properties =
+        await _propertyRepository.getAllProperties();
+    saveProperties(properties);
+    return properties;
+  }
+
+  @override
+  Future<bool> deleteAll() => _propertyRepository.deleteAll();
 }

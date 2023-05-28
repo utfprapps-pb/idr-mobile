@@ -7,22 +7,16 @@ import 'package:uuid/uuid.dart';
 
 class PurchaseServiceImpl implements PurchaseService {
   PurchaseRepository _purchaseRepository;
-  Connectivity _connectivity;
   Uuid _uuid;
 
   PurchaseServiceImpl({
     required PurchaseRepository purchaseRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _purchaseRepository = purchaseRepository,
+  })  : _purchaseRepository = purchaseRepository,
         _uuid = uuid;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
-  }
+  Future<bool> deleteAll() => _purchaseRepository.deleteAll();
 
   @override
   Future<bool> deletePurchase(PurchaseModel purchase) =>
@@ -52,5 +46,12 @@ class PurchaseServiceImpl implements PurchaseService {
     }
 
     return _purchaseRepository.savePurchasesInDb(purchases);
+  }
+
+  @override
+  Future<List<PurchaseModel>> getAllPurchasesOnline() async {
+    List<PurchaseModel> purchases = await _purchaseRepository.getAllPurchases();
+    savePurchases(purchases);
+    return purchases;
   }
 }

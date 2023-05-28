@@ -7,28 +7,24 @@ import 'package:uuid/uuid.dart';
 
 class AnimalServiceImpl implements AnimalService {
   AnimalRepository _animalRepository;
-  Connectivity _connectivity;
   Uuid _uuid;
 
   AnimalServiceImpl({
     required AnimalRepository animalRepository,
-    required Connectivity connectivity,
     required Uuid uuid,
-  })  : _connectivity = connectivity,
-        _animalRepository = animalRepository,
+  })  : _animalRepository = animalRepository,
         _uuid = uuid;
 
   @override
   Future<List<AnimalModel>> getAllAnimals(int? propertyId) async {
-    // var connectivityResult = await (Connectivity().checkConnectivity());
-
-    // if (connectivityResult == ConnectivityResult.none) {
     return _animalRepository.getAllAnimalsInDb(propertyId);
-    // } else {
+  }
+
+  @override
+  Future<List<AnimalModel>> getAllAnimalsOnline() async {
     List<AnimalModel> animals = await _animalRepository.getAllAnimals();
     saveAnimals(animals);
     return animals;
-    // }
   }
 
   @override

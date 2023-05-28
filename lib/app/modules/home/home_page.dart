@@ -44,6 +44,13 @@ class HomePage extends GetView<HomeController> {
                           ),
                         ],
                       ),
+                      IconButton(
+                        onPressed: () =>
+                            scaffoldKey.currentState!.openEndDrawer(),
+                        icon: const Icon(
+                          Icons.menu,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -92,7 +99,7 @@ class HomePage extends GetView<HomeController> {
                               content: '${property.ocupationArea}',
                               title:
                                   '${property.id} - ${property.ocupationArea}',
-                              icon: Icons.terrain,
+                              icon: Icons.agriculture_rounded,
                             ),
                           );
                         },

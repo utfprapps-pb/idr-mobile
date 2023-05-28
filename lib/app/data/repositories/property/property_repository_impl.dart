@@ -26,11 +26,14 @@ class PropertyRepositoryImpl implements PropertyRepository {
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
         final resultData = data;
-
         if (resultData != null) {
-          return resultData
-              .map<PropertyModel>((p) => PropertyModel.fromMap(p))
-              .toList();
+          try {
+            return resultData
+                .map<PropertyModel>((p) => PropertyModel.fromMap(p))
+                .toList();
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
         } else {
           return <PropertyModel>[];
         }
@@ -40,7 +43,7 @@ class PropertyRepositoryImpl implements PropertyRepository {
     // Cao houver erro
     if (result.hasError) {
       print('Error [${result.statusText}]');
-      throw Exception('Error _');
+      throw Exception('Error _ ${result.body}');
     }
 
     return result.body ?? <PropertyModel>[];
@@ -50,10 +53,17 @@ class PropertyRepositoryImpl implements PropertyRepository {
   Future<bool> savePropertiesInDb(List<PropertyModel> properties) async {
     _box = await DatabaseInit().getInstance();
 
-    _box.put(PROPERTIES, properties.toList());
-    var propertyBox = _box.get(PROPERTIES);
+    var status = false;
 
-    return true;
+    try {
+      _box.put(PROPERTIES, properties);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -68,5 +78,22 @@ class PropertyRepositoryImpl implements PropertyRepository {
         properties != null ? List<PropertyModel>.from(properties as List) : [];
 
     return propertiesList;
+  }
+
+  @override
+  Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
+    var status = false;
+
+    try {
+      _box.delete(PROPERTIES);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 }

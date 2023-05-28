@@ -74,12 +74,8 @@ class AnimalFormController extends GetxController {
     }
 
     if (data[0]['animal'] != null) {
-      var a = data[0]['animal'];
+      animal.value = data[0]['animal'];
 
-      animal.value = a;
-
-      print(a);
-      print(animal.value);
       setFormValues(data[0]['animal']);
       buttonText.value = "Editar";
     } else {
@@ -239,6 +235,7 @@ class AnimalFormController extends GetxController {
       b != null ? breedSelected.value = b : breedSelected.value = list[0];
     } else {
       breedSelected.value = breedsFinal.value[0];
+      animal.update((val) => val!.breed = breedSelected.value.id.toString());
     }
   }
 }

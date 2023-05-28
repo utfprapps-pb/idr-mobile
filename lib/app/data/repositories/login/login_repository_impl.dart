@@ -34,11 +34,39 @@ class LoginRepositoryImpl implements LoginRepository {
     // Cao houver erro
     if (result.hasError) {
       print('Error [${result.statusText}]');
-      throw Exception('Error _');
+      throw Exception('Error _ ${result.body}');
     }
 
     return result.body;
   }
 
   Future<UserModel?> logout() async {}
+
+  @override
+  Future<LoginModel?> refreshToken(dynamic json) async {
+    final result = await _restClient.post(
+      'tokenAuth/refreshToken',
+      json,
+      decoder: (data) {
+        // Pega os dados
+        final resultData = data;
+        // Verifica se não é nulo
+        if (resultData != null) {
+          // Passa para a lista de CHAVExVALOR (JSON) do model
+          return LoginModel.fromMap(resultData);
+        } else {
+          //se for vazio retorna nulo
+          return null;
+        }
+      },
+    );
+
+    // Cao houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _ ${result.body}');
+    }
+
+    return result.body;
+  }
 }

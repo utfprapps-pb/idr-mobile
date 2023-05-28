@@ -8,7 +8,7 @@ part of 'vegetable_plague_model.dart';
 
 class VegetablePlagueModelAdapter extends TypeAdapter<VegetablePlagueModel> {
   @override
-  final int typeId = 12;
+  final int typeId = 16;
 
   @override
   VegetablePlagueModel read(BinaryReader reader) {

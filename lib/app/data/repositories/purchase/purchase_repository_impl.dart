@@ -5,6 +5,7 @@ import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/providers/db/db.dart';
 import 'package:idr_mobile/app/data/repositories/purchase/purchase_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
+import 'package:idr_mobile/core/utils/header_api.dart';
 import 'package:idr_mobile/core/values/consts_db.dart';
 
 class PurchaseRepositoryImpl implements PurchaseRepository {
@@ -19,13 +20,25 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+    var status = false;
+
+    try {
+      _box.delete(PURCHASES);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
   Future<bool> deletePurchase(PurchaseModel purchase) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {
@@ -48,6 +61,8 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
 
   @override
   Future<bool> editPurchaseInDb(PurchaseModel purchase) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
     try {
       var purchases = _box.get(PURCHASES) ?? [];
@@ -79,9 +94,36 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
   }
 
   @override
-  Future<List<PurchaseModel>> getAllPurchases() {
-    // TODO: implement getAllPurchases
-    throw UnimplementedError();
+  Future<List<PurchaseModel>> getAllPurchases() async {
+    final result = await _restClient.get(
+      'purchases',
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        final resultData = data;
+
+        if (resultData != null) {
+          try {
+            var purchaseList = resultData
+                .map<PurchaseModel>((p) => PurchaseModel.fromMap(p))
+                .toList();
+
+            return purchaseList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
+        } else {
+          return <PurchaseModel>[];
+        }
+      },
+    );
+
+    // Caso houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _ ${result.body}');
+    }
+
+    return result.body ?? <PurchaseModel>[];
   }
 
   @override
@@ -135,9 +177,20 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
   }
 
   @override
-  Future<bool> savePurchasesInDb(List<PurchaseModel> purchases) {
-    // TODO: implement savePurchasesInDb
-    throw UnimplementedError();
+  Future<bool> savePurchasesInDb(List<PurchaseModel> purchases) async {
+    _box = await DatabaseInit().getInstance();
+
+    var status = false;
+
+    try {
+      _box.put(PURCHASES, purchases);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   PurchaseModel? findPurchase(

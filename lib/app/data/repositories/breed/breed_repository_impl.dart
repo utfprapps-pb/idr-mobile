@@ -21,9 +21,20 @@ class BreedRepositoryImpl implements BreedRepository {
         auth = authService;
 
   @override
-  Future<bool> deleteAll() {
-    // TODO: implement deleteAll
-    throw UnimplementedError();
+  Future<bool> deleteAll() async {
+    _box = await DatabaseInit().getInstance();
+
+    var status = false;
+
+    try {
+      _box.delete(BREEDS);
+      status = true;
+    } catch (e) {
+      print(e);
+      status = false;
+    }
+
+    return status;
   }
 
   @override
@@ -35,10 +46,15 @@ class BreedRepositoryImpl implements BreedRepository {
         final resultData = data;
 
         if (resultData != null) {
-          var breedList =
-              resultData.map<BreedModel>((p) => BreedModel.fromMap(p)).toList();
+          try {
+            var breedList = resultData
+                .map<BreedModel>((p) => BreedModel.fromMap(p))
+                .toList();
 
-          return breedList;
+            return breedList;
+          } catch (e) {
+            throw Exception('Error _ $e');
+          }
         } else {
           return <BreedModel>[];
         }
@@ -48,7 +64,7 @@ class BreedRepositoryImpl implements BreedRepository {
     // Caso houver erro
     if (result.hasError) {
       print('Error [${result.statusText}]');
-      throw Exception('Error _');
+      throw Exception('Error _ ${result.body}');
     }
 
     return result.body ?? <BreedModel>[];
@@ -85,6 +101,8 @@ class BreedRepositoryImpl implements BreedRepository {
 
   @override
   Future<bool> saveBreedsInDb(List<BreedModel> breeds) async {
+    _box = await DatabaseInit().getInstance();
+
     var status = false;
 
     try {

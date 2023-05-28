@@ -47,4 +47,12 @@ class DiseaseAnimalServiceImpl implements DiseaseAnimalService {
 
     return _diseaseAnimalRepository.saveDiseaseAnimalsInDb(diseaseAnimals);
   }
+
+  @override
+  Future<List<DiseaseAnimalModel>> getAllDiseaseAnimalsOnline() async {
+    List<DiseaseAnimalModel> diseaseAnimals =
+        await _diseaseAnimalRepository.getAllDiseaseAnimals();
+    saveDiseaseAnimals(diseaseAnimals);
+    return diseaseAnimals;
+  }
 }
