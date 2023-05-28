@@ -117,7 +117,8 @@ class AnimalPage extends GetView<AnimalController> {
                             identity: index,
                             content:
                                 '${animal.name ?? animal.identifier ?? ''}',
-                            title: '${animal.id ?? index} - ${animal.bornDate}',
+                            title:
+                                '${animal.id ?? index + 1} - ${animal.bornDate}',
                             icon: FontAwesomeIcons.cow,
                             onPressedEditCallBack: (BuildContext context) {
                               controller.goToForm(animal, index);

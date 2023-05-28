@@ -68,14 +68,14 @@ class AnimalRepositoryImpl implements AnimalRepository {
   }
 
   @override
-  Future<List<AnimalModel>> getAllAnimalsInDb(int? propertyId) async {
+  Future<List<AnimalModel>> getAllAnimalsInDb(int? idProperty) async {
     _box = await DatabaseInit().getInstance();
     var animals = _box.get(ANIMALS) ?? [];
     List<AnimalModel> animalsList =
         animals != null ? List<AnimalModel>.from(animals as List) : [];
 
-    if (propertyId != null) {
-      animalsList = findAnimalByProperty(propertyId, animalsList);
+    if (idProperty != null) {
+      animalsList = findAnimalByProperty(idProperty, animalsList);
     }
 
     print(animalsList);
@@ -84,11 +84,11 @@ class AnimalRepositoryImpl implements AnimalRepository {
   }
 
   List<AnimalModel> findAnimalByProperty(
-      int propertyId, List<AnimalModel> animalList) {
+      int idProperty, List<AnimalModel> animalList) {
     List<AnimalModel> newList = [];
 
     newList = animalList.where((o) {
-      if (o.propertyId == propertyId) {
+      if (o.idProperty == idProperty) {
         return true;
       }
 

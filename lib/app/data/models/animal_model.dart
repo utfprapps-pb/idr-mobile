@@ -31,15 +31,19 @@ class AnimalModel {
   @HiveField(11)
   String? type;
   @HiveField(12)
-  int? propertyId;
+  int? idProperty;
   @HiveField(13)
   bool? bornInProperty;
   @HiveField(14)
-  String? cowIdentifier;
+  String? animalMotherIdentifier;
   @HiveField(15)
   bool? dead;
   @HiveField(16)
   String? deadDate;
+  @HiveField(17)
+  String? bornCondition;
+  @HiveField(18)
+  String? gender;
 
   AnimalModel({
     this.internalId,
@@ -53,11 +57,13 @@ class AnimalModel {
     this.name,
     this.previousWeight,
     this.type,
-    this.propertyId,
+    this.idProperty,
     this.bornInProperty,
-    this.cowIdentifier,
+    this.animalMotherIdentifier,
     this.dead,
     this.deadDate,
+    this.bornCondition,
+    this.gender,
   });
 
   AnimalModel copyWith({
@@ -72,11 +78,13 @@ class AnimalModel {
     String? name,
     double? previousWeight,
     String? type,
-    int? propertyId,
+    int? idProperty,
     bool? bornInProperty,
-    String? cowIdentifier,
+    String? animalMotherIdentifier,
     bool? dead,
     String? deadDate,
+    String? bornCondition,
+    String? gender,
   }) {
     return AnimalModel(
       internalId: internalId ?? this.internalId,
@@ -90,11 +98,14 @@ class AnimalModel {
       name: name ?? this.name,
       previousWeight: previousWeight ?? this.previousWeight,
       type: type ?? this.type,
-      propertyId: propertyId ?? this.propertyId,
+      idProperty: idProperty ?? this.idProperty,
       bornInProperty: bornInProperty ?? this.bornInProperty,
-      cowIdentifier: cowIdentifier ?? this.cowIdentifier,
+      animalMotherIdentifier:
+          animalMotherIdentifier ?? this.animalMotherIdentifier,
       dead: dead ?? this.dead,
       deadDate: deadDate ?? this.deadDate,
+      bornCondition: bornCondition ?? this.bornCondition,
+      gender: gender ?? this.gender,
     );
   }
 
@@ -134,20 +145,26 @@ class AnimalModel {
     if (type != null) {
       result.addAll({'type': type});
     }
-    if (propertyId != null) {
-      result.addAll({'propertyId': propertyId});
+    if (idProperty != null) {
+      result.addAll({'idProperty': idProperty});
     }
     if (bornInProperty != null) {
       result.addAll({'bornInProperty': bornInProperty});
     }
-    if (cowIdentifier != null) {
-      result.addAll({'cowIdentifier': cowIdentifier});
+    if (animalMotherIdentifier != null) {
+      result.addAll({'animalMotherIdentifier': animalMotherIdentifier});
     }
     if (dead != null) {
       result.addAll({'dead': dead});
     }
     if (deadDate != null) {
       result.addAll({'deadDate': deadDate});
+    }
+    if (bornCondition != null) {
+      result.addAll({'bornCondition': bornCondition});
+    }
+    if (gender != null) {
+      result.addAll({'gender': gender});
     }
 
     return result;
@@ -166,11 +183,13 @@ class AnimalModel {
       name: map['name'],
       previousWeight: map['previousWeight']?.toDouble(),
       type: map['type'],
-      propertyId: map['property']['id']?.toInt(),
+      idProperty: map['property']['id']?.toInt(),
       bornInProperty: map['bornInProperty'],
-      cowIdentifier: map['cowIdentifier'],
+      animalMotherIdentifier: map['animal']['identifier'],
       dead: map['dead'],
       deadDate: map['deadDate'],
+      bornCondition: map['bornCondition'],
+      gender: map['gender'],
     );
   }
 
@@ -181,7 +200,7 @@ class AnimalModel {
 
   @override
   String toString() {
-    return 'AnimalModel(internalId: $internalId, id: $id, bornDate: $bornDate, bornWeight: $bornWeight, breed: $breed, currentWeight: $currentWeight, ecc: $ecc, identifier: $identifier, name: $name, previousWeight: $previousWeight, type: $type, propertyId: $propertyId, bornInProperty: $bornInProperty, cowIdentifier: $cowIdentifier, dead: $dead, deadDate: $deadDate)';
+    return '$id - $identifier - $name)';
   }
 
   @override
@@ -200,11 +219,13 @@ class AnimalModel {
         other.name == name &&
         other.previousWeight == previousWeight &&
         other.type == type &&
-        other.propertyId == propertyId &&
+        other.idProperty == idProperty &&
         other.bornInProperty == bornInProperty &&
-        other.cowIdentifier == cowIdentifier &&
+        other.animalMotherIdentifier == animalMotherIdentifier &&
         other.dead == dead &&
-        other.deadDate == deadDate;
+        other.deadDate == deadDate &&
+        other.bornCondition == bornCondition &&
+        other.gender == gender;
   }
 
   @override
@@ -220,10 +241,12 @@ class AnimalModel {
         name.hashCode ^
         previousWeight.hashCode ^
         type.hashCode ^
-        propertyId.hashCode ^
+        idProperty.hashCode ^
         bornInProperty.hashCode ^
-        cowIdentifier.hashCode ^
+        animalMotherIdentifier.hashCode ^
         dead.hashCode ^
-        deadDate.hashCode;
+        deadDate.hashCode ^
+        bornCondition.hashCode ^
+        gender.hashCode;
   }
 }
