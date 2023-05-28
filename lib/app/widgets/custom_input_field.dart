@@ -60,10 +60,9 @@ class CustomInputField extends StatelessWidget {
       obscureText: isObscureText ?? false,
       cursorColor: UIColors.primaryColor,
       decoration: InputDecoration(
-          // constraints: BoxConstraints(minHeight: 50),
           isDense: true,
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+              const EdgeInsets.symmetric(vertical: 18.0, horizontal: 10.0),
           labelText: labelText,
           labelStyle: TextStyle(
             color: UIColors.primaryColor,

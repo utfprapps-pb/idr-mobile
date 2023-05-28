@@ -36,8 +36,9 @@ class CustomDropdownButton<T> extends StatelessWidget {
       decoration: InputDecoration(
         filled: true,
         labelText: label,
+        constraints: BoxConstraints(maxHeight: 55),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(5),
           borderSide: BorderSide(
             color: UIColors.primaryColor,
             width: 2,
