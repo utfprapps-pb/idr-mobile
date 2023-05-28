@@ -44,6 +44,13 @@ class HomePage extends GetView<HomeController> {
                           ),
                         ],
                       ),
+                      IconButton(
+                        onPressed: () =>
+                            scaffoldKey.currentState!.openEndDrawer(),
+                        icon: const Icon(
+                          Icons.menu,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
