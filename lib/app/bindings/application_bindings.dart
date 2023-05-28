@@ -18,8 +18,8 @@ import 'package:idr_mobile/app/data/repositories/insemination/insemination_repos
 import 'package:idr_mobile/app/data/repositories/insemination/insemination_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository.dart';
 import 'package:idr_mobile/app/data/repositories/mastitis/mastitis_repository_impl.dart';
-import 'package:idr_mobile/app/data/repositories/medicine/medicine_repository.dart';
-import 'package:idr_mobile/app/data/repositories/medicine/medicine_repository_impl.dart';
+import 'package:idr_mobile/app/data/repositories/medication/medication_repository.dart';
+import 'package:idr_mobile/app/data/repositories/medication/medication_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/plague/plague_repository.dart';
 import 'package:idr_mobile/app/data/repositories/plague/plague_repository_impl.dart';
 import 'package:idr_mobile/app/data/repositories/pregnancy_diagnosis/pregnancy_diagnosis_repository.dart';
@@ -53,8 +53,8 @@ import 'package:idr_mobile/app/data/services/insemination/insemination_service.d
 import 'package:idr_mobile/app/data/services/insemination/insemination_service_impl.dart';
 import 'package:idr_mobile/app/data/services/mastitis/mastitis_service.dart';
 import 'package:idr_mobile/app/data/services/mastitis/mastitis_service_impl.dart';
-import 'package:idr_mobile/app/data/services/medicine/medicine_service.dart';
-import 'package:idr_mobile/app/data/services/medicine/medicine_service_impl.dart';
+import 'package:idr_mobile/app/data/services/medication/medication_service.dart';
+import 'package:idr_mobile/app/data/services/medication/medication_service_impl.dart';
 import 'package:idr_mobile/app/data/services/plague/plague_service.dart';
 import 'package:idr_mobile/app/data/services/plague/plague_service_impl.dart';
 import 'package:idr_mobile/app/data/services/pregnancy_diagnosis/pregnancy_diagnosis_service.dart';
@@ -127,7 +127,6 @@ class ApplicationBindings implements Bindings {
     Get.lazyPut<PropertyService>(
       () => PropertyServiceImpl(
         propertyRepository: Get.find(),
-        connectivity: Get.find(),
       ),
       fenix: true,
     );
@@ -150,7 +149,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<AnimalService>(
       () => AnimalServiceImpl(
-        connectivity: Get.find(),
         animalRepository: Get.find(),
         uuid: Get.find(),
       ),
@@ -167,7 +165,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<InseminationService>(
       () => InseminationServiceImpl(
-        connectivity: Get.find(),
         inseminationRepository: Get.find(),
         uuid: Get.find(),
       ),
@@ -206,17 +203,17 @@ class ApplicationBindings implements Bindings {
       fenix: true,
     );
 
-    Get.lazyPut<MedicineRepository>(
-      () => MedicineRepositoryImpl(
+    Get.lazyPut<MedicationRepository>(
+      () => MedicationRepositoryImpl(
         restClient: Get.find(),
         authService: Get.find(),
       ),
       fenix: true,
     );
 
-    Get.lazyPut<MedicineService>(
-      () => MedicineServiceImpl(
-        medicineRepository: Get.find(),
+    Get.lazyPut<MedicationService>(
+      () => MedicationServiceImpl(
+        medicationRepository: Get.find(),
         uuid: Get.find(),
       ),
       fenix: true,
@@ -232,7 +229,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<PregnancyDiagnosisService>(
       () => PregnancyDiagnosisServiceImpl(
-        connectivity: Get.find(),
         pregnancyDiagnosisRepository: Get.find(),
         uuid: Get.find(),
       ),
@@ -249,7 +245,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<SaleService>(
       () => SaleServiceImpl(
-        connectivity: Get.find(),
         saleRepository: Get.find(),
         uuid: Get.find(),
       ),
@@ -266,7 +261,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<PurchaseService>(
       () => PurchaseServiceImpl(
-        connectivity: Get.find(),
         purchaseRepository: Get.find(),
         uuid: Get.find(),
       ),
@@ -283,7 +277,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<BreedService>(
       () => BreedServiceImpl(
-        connectivity: Get.find(),
         uuid: Get.find(),
         breedRepository: Get.find(),
       ),
@@ -300,7 +293,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<DiseaseService>(
       () => DiseaseServiceImpl(
-        connectivity: Get.find(),
         uuid: Get.find(),
         diseaseRepository: Get.find(),
       ),
@@ -317,7 +309,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<PlagueService>(
       () => PlagueServiceImpl(
-        connectivity: Get.find(),
         uuid: Get.find(),
         plagueRepository: Get.find(),
       ),
@@ -334,7 +325,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<CultureService>(
       () => CultureServiceImpl(
-        connectivity: Get.find(),
         uuid: Get.find(),
         cultureRepository: Get.find(),
       ),
@@ -351,7 +341,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<VegetablePlagueService>(
       () => VegetablePlagueServiceImpl(
-        connectivity: Get.find(),
         uuid: Get.find(),
         vegetablePlagueRepository: Get.find(),
       ),
@@ -368,7 +357,6 @@ class ApplicationBindings implements Bindings {
 
     Get.lazyPut<VegetableDiseaseService>(
       () => VegetableDiseaseServiceImpl(
-        connectivity: Get.find(),
         uuid: Get.find(),
         vegetableDiseaseRepository: Get.find(),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idr_mobile/app/modules/medicine/medicine_controller.dart';
+import 'package:idr_mobile/app/modules/medication/medication_controller.dart';
 import 'package:idr_mobile/app/widgets/side_menu.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
@@ -8,7 +8,7 @@ import 'package:idr_mobile/core/utils/functions/size_config.dart';
 import 'package:idr_mobile/app/widgets/custom_outlined_button.dart';
 import 'package:idr_mobile/app/widgets/custom_slidable.dart';
 
-class MedicinePage extends GetView<MedicineController> {
+class MedicationPage extends GetView<MedicationController> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -73,27 +73,28 @@ class MedicinePage extends GetView<MedicineController> {
                   ),
                   Expanded(
                     child: Obx(() {
-                      return controller.medicinesFinal.length > 0
+                      return controller.medicationsFinal.length > 0
                           ? ListView.separated(
                               separatorBuilder: (context, index) => Divider(),
-                              itemCount: controller.medicinesFinal.length,
+                              itemCount: controller.medicationsFinal.length,
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) {
-                                var medicine = controller.medicinesFinal[index];
+                                var medication =
+                                    controller.medicationsFinal[index];
                                 return CustomSlidable(
                                   identity: index,
                                   title:
-                                      '${medicine.id ?? index} - ${medicine.date}',
-                                  content: '${medicine.name}',
+                                      '${medication.id ?? index} - ${medication.date}',
+                                  content: '${medication.name}',
                                   icon: Icons.child_friendly_rounded,
                                   onPressedEditCallBack:
                                       (BuildContext context) {
-                                    controller.goToForm(medicine, index);
+                                    controller.goToForm(medication, index);
                                   },
                                   onPressedRemoveCallBack:
                                       (BuildContext context) {
-                                    controller.removeMedicine(medicine);
+                                    controller.removeMedication(medication);
                                   },
                                 );
                               },

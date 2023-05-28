@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idr_mobile/app/modules/medicine/form/medicine_form_controller.dart';
+import 'package:idr_mobile/app/modules/medication/form/medication_form_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_dropdown.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
 import 'package:idr_mobile/app/widgets/custom_input_field.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
 
-class MedicineFormPage extends GetView<MedicineFormController> {
+class MedicationFormPage extends GetView<MedicationFormController> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -51,7 +51,7 @@ class MedicineFormPage extends GetView<MedicineFormController> {
                               onTapCallBack: () {},
                               labelText: 'Princípio ativo',
                               icon: Icons.medical_information_rounded,
-                              onChanged: (_) => controller.medicine
+                              onChanged: (_) => controller.medication
                                   .update((val) => val!.activePrinciple = _),
                               // onValidate: (_) => controller.onValidate(_),
                               validator: (value) {
@@ -77,7 +77,7 @@ class MedicineFormPage extends GetView<MedicineFormController> {
                               onTapCallBack: () {},
                               labelText: 'Nome do produto',
                               icon: Icons.medication,
-                              onChanged: (_) => controller.medicine
+                              onChanged: (_) => controller.medication
                                   .update((val) => val!.name = _),
                               // onValidate: (_) => controller.onValidate(_),
                               validator: (value) {
@@ -103,7 +103,7 @@ class MedicineFormPage extends GetView<MedicineFormController> {
                               onTapCallBack: () {},
                               labelText: 'Dose aplicada',
                               icon: Icons.vaccines_rounded,
-                              onChanged: (_) => controller.medicine
+                              onChanged: (_) => controller.medication
                                   .update((val) => val!.dose = _),
                               // onValidate: (_) => controller.onValidate(_),
                               validator: (value) {
@@ -128,7 +128,7 @@ class MedicineFormPage extends GetView<MedicineFormController> {
                           selectedValue: controller.applicationType.toString(),
                           onChanged: (String value) {
                             controller.applicationType.value = value;
-                            controller.medicine
+                            controller.medication
                                 .update((val) => val!.applicationType = value);
                           },
                         ),

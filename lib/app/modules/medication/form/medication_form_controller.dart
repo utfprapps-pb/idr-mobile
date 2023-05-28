@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idr_mobile/app/data/enums/enum_animal_medicine_application_type.dart';
+import 'package:idr_mobile/app/data/enums/enum_animal_medication_application_type.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
-import 'package:idr_mobile/app/data/models/medicine_model.dart';
-import 'package:idr_mobile/app/data/services/medicine/medicine_service.dart';
+import 'package:idr_mobile/app/data/models/medication_model.dart';
+import 'package:idr_mobile/app/data/services/medication/medication_service.dart';
 import 'package:idr_mobile/app/widgets/snackbar.dart';
 import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
 
-class MedicineFormController extends GetxController {
-  final MedicineService? _medicineService;
+class MedicationFormController extends GetxController {
+  final MedicationService? _medicationService;
 
-  MedicineFormController({
-    required MedicineService medicineService,
-  }) : _medicineService = medicineService;
+  MedicationFormController({
+    required MedicationService medicationService,
+  }) : _medicationService = medicationService;
 
-  final medicine = MedicineModel().obs;
+  final medication = MedicationModel().obs;
   RxString buttonText = ''.obs;
   RxString applicationType = ''.obs;
   List<String> applicationTypesList = [];
 
-  int? idxMedicine = null;
+  int? idxMedication = null;
 
   final formKey = GlobalKey<FormState>();
 
@@ -30,11 +30,11 @@ class MedicineFormController extends GetxController {
 
   @override
   void onInit() async {
-    // _medicineService = Get.find<MedicineService>();
+    // _medicationService = Get.find<MedicationService>();
     super.onInit();
     buttonText.value = "Salvar";
     applicationType.value =
-        typesApplication[AnimalMedicineApplicationType.im.name].toString();
+        typesApplication[AnimalMedicationApplicationType.im.name].toString();
 
     typesApplication.forEach((key, value) {
       applicationTypesList.add(value);
@@ -43,27 +43,27 @@ class MedicineFormController extends GetxController {
     var data = Get.arguments;
 
     if (data[2]['animalIdentifier'] != null) {
-      medicine.update((val) {
+      medication.update((val) {
         val!.animalIdentifier = data[2]['animalIdentifier'].toString();
       });
     }
 
-    if (data[0]['medicine'] != null) {
-      setFormValues(data[0]['medicine']);
-      // medicine.update((val) {
+    if (data[0]['medication'] != null) {
+      setFormValues(data[0]['medication']);
+      // medication.update((val) {
       //   val!.animalIdentifier =
-      //       data[0]['medicine'].animalIdentifier.toString();
+      //       data[0]['medication'].animalIdentifier.toString();
       // });
       buttonText.value = "Editar";
     } else {
       dateController.text = dateFormat.format(DateTime.now());
-      medicine.update((val) {
+      medication.update((val) {
         val!.date = dateController.text.toString();
       });
     }
 
     if (data[1]['index'] != null) {
-      idxMedicine = data[1]['index'];
+      idxMedication = data[1]['index'];
     }
   }
 
@@ -73,13 +73,13 @@ class MedicineFormController extends GetxController {
     super.onReady();
   }
 
-  void setFormValues(MedicineModel values) {
+  void setFormValues(MedicationModel values) {
     activePrincipleController.text = values.activePrinciple.toString();
     nameController.text = values.name.toString();
     doseController.text = values.dose.toString();
     dateController.text = values.date.toString();
 
-    medicine.update((val) {
+    medication.update((val) {
       val!.activePrinciple = values.activePrinciple;
       val.name = values.name;
       val.applicationType = values.applicationType;
@@ -91,14 +91,14 @@ class MedicineFormController extends GetxController {
   }
 
   onFormSubmit() async {
-    var isSaved = idxMedicine != null
-        ? await _medicineService!.editMedicine(medicine.value)
-        : await _medicineService!.saveMedicine(medicine.value);
+    var isSaved = idxMedication != null
+        ? await _medicationService!.editMedication(medication.value)
+        : await _medicationService!.saveMedication(medication.value);
 
     Snack.show(
       content: isSaved
-          ? 'Sucesso ao salvar medicineo'
-          : 'Ocorreu um erro ao salvar medicineo',
+          ? 'Sucesso ao salvar medicationo'
+          : 'Ocorreu um erro ao salvar medicationo',
       snackType: isSaved ? SnackType.success : SnackType.error,
       behavior: SnackBarBehavior.floating,
     );
@@ -120,7 +120,7 @@ class MedicineFormController extends GetxController {
       lastDate: data.add(Duration(days: 365 * 5)),
     ).then((DateTime? dataSelected) {
       if (dataSelected != null) {
-        medicine.update((val) => val!.date = dateFormat.format(dataSelected));
+        medication.update((val) => val!.date = dateFormat.format(dataSelected));
 
         dateController.text = dateFormat.format(dataSelected);
       }

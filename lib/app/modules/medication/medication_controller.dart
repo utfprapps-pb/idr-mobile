@@ -1,22 +1,22 @@
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
-import 'package:idr_mobile/app/data/models/medicine_model.dart';
-import 'package:idr_mobile/app/data/services/medicine/medicine_service.dart';
+import 'package:idr_mobile/app/data/models/medication_model.dart';
+import 'package:idr_mobile/app/data/services/medication/medication_service.dart';
 import 'package:idr_mobile/app/widgets/snackbar.dart';
 import 'package:idr_mobile/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
-class MedicineController extends GetxController {
-  final MedicineService _medicineService;
+class MedicationController extends GetxController {
+  final MedicationService _medicationService;
 
-  MedicineController({
-    required MedicineService medicineService,
-  }) : _medicineService = medicineService;
+  MedicationController({
+    required MedicationService medicationService,
+  }) : _medicationService = medicationService;
 
   Rx<AnimalModel> animal = AnimalModel().obs;
   RxString displayName = ''.obs;
-  final medicinesFinal = <MedicineModel>[].obs;
+  final medicationsFinal = <MedicationModel>[].obs;
 
   @override
   void onInit() {
@@ -33,14 +33,14 @@ class MedicineController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    loadMedicines();
+    loadMedications();
   }
 
-  void loadMedicines() async {
+  void loadMedications() async {
     try {
-      final medicinesData =
-          await _medicineService.getAllMedicines(animal.value.identifier);
-      medicinesFinal.assignAll(medicinesData);
+      final medicationsData =
+          await _medicationService.getAllMedications(animal.value.identifier);
+      medicationsFinal.assignAll(medicationsData);
     } catch (e) {
       Snack.show(
         content:
@@ -51,21 +51,21 @@ class MedicineController extends GetxController {
     }
   }
 
-  goToForm(MedicineModel? medicine, int? idx) async {
-    if (medicine != null) {}
-    var result = await Get.toNamed(Routes.MEDICINE_FORM, arguments: [
-      {'medicine': medicine},
+  goToForm(MedicationModel? medication, int? idx) async {
+    if (medication != null) {}
+    var result = await Get.toNamed(Routes.MEDICATION_FORM, arguments: [
+      {'medication': medication},
       {'index': idx},
       {'animalIdentifier': animal.value.identifier},
     ]);
 
     if (result != null && result) {
-      loadMedicines();
+      loadMedications();
     }
   }
 
-  removeMedicine(MedicineModel medicine) async {
-    var isRemoved = await _medicineService.deleteMedicine(medicine);
+  removeMedication(MedicationModel medication) async {
+    var isRemoved = await _medicationService.deleteMedication(medication);
     Snack.show(
       content: isRemoved
           ? 'Sucesso ao remover medicamento'
@@ -74,6 +74,6 @@ class MedicineController extends GetxController {
       behavior: SnackBarBehavior.floating,
     );
 
-    loadMedicines();
+    loadMedications();
   }
 }

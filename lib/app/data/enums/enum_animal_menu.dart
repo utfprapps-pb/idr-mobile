@@ -2,7 +2,7 @@ enum AnimalMenuType {
   insemination,
   mastitis,
   disease,
-  medicines,
+  medications,
   pregnancyDiagnosis,
   sale,
   acquisition,

@@ -4,10 +4,10 @@ import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-part 'medicine_model.g.dart';
+part 'medication_model.g.dart';
 
 @HiveType(typeId: 6)
-class MedicineModel {
+class MedicationModel {
   @HiveField(1)
   String? internalId;
   @HiveField(2)
@@ -25,7 +25,7 @@ class MedicineModel {
   @HiveField(8)
   String? applicationType;
 
-  MedicineModel({
+  MedicationModel({
     this.internalId,
     this.id,
     this.animalIdentifier,
@@ -36,7 +36,7 @@ class MedicineModel {
     this.applicationType,
   });
 
-  MedicineModel copyWith({
+  MedicationModel copyWith({
     String? internalId,
     int? id,
     String? animalIdentifier,
@@ -46,7 +46,7 @@ class MedicineModel {
     String? dose,
     String? applicationType,
   }) {
-    return MedicineModel(
+    return MedicationModel(
       internalId: internalId ?? this.internalId,
       id: id ?? this.id,
       animalIdentifier: animalIdentifier ?? this.animalIdentifier,
@@ -89,8 +89,8 @@ class MedicineModel {
     return result;
   }
 
-  factory MedicineModel.fromMap(Map<String, dynamic> map) {
-    return MedicineModel(
+  factory MedicationModel.fromMap(Map<String, dynamic> map) {
+    return MedicationModel(
       internalId: map['internalId'],
       id: map['id']?.toInt(),
       animalIdentifier: map['animalIdentifier'],
@@ -104,19 +104,19 @@ class MedicineModel {
 
   String toJson() => json.encode(toMap());
 
-  factory MedicineModel.fromJson(String source) =>
-      MedicineModel.fromMap(json.decode(source));
+  factory MedicationModel.fromJson(String source) =>
+      MedicationModel.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'MedicineModel(internalId: $internalId, id: $id, animalIdentifier: $animalIdentifier, date: $date, activePrinciple: $activePrinciple, name: $name, dose: $dose, applicationType: $applicationType)';
+    return 'MedicationModel(internalId: $internalId, id: $id, animalIdentifier: $animalIdentifier, date: $date, activePrinciple: $activePrinciple, name: $name, dose: $dose, applicationType: $applicationType)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MedicineModel &&
+    return other is MedicationModel &&
         other.internalId == internalId &&
         other.id == id &&
         other.animalIdentifier == animalIdentifier &&

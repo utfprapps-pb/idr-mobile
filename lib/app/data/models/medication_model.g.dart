@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'medicine_model.dart';
+part of 'medication_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MedicineModelAdapter extends TypeAdapter<MedicineModel> {
+class MedicationModelAdapter extends TypeAdapter<MedicationModel> {
   @override
   final int typeId = 6;
 
   @override
-  MedicineModel read(BinaryReader reader) {
+  MedicationModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MedicineModel(
+    return MedicationModel(
       internalId: fields[1] as String?,
       id: fields[2] as int?,
       animalIdentifier: fields[3] as String?,
@@ -29,7 +29,7 @@ class MedicineModelAdapter extends TypeAdapter<MedicineModel> {
   }
 
   @override
-  void write(BinaryWriter writer, MedicineModel obj) {
+  void write(BinaryWriter writer, MedicationModel obj) {
     writer
       ..writeByte(8)
       ..writeByte(1)
@@ -56,7 +56,7 @@ class MedicineModelAdapter extends TypeAdapter<MedicineModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MedicineModelAdapter &&
+      other is MedicationModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
