@@ -113,39 +113,7 @@ class VegetableDiseaseFormController extends GetxController {
 
   void setFormValues(VegetableDiseaseModel values) {
     dateController.text = values.date.toString();
-
-    // vegetableDisease.update((val) {
-    //   if (values.previousWeight != null) {
-    //     val!.previousWeight = double.parse(values.previousWeight.toString());
-    //   }
-    //   val!.internalId = values.internalId.toString();
-    //   val.bornDate = values.bornDate.toString();
-    //   val.bornWeight = double.parse(values.previousWeight.toString());
-    //   val.currentWeight = double.parse(values.previousWeight.toString());
-    //   val.ecc = double.parse(values.previousWeight.toString());
-    //   val.identifier = values.identifier.toString();
-    //   val.previousWeight = double.parse(values.previousWeight.toString());
-    //   val.propertyId = int.parse(values.propertyId.toString());
-
-    //   if (values.id != null) {
-    //     val.id = values.id;
-    //   }
-    //   if (values.cowIdentifier != null) {
-    //     val.bornInProperty = values.bornInProperty;
-    //     val.cowIdentifier = values.cowIdentifier.toString();
-    //   }
-    //   if (values.deadDate != null) {
-    //     val.deadDate = values.deadDate.toString();
-    //   }
-    // });
-  }
-
-  void onChangedDropdown(newValue) {
-    selectedProperty.value = newValue;
-    vegetableDisease.update(
-      (val) => val!.idProperty =
-          int.parse(newValue.replaceAll('Propriedade', '').trim()),
-    );
+    infestationTypeSelected.value = values.infestationType.toString();
   }
 
   onFormSubmit() async {

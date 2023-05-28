@@ -34,7 +34,7 @@ class VegetableDiseasePage extends GetView<VegetableDiseaseController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Pragas Vegetais',
+                          'Doenças Vegetais',
                           style: UIConfig.titleStyle,
                         ),
                       ],
@@ -57,7 +57,7 @@ class VegetableDiseasePage extends GetView<VegetableDiseaseController> {
                       child: CustomOutlinedButton(
                         onPressedCallBack: () =>
                             controller.goToForm(null, null),
-                        title: "Adicionar Praga",
+                        title: "Adicionar doença",
                       ),
                     ),
                   ],

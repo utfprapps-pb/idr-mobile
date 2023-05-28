@@ -91,7 +91,7 @@ class VegetableDiseaseFormPage extends GetView<VegetableDiseaseFormController> {
                               ),
                               Obx(
                                 () => CustomDropdownButton<DiseaseModel>(
-                                  label: 'Praga',
+                                  label: 'Doença',
                                   items: controller.diseasesFinal,
                                   selectedValue:
                                       controller.diseaseSelected.value,
