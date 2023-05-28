@@ -57,4 +57,12 @@ class UIConfig {
         letterSpacing: 0.15,
         fontWeight: FontWeight.w400,
       );
+
+  static TextStyle get textHeadStyle => TextStyle(
+        color: UIColors.blackColor24,
+        fontFamily: 'Segoe-UI',
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 0.5,
+      );
 }
