@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:idr_mobile/app/data/models/vegetable_disease_model.dart';
 import 'package:idr_mobile/app/data/models/vegetable_plague_model.dart';
 import 'package:idr_mobile/app/data/providers/api/rest_client.dart';
 import 'package:idr_mobile/app/data/providers/db/db.dart';
-import 'package:idr_mobile/app/data/repositories/vegetable_disease/vegetable_disease_repository.dart';
 import 'package:idr_mobile/app/data/repositories/vegetable_plague/vegetable_plague_repository.dart';
 import 'package:idr_mobile/app/data/services/auth/auth_service.dart';
 import 'package:idr_mobile/core/utils/header_api.dart';
@@ -113,7 +111,7 @@ class VegetablePlagueRepositoryImpl implements VegetablePlagueRepository {
           try {
             var vegetablePlaguesList = resultData
                 .map<VegetablePlagueModel>(
-                    (p) => VegetableDiseaseModel.fromMap(p))
+                    (p) => VegetablePlagueModel.fromMap(p))
                 .toList();
 
             return vegetablePlaguesList;

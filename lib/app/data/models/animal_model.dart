@@ -171,6 +171,11 @@ class AnimalModel {
   }
 
   factory AnimalModel.fromMap(Map<String, dynamic> map) {
+    String? animalMotherIdentifier;
+    if (map['animal'] != null) {
+      animalMotherIdentifier = map['animal']['identifier'];
+    }
+
     return AnimalModel(
       internalId: map['internalId'],
       id: map['id']?.toInt(),
@@ -185,7 +190,7 @@ class AnimalModel {
       type: map['type'],
       idProperty: map['property']['id']?.toInt(),
       bornInProperty: map['bornInProperty'],
-      animalMotherIdentifier: map['animal']['identifier'],
+      animalMotherIdentifier: animalMotherIdentifier,
       dead: map['dead'],
       deadDate: map['deadDate'],
       bornCondition: map['bornCondition'],
