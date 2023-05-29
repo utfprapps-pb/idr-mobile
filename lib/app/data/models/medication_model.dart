@@ -94,7 +94,7 @@ class MedicationModel {
       internalId: map['internalId'],
       id: map['id']?.toInt(),
       animalIdentifier: map['animal']['animalIdentifier'],
-      applicationDate: '',
+      applicationDate: map['date'],
       activePrinciple: map['activePrinciple'],
       appliedDose: map['appliedDose'],
       applicationWay: map['applicationWay'],
