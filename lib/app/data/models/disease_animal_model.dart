@@ -66,10 +66,9 @@ class DiseaseAnimalModel {
   factory DiseaseAnimalModel.fromMap(Map<String, dynamic> map) {
     return DiseaseAnimalModel(
       id: map['id'],
-      internalId: map['internalId'],
-      animalIdentifier: map['animalIdentifier'],
-      dateDiagnostic: map['dateDiagnostic'],
-      diagnostic: map['diagnostic'],
+      animalIdentifier: map['animal']['identifier'],
+      dateDiagnostic: map['diagnosisDate'],
+      diagnostic: map['diagnosis'],
     );
   }
 
