@@ -96,7 +96,7 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
   @override
   Future<List<PurchaseModel>> getAllPurchases() async {
     final result = await _restClient.get(
-      'purchases',
+      'animalPurchases',
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
         final resultData = data;
