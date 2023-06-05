@@ -10,4 +10,6 @@ abstract class AnimalRepository {
   Future<bool> editAnimalInDb(AnimalModel animal);
   Future<bool> deleteAnimal(AnimalModel animal);
   Future<bool> deleteAll();
+  Future<List<AnimalModel>> getAllInDb();
+  Future<bool> sendAnimals(List<AnimalModel> animals);
 }
