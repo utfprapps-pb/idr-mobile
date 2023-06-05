@@ -8,4 +8,6 @@ abstract class AnimalService {
   Future<bool> editAnimal(AnimalModel animal);
   Future<bool> deleteAnimal(AnimalModel animal);
   Future<bool> deleteAll();
+  Future<List<AnimalModel>> getAll();
+  Future<bool> sendAnimals(List<AnimalModel> animals);
 }
