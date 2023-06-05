@@ -83,11 +83,10 @@ class PurchaseModel {
 
   factory PurchaseModel.fromMap(Map<String, dynamic> map) {
     return PurchaseModel(
-      internalId: map['internalId'],
       id: map['id']?.toInt(),
       datePurchase: map['datePurchase'],
-      animalIdentifier: map['animalIdentifier'],
-      dateBirth: map['dateBirth'],
+      animalIdentifier: map['animal']['identifier'],
+      dateBirth: map['birthDate'],
       weight: map['weight']?.toDouble(),
       value: map['value']?.toDouble(),
     );
