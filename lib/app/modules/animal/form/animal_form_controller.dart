@@ -85,6 +85,9 @@ class AnimalFormController extends GetxController {
     }
 
     if (data[0]['animal'] != null) {
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
       animal.value = data[0]['animal'];
 
       setFormValues(data[0]['animal']);
@@ -107,7 +110,9 @@ class AnimalFormController extends GetxController {
   }
 
   void setFormValues(AnimalModel values) {
-    bornDateController.text = values.bornDate.toString();
+    bornDateController.text = dateFormat
+        .format(DateTime.tryParse(values.bornDate.toString()) ?? DateTime.now())
+        .toString();
     nameController.text = values.name ?? '';
 
     if (values.bornWeight != null) {
@@ -217,7 +222,7 @@ class AnimalFormController extends GetxController {
   void setBreedSelected(List<BreedModel> list) {
     if (animal.value.breed != null) {
       BreedModel? b = list.firstWhereOrNull(
-          (element) => element.id == int.parse(animal.value.breed!));
+          (element) => element.breedName == (animal.value.breed!).toString());
 
       b != null ? breedSelected.value = b : breedSelected.value = list[0];
     } else {
