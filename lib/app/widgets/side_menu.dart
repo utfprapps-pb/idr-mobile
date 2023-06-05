@@ -26,6 +26,9 @@ class _SideMenuState extends State<SideMenu> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            const SizedBox(
+              height: 20,
+            ),
             Flexible(
               child: ListView(
                 padding: EdgeInsets.zero,
