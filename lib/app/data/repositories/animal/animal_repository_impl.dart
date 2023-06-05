@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
@@ -196,5 +198,45 @@ class AnimalRepositoryImpl implements AnimalRepository {
         .firstWhereOrNull((element) => element.internalId == animal.internalId);
 
     return am;
+  }
+
+  @override
+  Future<List<AnimalModel>> getAllInDb() async {
+    _box = await DatabaseInit().getInstance();
+    var animals = _box.get(ANIMALS) ?? [];
+    List<AnimalModel> animalsList =
+        animals != null ? List<AnimalModel>.from(animals as List) : [];
+
+    return animalsList;
+  }
+
+  @override
+  Future<bool> sendAnimals(List<AnimalModel> animals) async {
+    final result = await _restClient.post(
+      'animals',
+      jsonEncode(animals),
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        final resultData = data;
+
+        if (resultData != null) {
+          var animalList = resultData
+              .map<AnimalModel>((p) => AnimalModel.fromMap(p))
+              .toList();
+
+          return animalList;
+        } else {
+          return <AnimalModel>[];
+        }
+      },
+    );
+
+    // Caso houver erro
+    if (result.hasError) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _ ${result.body}');
+    }
+
+    return result.body ?? <AnimalModel>[];
   }
 }
