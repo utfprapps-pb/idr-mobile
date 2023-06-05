@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
@@ -42,32 +44,36 @@ class LoginController extends GetxController {
     required String username,
     required String password,
   }) async {
-    // isLoading.value = true;
+    isLoading.value = true;
     var login = {
       "username": username,
       "password": password,
     };
 
-    await _loginService.login(login).then((value) {
-      if (value != null) {
-        auth!.changeApiToken(value.token);
-        auth!.changeIsLogged(true);
-        auth!.changeDisplayName(value.displayName);
-        reauth();
-      } else {
-        Snack.show(
-          content: 'Erro ao realizar login',
-          snackType: SnackType.error,
-          behavior: SnackBarBehavior.floating,
-        );
-      }
-    });
+    try {
+      await _loginService.login(login).then((value) {
+        if (value != null) {
+          auth!.changeApiToken(value.token);
+          auth!.changeIsLogged(true);
+          auth!.changeDisplayName(value.displayName);
+          reauth();
+        } else {
+          throw Exception(e);
+        }
+      });
+    } catch (e) {
+      Snack.show(
+        content: 'Erro ao realizar login',
+        snackType: SnackType.error,
+        behavior: SnackBarBehavior.floating,
+      );
+    }
+
+    isLoading.value = false;
 
     await Future.delayed(
       const Duration(seconds: 3),
     );
-
-    isLoading.value = false;
   }
 
   onValidateUsername(_) =>
