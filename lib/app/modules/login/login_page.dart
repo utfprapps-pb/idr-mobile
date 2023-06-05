@@ -11,8 +11,6 @@ import 'package:idr_mobile/core/utils/functions/size_config.dart';
 
 class LoginPage extends GetView<LoginController> {
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +58,7 @@ class LoginPage extends GetView<LoginController> {
                             padding: const EdgeInsets.only(bottom: 15.0),
                             child: CustomInputField(
                               maxLines: 1,
-                              inputController: _usernameController,
+                              inputController: controller.usernameController,
                               onTapCallBack: () {},
                               labelText: 'Usuário',
                               icon: Icons.person,
@@ -82,7 +80,7 @@ class LoginPage extends GetView<LoginController> {
                           child: Obx(
                             () => CustomInputField(
                               maxLines: 1,
-                              inputController: _passwordController,
+                              inputController: controller.passwordController,
                               onTapCallBack: () {},
                               onPressedIcon: () =>
                                   controller.onChangedObscureText(),
@@ -128,8 +126,10 @@ class LoginPage extends GetView<LoginController> {
                               onPressedCallBack: () {
                                 if (_formKey.currentState!.validate()) {
                                   controller.signIn(
-                                    username: _usernameController.text,
-                                    password: _passwordController.text,
+                                    username:
+                                        controller.usernameController.text,
+                                    password:
+                                        controller.passwordController.text,
                                   );
                                 }
                               },

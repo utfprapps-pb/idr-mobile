@@ -20,12 +20,18 @@ class LoginController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isObscureText = true.obs;
   RxString titleTest = ''.obs;
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   void onInit() async {
     auth = Get.find<AuthService>();
     await reauth();
     super.onInit();
+
+    //! APENAS PARA TESTES
+    usernameController.text = 'fulano1@test.com';
+    passwordController.text = '123';
   }
 
   reauth() async {
