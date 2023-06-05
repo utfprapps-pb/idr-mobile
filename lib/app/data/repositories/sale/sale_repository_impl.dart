@@ -99,7 +99,7 @@ class SaleRepositoryImpl implements SaleRepository {
   @override
   Future<List<SaleModel>> getAllSales() async {
     final result = await _restClient.get(
-      'sales',
+      'animalSales',
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
         final resultData = data;
