@@ -45,7 +45,6 @@ class CustomInputField extends StatelessWidget {
     return TextFormField(
       onChanged: onChanged,
       onSaved: (v) => onSaved!(v!),
-      // validator: (v) => onValidate!(v!),
       validator: validator,
       maxLines: maxLines ?? 1,
       controller: inputController,
