@@ -61,7 +61,7 @@ class AnimalPage extends GetView<AnimalController> {
                       child: CustomOutlinedButton(
                         onPressedCallBack: () =>
                             controller.goToForm(null, null),
-                        title: "Adicionar animais",
+                        title: "Adicionar Animal",
                       ),
                     ),
                   ],
@@ -118,8 +118,7 @@ class AnimalPage extends GetView<AnimalController> {
                                   : _itemsPopMenu(),
                           child: CustomSlidable(
                             identity: index,
-                            content:
-                                '${animal.name ?? animal.identifier ?? ''}',
+                            content: 'Identifier ${animal.identifier ?? ''}',
                             title:
                                 '${animal.id ?? index + 1} - ${animal.bornDate}',
                             icon: FontAwesomeIcons.cow,

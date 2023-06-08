@@ -22,7 +22,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
       backgroundColor: UIColors.whiteColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cadastrar animais"),
+        title: Text("Cadastrar Animal"),
       ),
       body: Obx(
         () => SafeArea(
