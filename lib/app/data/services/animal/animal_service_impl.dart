@@ -54,4 +54,13 @@ class AnimalServiceImpl implements AnimalService {
   @override
   Future<bool> deleteAnimal(AnimalModel animal) =>
       _animalRepository.deleteAnimal(animal);
+
+  @override
+  Future<List<AnimalModel>> getAll() {
+    return _animalRepository.getAllInDb();
+  }
+
+  @override
+  Future<bool> sendAnimals(List<AnimalModel> animals) =>
+      _animalRepository.sendAnimals(animals);
 }

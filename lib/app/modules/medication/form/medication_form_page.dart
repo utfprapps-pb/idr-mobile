@@ -21,7 +21,7 @@ class MedicationFormPage extends GetView<MedicationFormController> {
       backgroundColor: UIColors.whiteColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cadastrar medicamento"),
+        title: Text("Cadastrar uso de medicamento"),
       ),
       body: Obx(
         () => SafeArea(
@@ -50,35 +50,6 @@ class MedicationFormPage extends GetView<MedicationFormController> {
                                     controller.showCalendar(context),
                                 labelText: 'Data aplicação',
                                 icon: Icons.calendar_today,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: CustomInputField(
-                                      inputController:
-                                          controller.activePrincipleController,
-                                      onTapCallBack: () {},
-                                      labelText: 'Princípio ativo',
-                                      icon: Icons.medical_information_rounded,
-                                      onChanged: (_) => controller.medication
-                                          .update((val) =>
-                                              val!.activePrinciple = _),
-                                      // onValidate: (_) => controller.onValidate(_),
-                                      isEnable: false,
-                                      validator: (value) {
-                                        if (value == null ||
-                                            value.toString().trim().isEmpty) {
-                                          return "Campo não pode ser vazio";
-                                        }
-
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                ],
                               ),
                               const SizedBox(
                                 height: 20,
@@ -181,6 +152,35 @@ class MedicationFormPage extends GetView<MedicationFormController> {
                                             ),
                                           ),
                                         )),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: CustomInputField(
+                                      inputController:
+                                          controller.activePrincipleController,
+                                      onTapCallBack: () {},
+                                      labelText: 'Princípio ativo',
+                                      icon: Icons.medical_information_rounded,
+                                      onChanged: (_) => controller.medication
+                                          .update((val) =>
+                                              val!.activePrinciple = _),
+                                      // onValidate: (_) => controller.onValidate(_),
+                                      isEnable: false,
+                                      validator: (value) {
+                                        if (value == null ||
+                                            value.toString().trim().isEmpty) {
+                                          return "Campo não pode ser vazio";
+                                        }
+
+                                        return null;
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),

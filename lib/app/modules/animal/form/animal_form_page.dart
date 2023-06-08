@@ -22,7 +22,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
       backgroundColor: UIColors.whiteColor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Cadastrar animais"),
+        title: Text("Cadastrar Animal"),
       ),
       body: Obx(
         () => SafeArea(
@@ -39,7 +39,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               const SizedBox(
-                                height: 12,
+                                height: 20,
                               ),
                               Row(
                                 children: [
@@ -57,7 +57,7 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                 ],
                               ),
                               const SizedBox(
-                                height: 20,
+                                height: 12,
                               ),
                               Row(
                                 children: [

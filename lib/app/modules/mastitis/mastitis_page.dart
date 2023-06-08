@@ -36,7 +36,7 @@ class MastitisPage extends GetView<MastitisController> {
                           children: [
                             Obx(
                               () => Text(
-                                'Mastites ${controller.animal.value.name}',
+                                'Mastites ${controller.animal.value.identifier}',
                                 style: UIConfig.titleStyle,
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: StrutStyle.disabled,

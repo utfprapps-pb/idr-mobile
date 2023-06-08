@@ -11,8 +11,6 @@ import 'package:idr_mobile/core/utils/functions/size_config.dart';
 
 class LoginPage extends GetView<LoginController> {
   final _formKey = GlobalKey<FormState>();
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +25,15 @@ class LoginPage extends GetView<LoginController> {
               child: TopWavesCustomPainter(),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    SizedBox(
+                      height: Get.height * 0.1,
+                    ),
                     Row(
                       children: const [
                         Text(
@@ -57,7 +58,7 @@ class LoginPage extends GetView<LoginController> {
                             padding: const EdgeInsets.only(bottom: 15.0),
                             child: CustomInputField(
                               maxLines: 1,
-                              inputController: _usernameController,
+                              inputController: controller.usernameController,
                               onTapCallBack: () {},
                               labelText: 'Usuário',
                               icon: Icons.person,
@@ -76,26 +77,28 @@ class LoginPage extends GetView<LoginController> {
                     Row(
                       children: [
                         Expanded(
-                          child: Obx(() => CustomInputField(
-                                maxLines: 1,
-                                inputController: _passwordController,
-                                onTapCallBack: () {},
-                                onPressedIcon: () =>
-                                    controller.onChangedObscureText(),
-                                isObscureText: controller.isObscureText.value,
-                                labelText: 'Senha',
-                                icon: controller.isObscureText.value
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                validator: (password) {
-                                  if (password == null ||
-                                      password.toString().trim().isEmpty) {
-                                    return "Digite sua senha";
-                                  }
+                          child: Obx(
+                            () => CustomInputField(
+                              maxLines: 1,
+                              inputController: controller.passwordController,
+                              onTapCallBack: () {},
+                              onPressedIcon: () =>
+                                  controller.onChangedObscureText(),
+                              isObscureText: controller.isObscureText.value,
+                              labelText: 'Senha',
+                              icon: controller.isObscureText.value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              validator: (password) {
+                                if (password == null ||
+                                    password.toString().trim().isEmpty) {
+                                  return "Digite sua senha";
+                                }
 
-                                  return null;
-                                },
-                              )),
+                                return null;
+                              },
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -109,7 +112,7 @@ class LoginPage extends GetView<LoginController> {
                 alignment: Alignment.bottomCenter,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      right: 16, left: 16, bottom: 16, top: 32),
+                      right: 24, left: 24, bottom: 16, top: 32),
                   child: SizedBox(
                     height: 48,
                     child: Obx(
@@ -123,8 +126,10 @@ class LoginPage extends GetView<LoginController> {
                               onPressedCallBack: () {
                                 if (_formKey.currentState!.validate()) {
                                   controller.signIn(
-                                    username: _usernameController.text,
-                                    password: _passwordController.text,
+                                    username:
+                                        controller.usernameController.text,
+                                    password:
+                                        controller.passwordController.text,
                                   );
                                 }
                               },

@@ -17,7 +17,7 @@ class DiseaseAnimalModelAdapter extends TypeAdapter<DiseaseAnimalModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return DiseaseAnimalModel(
-      id: fields[1] as String?,
+      id: fields[1] as int?,
       internalId: fields[2] as String?,
       animalIdentifier: fields[3] as String?,
       dateDiagnostic: fields[4] as String?,

@@ -91,13 +91,12 @@ class SaleModel {
 
   factory SaleModel.fromMap(Map<String, dynamic> map) {
     return SaleModel(
-      internalId: map['internalId'],
       id: map['id']?.toInt(),
-      date: map['date'],
-      animalIdentifier: map['animalIdentifier'],
+      date: map['dateSale'],
+      animalIdentifier: map['animal']['identifier'],
       weight: map['weight']?.toDouble(),
       value: map['value']?.toDouble(),
-      destiny: map['destiny'],
+      destiny: map['destination'],
       reason: map['reason'],
     );
   }

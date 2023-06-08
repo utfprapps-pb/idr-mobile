@@ -73,7 +73,7 @@ class MedicationPage extends GetView<MedicationController> {
                   ),
                   Expanded(
                     child: Obx(() {
-                      return controller.medicationsFinal.length > 0
+                      return controller.medicationsFinal.isNotEmpty
                           ? ListView.separated(
                               separatorBuilder: (context, index) => Divider(),
                               itemCount: controller.medicationsFinal.length,
@@ -87,7 +87,7 @@ class MedicationPage extends GetView<MedicationController> {
                                   title:
                                       '${medication.id ?? index + 1} - ${medication.applicationDate}',
                                   content: '${medication.activePrinciple}',
-                                  icon: Icons.child_friendly_rounded,
+                                  icon: Icons.medication_liquid_rounded,
                                   onPressedEditCallBack:
                                       (BuildContext context) {
                                     controller.goToForm(medication, index);

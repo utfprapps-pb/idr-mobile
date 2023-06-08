@@ -22,7 +22,7 @@ class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
   @override
   Future<List<DiseaseAnimalModel>> getAllDiseaseAnimals() async {
     final result = await _restClient.get(
-      'diseasesanimal',
+      'animalDiseases',
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
         final resultData = data;

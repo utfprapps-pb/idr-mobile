@@ -32,6 +32,9 @@ class HomePage extends GetView<HomeController> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
                           Obx(
                             () => Text(
                               'Olá, ${controller.displayName.value}',

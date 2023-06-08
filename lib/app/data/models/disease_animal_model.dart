@@ -7,7 +7,7 @@ part 'disease_animal_model.g.dart';
 @HiveType(typeId: 5)
 class DiseaseAnimalModel {
   @HiveField(1)
-  String? id;
+  int? id;
   @HiveField(2)
   String? internalId;
   @HiveField(3)
@@ -26,7 +26,7 @@ class DiseaseAnimalModel {
   });
 
   DiseaseAnimalModel copyWith({
-    String? id,
+    int? id,
     String? internalId,
     String? animalIdentifier,
     String? dateDiagnostic,
@@ -65,11 +65,10 @@ class DiseaseAnimalModel {
 
   factory DiseaseAnimalModel.fromMap(Map<String, dynamic> map) {
     return DiseaseAnimalModel(
-      id: map['id'],
-      internalId: map['internalId'],
-      animalIdentifier: map['animalIdentifier'],
-      dateDiagnostic: map['dateDiagnostic'],
-      diagnostic: map['diagnostic'],
+      id: map['id']?.toInt(),
+      animalIdentifier: map['animal']['identifier'],
+      dateDiagnostic: map['diagnosisDate'],
+      diagnostic: map['diagnosis'],
     );
   }
 

@@ -44,6 +44,8 @@ class AnimalModel {
   String? bornCondition;
   @HiveField(18)
   String? gender;
+  @HiveField(19)
+  bool? isEdited;
 
   AnimalModel({
     this.internalId,
@@ -64,6 +66,7 @@ class AnimalModel {
     this.deadDate,
     this.bornCondition,
     this.gender,
+    this.isEdited,
   });
 
   AnimalModel copyWith({
@@ -85,6 +88,7 @@ class AnimalModel {
     String? deadDate,
     String? bornCondition,
     String? gender,
+    bool? isEdited,
   }) {
     return AnimalModel(
       internalId: internalId ?? this.internalId,
@@ -106,6 +110,7 @@ class AnimalModel {
       deadDate: deadDate ?? this.deadDate,
       bornCondition: bornCondition ?? this.bornCondition,
       gender: gender ?? this.gender,
+      isEdited: isEdited ?? this.isEdited,
     );
   }
 
@@ -146,7 +151,9 @@ class AnimalModel {
       result.addAll({'type': type});
     }
     if (idProperty != null) {
-      result.addAll({'idProperty': idProperty});
+      result.addAll({
+        'property': {'id': idProperty}
+      });
     }
     if (bornInProperty != null) {
       result.addAll({'bornInProperty': bornInProperty});
@@ -165,6 +172,9 @@ class AnimalModel {
     }
     if (gender != null) {
       result.addAll({'gender': gender});
+    }
+    if (isEdited != null) {
+      result.addAll({'isEdited': isEdited});
     }
 
     return result;
@@ -230,7 +240,8 @@ class AnimalModel {
         other.dead == dead &&
         other.deadDate == deadDate &&
         other.bornCondition == bornCondition &&
-        other.gender == gender;
+        other.gender == gender &&
+        other.isEdited == isEdited;
   }
 
   @override
@@ -252,6 +263,7 @@ class AnimalModel {
         dead.hashCode ^
         deadDate.hashCode ^
         bornCondition.hashCode ^
-        gender.hashCode;
+        gender.hashCode ^
+        isEdited.hashCode;
   }
 }
