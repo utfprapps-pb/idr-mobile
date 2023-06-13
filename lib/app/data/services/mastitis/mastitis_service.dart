@@ -8,4 +8,6 @@ abstract class MastitisService {
   Future<bool> editMastitis(MastitisModel mastitis);
   Future<bool> deleteMastitis(MastitisModel mastitis);
   Future<bool> deleteAll();
+  Future<List> getAllMastitisIfIsEdited();
+  Future<bool> sendMastitis(List animals);
 }

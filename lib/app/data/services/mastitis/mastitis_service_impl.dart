@@ -59,4 +59,31 @@ class MastitisServiceImpl implements MastitisService {
     saveMastitisList(mastitis);
     return mastitis;
   }
+
+  @override
+  Future<List> getAllMastitisIfIsEdited() async {
+    List<MastitisModel> mastitis =
+        await _mastitisRepository.getAllMastitisInDb(null);
+
+    List mastitisList = [];
+    for (var e in mastitis) {
+      if (e.isEdited != null) {
+        mastitisList.add(e.toMap());
+      }
+    }
+
+    return mastitisList;
+  }
+
+  @override
+  Future<bool> sendMastitis(List mastitisList) async {
+    if (mastitisList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _mastitisRepository.postMastitis(mastitisList);
+  }
 }
