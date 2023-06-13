@@ -177,9 +177,6 @@ class AnimalModel {
     if (gender != null) {
       result.addAll({'gender': gender});
     }
-    if (isEdited != null) {
-      result.addAll({'isEdited': isEdited});
-    }
 
     return result;
   }
