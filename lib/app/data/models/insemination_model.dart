@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
+import 'package:intl/intl.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,6 +20,8 @@ class InseminationModel {
   String? bull;
   @HiveField(5)
   String? animalIdentifier;
+  @HiveField(6)
+  bool? isEdited;
 
   InseminationModel({
     this.internalId,
@@ -25,6 +29,7 @@ class InseminationModel {
     this.date,
     this.bull,
     this.animalIdentifier,
+    this.isEdited,
   });
 
   InseminationModel copyWith({
@@ -33,6 +38,7 @@ class InseminationModel {
     String? date,
     String? bull,
     String? animalIdentifier,
+    bool? isEdited,
   }) {
     return InseminationModel(
       internalId: internalId ?? this.internalId,
@@ -40,36 +46,45 @@ class InseminationModel {
       date: date ?? this.date,
       bull: bull ?? this.bull,
       animalIdentifier: animalIdentifier ?? this.animalIdentifier,
+      isEdited: isEdited ?? this.isEdited,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (internalId != null) {
-      result.addAll({'internalId': internalId});
-    }
     if (id != null) {
       result.addAll({'id': id});
     }
     if (date != null) {
-      result.addAll({'date': date});
+      DateTime convertToDateTime = DateFormat("dd/MM/yyy").parse(date!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'date': formatted});
     }
     if (bull != null) {
       result.addAll({'bull': bull});
     }
     if (animalIdentifier != null) {
-      result.addAll({'animalIdentifier': animalIdentifier});
+      result.addAll({
+        'animal': {'identifier': animalIdentifier}
+      });
     }
 
     return result;
   }
 
   factory InseminationModel.fromMap(Map<String, dynamic> map) {
+    String? dateFormatted;
+    if (map['date'] != null) {
+      dateFormatted = dateFormat
+          .format(DateTime.tryParse(map['date'].toString()) ?? DateTime.now())
+          .toString();
+    }
+
     return InseminationModel(
-      internalId: map['internalId'],
       id: map['id']?.toInt(),
-      date: map['date'],
+      date: dateFormatted,
       bull: map['bull'],
       animalIdentifier: map['animalIdentifier'],
     );

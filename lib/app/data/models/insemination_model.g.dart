@@ -22,13 +22,14 @@ class InseminationModelAdapter extends TypeAdapter<InseminationModel> {
       date: fields[3] as String?,
       bull: fields[4] as String?,
       animalIdentifier: fields[5] as String?,
+      isEdited: fields[6] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, InseminationModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(1)
       ..write(obj.internalId)
       ..writeByte(2)
@@ -38,7 +39,9 @@ class InseminationModelAdapter extends TypeAdapter<InseminationModel> {
       ..writeByte(4)
       ..write(obj.bull)
       ..writeByte(5)
-      ..write(obj.animalIdentifier);
+      ..write(obj.animalIdentifier)
+      ..writeByte(6)
+      ..write(obj.isEdited);
   }
 
   @override
