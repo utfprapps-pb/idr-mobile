@@ -23,13 +23,14 @@ class PregnancyDiagnosisModelAdapter
       date: fields[3] as String?,
       animalIdentifier: fields[4] as String?,
       dateLastInsemination: fields[5] as String?,
+      isEdited: fields[6] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, PregnancyDiagnosisModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(1)
       ..write(obj.internalId)
       ..writeByte(2)
@@ -39,7 +40,9 @@ class PregnancyDiagnosisModelAdapter
       ..writeByte(4)
       ..write(obj.animalIdentifier)
       ..writeByte(5)
-      ..write(obj.dateLastInsemination);
+      ..write(obj.dateLastInsemination)
+      ..writeByte(6)
+      ..write(obj.isEdited);
   }
 
   @override

@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'pregnancy_diagnosis_model.g.dart';
@@ -18,6 +19,8 @@ class PregnancyDiagnosisModel {
   String? animalIdentifier;
   @HiveField(5)
   String? dateLastInsemination;
+  @HiveField(6)
+  bool? isEdited;
 
   PregnancyDiagnosisModel({
     this.internalId,
@@ -25,6 +28,7 @@ class PregnancyDiagnosisModel {
     this.date,
     this.animalIdentifier,
     this.dateLastInsemination,
+    this.isEdited,
   });
 
   PregnancyDiagnosisModel copyWith({
@@ -33,6 +37,7 @@ class PregnancyDiagnosisModel {
     String? date,
     String? animalIdentifier,
     String? dateLastInsemination,
+    bool? isEdited,
   }) {
     return PregnancyDiagnosisModel(
       internalId: internalId ?? this.internalId,
@@ -40,26 +45,33 @@ class PregnancyDiagnosisModel {
       date: date ?? this.date,
       animalIdentifier: animalIdentifier ?? this.animalIdentifier,
       dateLastInsemination: dateLastInsemination ?? this.dateLastInsemination,
+      isEdited: isEdited ?? this.isEdited,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (internalId != null) {
-      result.addAll({'internalId': internalId});
-    }
     if (id != null) {
       result.addAll({'id': id});
     }
     if (date != null) {
-      result.addAll({'date': date});
+      DateTime convertToDateTime = DateFormat("dd/MM/yyy").parse(date!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'date': formatted});
     }
     if (animalIdentifier != null) {
-      result.addAll({'animalIdentifier': animalIdentifier});
+      result.addAll({
+        'animal': {'identifier': animalIdentifier}
+      });
     }
     if (dateLastInsemination != null) {
-      result.addAll({'dateLastInsemination': dateLastInsemination});
+      DateTime convertToDateTime =
+          DateFormat("dd/MM/yyy").parse(dateLastInsemination!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'dateLastInsemination': formatted});
     }
 
     return result;
@@ -67,7 +79,6 @@ class PregnancyDiagnosisModel {
 
   factory PregnancyDiagnosisModel.fromMap(Map<String, dynamic> map) {
     return PregnancyDiagnosisModel(
-      internalId: map['internalId'],
       id: map['id']?.toInt(),
       date: map['date'],
       animalIdentifier: map['animalIdentifier'],
@@ -94,6 +105,7 @@ class PregnancyDiagnosisModel {
         other.id == id &&
         other.date == date &&
         other.animalIdentifier == animalIdentifier &&
+        other.isEdited == isEdited &&
         other.dateLastInsemination == dateLastInsemination;
   }
 
@@ -103,6 +115,7 @@ class PregnancyDiagnosisModel {
         id.hashCode ^
         date.hashCode ^
         animalIdentifier.hashCode ^
+        isEdited.hashCode ^
         dateLastInsemination.hashCode;
   }
 }
