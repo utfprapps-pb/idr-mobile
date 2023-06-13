@@ -22,13 +22,14 @@ class DiseaseAnimalModelAdapter extends TypeAdapter<DiseaseAnimalModel> {
       animalIdentifier: fields[3] as String?,
       dateDiagnostic: fields[4] as String?,
       diagnostic: fields[5] as String?,
+      isEdited: fields[6] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, DiseaseAnimalModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)
@@ -38,7 +39,9 @@ class DiseaseAnimalModelAdapter extends TypeAdapter<DiseaseAnimalModel> {
       ..writeByte(4)
       ..write(obj.dateDiagnostic)
       ..writeByte(5)
-      ..write(obj.diagnostic);
+      ..write(obj.diagnostic)
+      ..writeByte(6)
+      ..write(obj.isEdited);
   }
 
   @override
