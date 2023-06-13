@@ -39,6 +39,8 @@ import 'package:idr_mobile/app/modules/sale/sale_binding.dart';
 import 'package:idr_mobile/app/modules/sale/sale_page.dart';
 import 'package:idr_mobile/app/modules/sync/sync_binding.dart';
 import 'package:idr_mobile/app/modules/sync/sync_page.dart';
+import 'package:idr_mobile/app/modules/sync_default/sync_default_binding.dart';
+import 'package:idr_mobile/app/modules/sync_default/sync_default_page.dart';
 import 'package:idr_mobile/app/modules/sync_forced/sync_forced_binding.dart';
 import 'package:idr_mobile/app/modules/sync_forced/sync_forced_page.dart';
 import 'package:idr_mobile/app/modules/vegetable_disease/form/vegetable_disease_form_binding.dart';
@@ -228,6 +230,13 @@ abstract class AppPages {
       page: () => SyncForcedPage(),
       bindings: [
         SyncForcedBinding(),
+      ],
+    ),
+    GetPage(
+      name: Routes.DEFAULT_SYNC,
+      page: () => SyncDefaultPage(),
+      bindings: [
+        SyncDefaultBinding(),
       ],
     ),
   ];
