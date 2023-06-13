@@ -135,6 +135,9 @@ class AnimalFormController extends GetxController {
           values.animalMotherIdentifier.toString();
       isBornInProperty.value = true;
     }
+    if (values.gender != null) {
+      genderTypeSelected.value = values.gender.toString();
+    }
 
     if (values.deadDate != null) {
       deadDateController.text = values.deadDate.toString();
@@ -224,10 +227,13 @@ class AnimalFormController extends GetxController {
       BreedModel? b = list.firstWhereOrNull(
           (element) => element.breedName == (animal.value.breed!).toString());
 
+      b ??=
+          list.firstWhereOrNull((element) => element.id == animal.value.breed!);
+
       b != null ? breedSelected.value = b : breedSelected.value = list[0];
     } else {
       breedSelected.value = breedsFinal.value[0];
-      animal.update((val) => val!.breed = breedSelected.value.id.toString());
+      animal.update((val) => val!.breed = breedSelected.value.id);
     }
   }
 }

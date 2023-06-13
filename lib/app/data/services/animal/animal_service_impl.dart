@@ -40,13 +40,17 @@ class AnimalServiceImpl implements AnimalService {
   @override
   Future<bool> saveAnimal(AnimalModel animal) {
     animal.internalId ??= _uuid.v1();
+    animal.isEdited ??= true;
 
     return _animalRepository.saveAnimalInDb(animal);
   }
 
   @override
-  Future<bool> editAnimal(AnimalModel animal) =>
-      _animalRepository.editAnimalInDb(animal);
+  Future<bool> editAnimal(AnimalModel animal) {
+    animal.isEdited ??= true;
+
+    return _animalRepository.editAnimalInDb(animal);
+  }
 
   @override
   Future<bool> deleteAll() => _animalRepository.deleteAll();
@@ -61,6 +65,28 @@ class AnimalServiceImpl implements AnimalService {
   }
 
   @override
-  Future<bool> sendAnimals(List<AnimalModel> animals) =>
-      _animalRepository.sendAnimals(animals);
+  Future<List> getAllAnimalsIfIsEdited() async {
+    List<AnimalModel> animals = await _animalRepository.getAllAnimals();
+
+    List animalsList = [];
+    for (var e in animals) {
+      if (e.isEdited != null) {
+        animalsList.add(e.toMap());
+      }
+    }
+
+    return animalsList;
+  }
+
+  @override
+  Future<bool> sendAnimals(List animals) async {
+    if (animals.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _animalRepository.postAnimals(animals);
+  }
 }

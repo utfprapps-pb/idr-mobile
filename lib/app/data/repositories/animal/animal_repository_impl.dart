@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -211,32 +212,23 @@ class AnimalRepositoryImpl implements AnimalRepository {
   }
 
   @override
-  Future<bool> sendAnimals(List<AnimalModel> animals) async {
+  Future<bool> postAnimals(List animals) async {
     final result = await _restClient.post(
-      'animals',
+      'animals/sendAnimals',
       jsonEncode(animals),
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
-        final resultData = data;
-
-        if (resultData != null) {
-          var animalList = resultData
-              .map<AnimalModel>((p) => AnimalModel.fromMap(p))
-              .toList();
-
-          return animalList;
-        } else {
-          return <AnimalModel>[];
-        }
+        return data;
       },
     );
 
     // Caso houver erro
-    if (result.hasError) {
+    if (result.status.code != HttpStatus.created &&
+        result.status.code != HttpStatus.ok) {
       print('Error [${result.statusText}]');
       throw Exception('Error _ ${result.body}');
     }
 
-    return result.body ?? <AnimalModel>[];
+    return true;
   }
 }
