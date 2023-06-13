@@ -76,7 +76,7 @@ class DiseaseAnimalServiceImpl implements DiseaseAnimalService {
   }
 
   @override
-  Future<bool> sendAnimals(List diseasesAnimal) async {
+  Future<bool> sendDiseasesAnimal(List diseasesAnimal) async {
     if (diseasesAnimal.isEmpty) {
       return Future.delayed(
         const Duration(microseconds: 1),

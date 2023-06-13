@@ -10,5 +10,5 @@ abstract class DiseaseAnimalService {
   Future<bool> deleteDiseaseAnimal(DiseaseAnimalModel diseaseAnimal);
   Future<bool> deleteAll();
   Future<List> getAllDiseasesAnimalIfIsEdited();
-  Future<bool> sendAnimals(List animals);
+  Future<bool> sendDiseasesAnimal(List diseasesAnimals);
 }
