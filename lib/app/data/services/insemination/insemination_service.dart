@@ -8,4 +8,6 @@ abstract class InseminationService {
   Future<bool> editInsemination(InseminationModel insemination);
   Future<bool> deleteInsemination(InseminationModel insemination);
   Future<bool> deleteAll();
+  Future<List> getAllInseminationsIfIsEdited();
+  Future<bool> sendInseminations(List inseminations);
 }

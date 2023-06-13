@@ -9,4 +9,5 @@ abstract class InseminationRepository {
   Future<bool> editInseminationInDb(InseminationModel insemination);
   Future<bool> deleteInsemination(InseminationModel insemination);
   Future<bool> deleteAll();
+  Future<dynamic> sendInseminations(List inseminations);
 }
