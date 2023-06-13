@@ -53,4 +53,31 @@ class MedicationServiceImpl implements MedicationService {
     saveMedications(medications);
     return medications;
   }
+
+  @override
+  Future<List> getAllMedicationsIfIsEdited() async {
+    List<MedicationModel> medications =
+        await _medicationRepository.getAllMedicationsInDb(null);
+
+    List medicationsList = [];
+    for (var e in medications) {
+      if (e.isEdited != null) {
+        medicationsList.add(e.toMap());
+      }
+    }
+
+    return medicationsList;
+  }
+
+  @override
+  Future<bool> sendMedications(List medicationsList) async {
+    if (medicationsList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _medicationRepository.postMedication(medicationsList);
+  }
 }
