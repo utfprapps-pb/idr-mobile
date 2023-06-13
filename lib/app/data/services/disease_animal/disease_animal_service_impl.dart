@@ -22,8 +22,11 @@ class DiseaseAnimalServiceImpl implements DiseaseAnimalService {
       _diseaseAnimalRepository.deleteDiseaseAnimal(diseaseAnimal);
 
   @override
-  Future<bool> editDiseaseAnimal(DiseaseAnimalModel diseaseAnimal) =>
-      _diseaseAnimalRepository.editDiseaseAnimalInDb(diseaseAnimal);
+  Future<bool> editDiseaseAnimal(DiseaseAnimalModel diseaseAnimal) {
+    diseaseAnimal.isEdited ??= true;
+
+    return _diseaseAnimalRepository.editDiseaseAnimalInDb(diseaseAnimal);
+  }
 
   @override
   Future<List<DiseaseAnimalModel>> getAllDiseaseAnimals(
@@ -33,6 +36,7 @@ class DiseaseAnimalServiceImpl implements DiseaseAnimalService {
   @override
   Future<bool> saveDiseaseAnimal(DiseaseAnimalModel diseaseAnimal) {
     diseaseAnimal.internalId ??= _uuid.v1();
+    diseaseAnimal.isEdited ??= true;
 
     return _diseaseAnimalRepository.saveDiseaseAnimalInDb(diseaseAnimal);
   }
@@ -54,5 +58,32 @@ class DiseaseAnimalServiceImpl implements DiseaseAnimalService {
         await _diseaseAnimalRepository.getAllDiseaseAnimals();
     saveDiseaseAnimals(diseaseAnimals);
     return diseaseAnimals;
+  }
+
+  @override
+  Future<List> getAllDiseasesAnimalIfIsEdited() async {
+    List<DiseaseAnimalModel> diseaseAnimals =
+        await _diseaseAnimalRepository.getAllDiseaseAnimalsInDb(null);
+
+    List diseaseAnimalsList = [];
+    for (var e in diseaseAnimals) {
+      if (e.isEdited != null) {
+        diseaseAnimalsList.add(e.toMap());
+      }
+    }
+
+    return diseaseAnimalsList;
+  }
+
+  @override
+  Future<bool> sendAnimals(List diseasesAnimal) async {
+    if (diseasesAnimal.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _diseaseAnimalRepository.postDiseaseAnimals(diseasesAnimal);
   }
 }
