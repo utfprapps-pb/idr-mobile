@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/pregnancy_diagnosis_model.dart';
@@ -217,5 +220,26 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
         (element) => element.internalId == pregnancyDiagnosis.internalId);
 
     return im;
+  }
+
+  @override
+  Future<bool> postPregnancyDiagnoses(List pregnancyDiagnosisList) async {
+    final result = await _restClient.post(
+      'pregnancydiagnoses/sendPregnancyDiagnoses',
+      jsonEncode(pregnancyDiagnosisList),
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        return data;
+      },
+    );
+
+    // Caso houver erro
+    if (result.status.code != HttpStatus.created &&
+        result.status.code != HttpStatus.ok) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _ ${result.body}');
+    }
+
+    return true;
   }
 }

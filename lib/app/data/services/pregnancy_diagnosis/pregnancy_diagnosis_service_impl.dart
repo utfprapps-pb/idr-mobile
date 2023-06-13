@@ -67,4 +67,32 @@ class PregnancyDiagnosisServiceImpl implements PregnancyDiagnosisService {
     savePregnancyDiagnoses(pregnancyDiagnoses);
     return pregnancyDiagnoses;
   }
+
+  @override
+  Future<List> getAllPregnancyDiagnosesIfIsEdited() async {
+    List<PregnancyDiagnosisModel> pregnancyDiagnoses =
+        await _pregnancyDiagnosisRepository.getAllPregnancyDiagnosesInDb(null);
+
+    List pregnancyDiagnosesList = [];
+    for (var e in pregnancyDiagnoses) {
+      if (e.isEdited != null) {
+        pregnancyDiagnosesList.add(e.toMap());
+      }
+    }
+
+    return pregnancyDiagnosesList;
+  }
+
+  @override
+  Future<bool> sendPregnancyDiagnoses(List pregnancyDiagnosesList) async {
+    if (pregnancyDiagnosesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _pregnancyDiagnosisRepository
+        .postPregnancyDiagnoses(pregnancyDiagnosesList);
+  }
 }
