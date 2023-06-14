@@ -8,4 +8,5 @@ abstract class PurchaseRepository {
   Future<bool> editPurchaseInDb(PurchaseModel purchase);
   Future<bool> deletePurchase(PurchaseModel purchase);
   Future<bool> deleteAll();
+  Future<dynamic> postPurchase(List purchaseList);
 }

@@ -54,4 +54,31 @@ class PurchaseServiceImpl implements PurchaseService {
     savePurchases(purchases);
     return purchases;
   }
+
+  @override
+  Future<List> getAllPurchasesIfIsEdited() async {
+    List<PurchaseModel> purchases =
+        await _purchaseRepository.getAllPurchasesInDb(null);
+
+    List purchasesList = [];
+    for (var e in purchases) {
+      if (e.isEdited != null) {
+        purchasesList.add(e.toMap());
+      }
+    }
+
+    return purchasesList;
+  }
+
+  @override
+  Future<bool> sendPurchases(List purchasesList) async {
+    if (purchasesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _purchaseRepository.postPurchase(purchasesList);
+  }
 }
