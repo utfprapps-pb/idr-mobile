@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'purchase_model.g.dart';
@@ -22,6 +23,8 @@ class PurchaseModel {
   double? weight;
   @HiveField(7)
   double? value;
+  @HiveField(8)
+  bool? isEdited;
 
   PurchaseModel({
     this.internalId,
@@ -31,6 +34,7 @@ class PurchaseModel {
     this.dateBirth,
     this.weight,
     this.value,
+    this.isEdited,
   });
 
   PurchaseModel copyWith({
@@ -41,6 +45,7 @@ class PurchaseModel {
     String? dateBirth,
     double? weight,
     double? value,
+    bool? isEdited,
   }) {
     return PurchaseModel(
       internalId: internalId ?? this.internalId,
@@ -50,26 +55,32 @@ class PurchaseModel {
       dateBirth: dateBirth ?? this.dateBirth,
       weight: weight ?? this.weight,
       value: value ?? this.value,
+      isEdited: isEdited ?? this.isEdited,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (internalId != null) {
-      result.addAll({'internalId': internalId});
-    }
     if (id != null) {
       result.addAll({'id': id});
     }
     if (datePurchase != null) {
-      result.addAll({'datePurchase': datePurchase});
+      DateTime convertToDateTime = DateFormat("dd/MM/yyy").parse(datePurchase!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'datePurchase': formatted});
     }
     if (animalIdentifier != null) {
-      result.addAll({'animalIdentifier': animalIdentifier});
+      result.addAll({
+        'animal': {'identifier': animalIdentifier}
+      });
     }
     if (dateBirth != null) {
-      result.addAll({'dateBirth': dateBirth});
+      DateTime convertToDateTime = DateFormat("dd/MM/yyy").parse(dateBirth!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'birthDate': formatted});
     }
     if (weight != null) {
       result.addAll({'weight': weight});
@@ -113,6 +124,7 @@ class PurchaseModel {
         other.animalIdentifier == animalIdentifier &&
         other.dateBirth == dateBirth &&
         other.weight == weight &&
+        other.isEdited == isEdited &&
         other.value == value;
   }
 
@@ -124,6 +136,7 @@ class PurchaseModel {
         animalIdentifier.hashCode ^
         dateBirth.hashCode ^
         weight.hashCode ^
+        isEdited.hashCode ^
         value.hashCode;
   }
 }
