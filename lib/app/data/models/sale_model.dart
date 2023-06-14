@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'sale_model.g.dart';
@@ -24,6 +25,8 @@ class SaleModel {
   String? destiny;
   @HiveField(8)
   String? reason;
+  @HiveField(9)
+  bool? isEdited;
 
   SaleModel({
     this.internalId,
@@ -34,6 +37,7 @@ class SaleModel {
     this.value,
     this.destiny,
     this.reason,
+    this.isEdited,
   });
 
   SaleModel copyWith({
@@ -45,6 +49,7 @@ class SaleModel {
     double? value,
     String? destiny,
     String? reason,
+    bool? isEdited,
   }) {
     return SaleModel(
       internalId: internalId ?? this.internalId,
@@ -55,23 +60,26 @@ class SaleModel {
       value: value ?? this.value,
       destiny: destiny ?? this.destiny,
       reason: reason ?? this.reason,
+      isEdited: isEdited ?? this.isEdited,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (internalId != null) {
-      result.addAll({'internalId': internalId});
-    }
     if (id != null) {
       result.addAll({'id': id});
     }
     if (date != null) {
-      result.addAll({'date': date});
+      DateTime convertToDateTime = DateFormat("dd/MM/yyy").parse(date!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'dateSale': formatted});
     }
     if (animalIdentifier != null) {
-      result.addAll({'animalIdentifier': animalIdentifier});
+      result.addAll({
+        'animal': {'identifier': animalIdentifier}
+      });
     }
     if (weight != null) {
       result.addAll({'weight': weight});
@@ -80,7 +88,7 @@ class SaleModel {
       result.addAll({'value': value});
     }
     if (destiny != null) {
-      result.addAll({'destiny': destiny});
+      result.addAll({'destination': destiny});
     }
     if (reason != null) {
       result.addAll({'reason': reason});
@@ -123,6 +131,7 @@ class SaleModel {
         other.weight == weight &&
         other.value == value &&
         other.destiny == destiny &&
+        other.isEdited == isEdited &&
         other.reason == reason;
   }
 
@@ -135,6 +144,7 @@ class SaleModel {
         weight.hashCode ^
         value.hashCode ^
         destiny.hashCode ^
+        isEdited.hashCode ^
         reason.hashCode;
   }
 }

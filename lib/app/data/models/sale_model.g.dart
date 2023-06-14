@@ -25,13 +25,14 @@ class SaleModelAdapter extends TypeAdapter<SaleModel> {
       value: fields[6] as double?,
       destiny: fields[7] as String?,
       reason: fields[8] as String?,
+      isEdited: fields[9] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, SaleModel obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(1)
       ..write(obj.internalId)
       ..writeByte(2)
@@ -47,7 +48,9 @@ class SaleModelAdapter extends TypeAdapter<SaleModel> {
       ..writeByte(7)
       ..write(obj.destiny)
       ..writeByte(8)
-      ..write(obj.reason);
+      ..write(obj.reason)
+      ..writeByte(9)
+      ..write(obj.isEdited);
   }
 
   @override
