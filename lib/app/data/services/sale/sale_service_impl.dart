@@ -51,4 +51,30 @@ class SaleServiceImpl implements SaleService {
     saveSales(sales);
     return sales;
   }
+
+  @override
+  Future<List> getAllSalesIfIsEdited() async {
+    List<SaleModel> sales = await _saleRepository.getAllSalesInDb(null);
+
+    List salesList = [];
+    for (var e in sales) {
+      if (e.isEdited != null) {
+        salesList.add(e.toMap());
+      }
+    }
+
+    return salesList;
+  }
+
+  @override
+  Future<bool> sendSales(List salesList) async {
+    if (salesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _saleRepository.postSales(salesList);
+  }
 }

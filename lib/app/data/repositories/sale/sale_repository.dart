@@ -8,4 +8,5 @@ abstract class SaleRepository {
   Future<bool> editSaleInDb(SaleModel sale);
   Future<bool> deleteSale(SaleModel sale);
   Future<bool> deleteAll();
+  Future<bool> postSales(List salesList);
 }

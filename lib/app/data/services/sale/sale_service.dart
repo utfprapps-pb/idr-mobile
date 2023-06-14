@@ -8,4 +8,6 @@ abstract class SaleService {
   Future<bool> editSale(SaleModel sale);
   Future<bool> deleteSale(SaleModel sale);
   Future<bool> deleteAll();
+  Future<List> getAllSalesIfIsEdited();
+  Future<bool> sendSales(List sales);
 }
