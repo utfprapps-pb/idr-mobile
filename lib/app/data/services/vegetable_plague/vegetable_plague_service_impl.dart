@@ -56,4 +56,32 @@ class VegetablePlagueServiceImpl implements VegetablePlagueService {
     saveVegetablePlagues(vegetablePlagues);
     return vegetablePlagues;
   }
+
+  @override
+  Future<List> getAllVegetablePlaguesIfIsEdited() async {
+    List<VegetablePlagueModel> vegetablePlagues =
+        await _vegetablePlagueRepository.getAllVegetablePlaguesInDb(null);
+
+    List vegetablePlaguesList = [];
+    for (var e in vegetablePlagues) {
+      if (e.isEdited != null) {
+        vegetablePlaguesList.add(e.toMap());
+      }
+    }
+
+    return vegetablePlaguesList;
+  }
+
+  @override
+  Future<bool> sendVegetablePlagues(List vegetablePlaguesList) async {
+    if (vegetablePlaguesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _vegetablePlagueRepository
+        .postVegetablePlagues(vegetablePlaguesList);
+  }
 }

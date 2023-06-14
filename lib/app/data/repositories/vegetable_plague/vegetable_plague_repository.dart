@@ -10,4 +10,5 @@ abstract class VegetablePlagueRepository {
   Future<bool> editVegetablePlagueInDb(VegetablePlagueModel vegetablePlague);
   Future<bool> deleteVegetablePlague(VegetablePlagueModel vegetablePlague);
   Future<bool> deleteAll();
+  Future<bool> postVegetablePlagues(List vegetablePlaguesList);
 }
