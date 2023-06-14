@@ -61,4 +61,32 @@ class VegetableDiseaseServiceImpl implements VegetableDiseaseService {
     saveVegetableDiseases(vegetableDiseases);
     return vegetableDiseases;
   }
+
+  @override
+  Future<List> getAllVegetableDiseasesIfIsEdited() async {
+    List<VegetableDiseaseModel> vegetableDiseases =
+        await _vegetableDiseaseRepository.getAllVegetableDiseasesInDb(null);
+
+    List vegetableDiseasesList = [];
+    for (var e in vegetableDiseases) {
+      if (e.isEdited != null) {
+        vegetableDiseasesList.add(e.toMap());
+      }
+    }
+
+    return vegetableDiseasesList;
+  }
+
+  @override
+  Future<bool> sendVegetableDiseases(List vegetableDiseasesList) async {
+    if (vegetableDiseasesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _vegetableDiseaseRepository
+        .postVegetableDiseases(vegetableDiseasesList);
+  }
 }
