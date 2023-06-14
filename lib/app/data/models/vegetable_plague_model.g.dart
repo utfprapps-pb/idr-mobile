@@ -24,13 +24,14 @@ class VegetablePlagueModelAdapter extends TypeAdapter<VegetablePlagueModel> {
       idProperty: fields[5] as int?,
       idCulture: fields[6] as int?,
       idPlague: fields[7] as int?,
+      isEdited: fields[8] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, VegetablePlagueModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(1)
       ..write(obj.internalId)
       ..writeByte(2)
@@ -44,7 +45,9 @@ class VegetablePlagueModelAdapter extends TypeAdapter<VegetablePlagueModel> {
       ..writeByte(6)
       ..write(obj.idCulture)
       ..writeByte(7)
-      ..write(obj.idPlague);
+      ..write(obj.idPlague)
+      ..writeByte(8)
+      ..write(obj.isEdited);
   }
 
   @override

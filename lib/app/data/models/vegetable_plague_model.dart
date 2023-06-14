@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -22,6 +23,8 @@ class VegetablePlagueModel {
   int? idCulture;
   @HiveField(7)
   int? idPlague;
+  @HiveField(8)
+  bool? isEdited;
 
   VegetablePlagueModel({
     this.internalId,
@@ -31,6 +34,7 @@ class VegetablePlagueModel {
     this.idProperty,
     this.idCulture,
     this.idPlague,
+    this.isEdited,
   });
 
   VegetablePlagueModel copyWith({
@@ -41,6 +45,7 @@ class VegetablePlagueModel {
     int? idProperty,
     int? idCulture,
     int? idPlague,
+    bool? isEdited,
   }) {
     return VegetablePlagueModel(
       internalId: internalId ?? this.internalId,
@@ -50,15 +55,13 @@ class VegetablePlagueModel {
       idProperty: idProperty ?? this.idProperty,
       idCulture: idCulture ?? this.idCulture,
       idPlague: idPlague ?? this.idPlague,
+      isEdited: isEdited ?? this.isEdited,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (internalId != null) {
-      result.addAll({'internalId': internalId});
-    }
     if (id != null) {
       result.addAll({'id': id});
     }
@@ -66,16 +69,25 @@ class VegetablePlagueModel {
       result.addAll({'infestationType': infestationType});
     }
     if (date != null) {
-      result.addAll({'date': date});
+      DateTime convertToDateTime = DateFormat("dd/MM/yyy").parse(date!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'date': formatted});
     }
     if (idProperty != null) {
-      result.addAll({'idProperty': idProperty});
+      result.addAll({
+        'property': {'id': idProperty}
+      });
     }
     if (idCulture != null) {
-      result.addAll({'idCulture': idCulture});
+      result.addAll({
+        'culture': {'id': idCulture}
+      });
     }
     if (idPlague != null) {
-      result.addAll({'idPlague': idPlague});
+      result.addAll({
+        'plague': {'id': idPlague}
+      });
     }
 
     return result;
@@ -83,7 +95,6 @@ class VegetablePlagueModel {
 
   factory VegetablePlagueModel.fromMap(Map<String, dynamic> map) {
     return VegetablePlagueModel(
-      internalId: map['internalId'],
       id: map['id']?.toInt(),
       infestationType: map['infestationType'],
       date: map['date'],
@@ -114,6 +125,7 @@ class VegetablePlagueModel {
         other.date == date &&
         other.idProperty == idProperty &&
         other.idCulture == idCulture &&
+        other.isEdited == isEdited &&
         other.idPlague == idPlague;
   }
 
@@ -125,6 +137,7 @@ class VegetablePlagueModel {
         date.hashCode ^
         idProperty.hashCode ^
         idCulture.hashCode ^
+        isEdited.hashCode ^
         idPlague.hashCode;
   }
 }
