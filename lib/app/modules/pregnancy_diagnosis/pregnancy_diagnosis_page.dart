@@ -35,10 +35,16 @@ class PregnancyDiagnosisPage extends GetView<PregnancyDiagnosisController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              'Diagnósticos',
+                              style: UIConfig.titleStyle,
+                              overflow: TextOverflow.ellipsis,
+                              strutStyle: StrutStyle.disabled,
+                            ),
                             Obx(
                               () => Text(
-                                'Diagnóssticos ${controller.animal.value.identifier}',
-                                style: UIConfig.titleStyle,
+                                'Animal: ${controller.animal.value.identifier}',
+                                style: UIConfig.subtitleStyle,
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: StrutStyle.disabled,
                               ),

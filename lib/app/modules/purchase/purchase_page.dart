@@ -34,10 +34,16 @@ class PurchasePage extends GetView<PurchaseController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              'Compra',
+                              style: UIConfig.titleStyle,
+                              overflow: TextOverflow.ellipsis,
+                              strutStyle: StrutStyle.disabled,
+                            ),
                             Obx(
                               () => Text(
-                                'Compra ${controller.animal.value.identifier}',
-                                style: UIConfig.titleStyle,
+                                'Animal: ${controller.animal.value.identifier}',
+                                style: UIConfig.subtitleStyle,
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: StrutStyle.disabled,
                               ),
