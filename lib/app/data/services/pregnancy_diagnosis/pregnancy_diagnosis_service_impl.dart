@@ -28,9 +28,12 @@ class PregnancyDiagnosisServiceImpl implements PregnancyDiagnosisService {
 
   @override
   Future<bool> editPregnancyDiagnosis(
-          PregnancyDiagnosisModel pregnancyDiagnosis) =>
-      _pregnancyDiagnosisRepository
-          .editPregnancyDiagnosisInDb(pregnancyDiagnosis);
+      PregnancyDiagnosisModel pregnancyDiagnosis) {
+    pregnancyDiagnosis.isEdited ??= true;
+
+    return _pregnancyDiagnosisRepository
+        .editPregnancyDiagnosisInDb(pregnancyDiagnosis);
+  }
 
   @override
   Future<List<PregnancyDiagnosisModel>> getAllPregnancyDiagnoses(
@@ -42,6 +45,7 @@ class PregnancyDiagnosisServiceImpl implements PregnancyDiagnosisService {
   Future<bool> savePregnancyDiagnosis(
       PregnancyDiagnosisModel pregnancyDiagnosis) {
     pregnancyDiagnosis.internalId ??= _uuid.v1();
+    pregnancyDiagnosis.isEdited ??= true;
 
     return _pregnancyDiagnosisRepository
         .savePregnancyDiagnosisInDb(pregnancyDiagnosis);

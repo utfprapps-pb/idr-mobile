@@ -22,8 +22,11 @@ class VegetablePlagueServiceImpl implements VegetablePlagueService {
       _vegetablePlagueRepository.deleteVegetablePlague(vegetablePlague);
 
   @override
-  Future<bool> editVegetablePlague(VegetablePlagueModel vegetablePlague) =>
-      _vegetablePlagueRepository.editVegetablePlagueInDb(vegetablePlague);
+  Future<bool> editVegetablePlague(VegetablePlagueModel vegetablePlague) {
+    vegetablePlague.isEdited ??= true;
+
+    return _vegetablePlagueRepository.editVegetablePlagueInDb(vegetablePlague);
+  }
 
   @override
   Future<List<VegetablePlagueModel>> getAllVegetablePlagues(int? idProperty) =>
@@ -32,6 +35,7 @@ class VegetablePlagueServiceImpl implements VegetablePlagueService {
   @override
   Future<bool> saveVegetablePlague(VegetablePlagueModel vegetablePlague) {
     vegetablePlague.internalId ??= _uuid.v1();
+    vegetablePlague.isEdited ??= true;
 
     return _vegetablePlagueRepository.saveVegetablePlagueInDb(vegetablePlague);
   }

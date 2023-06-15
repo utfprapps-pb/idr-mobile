@@ -21,8 +21,11 @@ class MedicationServiceImpl implements MedicationService {
       _medicationRepository.deleteMedication(medication);
 
   @override
-  Future<bool> editMedication(MedicationModel medication) =>
-      _medicationRepository.editMedicationInDb(medication);
+  Future<bool> editMedication(MedicationModel medication) {
+    medication.isEdited ??= true;
+
+    return _medicationRepository.editMedicationInDb(medication);
+  }
 
   @override
   Future<List<MedicationModel>> getAllMedications(String? animalIdentifier) =>
@@ -31,6 +34,7 @@ class MedicationServiceImpl implements MedicationService {
   @override
   Future<bool> saveMedication(MedicationModel medication) {
     medication.internalId ??= _uuid.v1();
+    medication.isEdited ??= true;
 
     return _medicationRepository.saveMedicationInDb(medication);
   }

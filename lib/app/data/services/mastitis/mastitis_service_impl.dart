@@ -28,8 +28,10 @@ class MastitisServiceImpl implements MastitisService {
       _mastitisRepository.deleteMastitis(mastitis);
 
   @override
-  Future<bool> editMastitis(MastitisModel mastitis) =>
-      _mastitisRepository.editMastitisInDb(mastitis);
+  Future<bool> editMastitis(MastitisModel mastitis) {
+    mastitis.isEdited ??= true;
+    return _mastitisRepository.editMastitisInDb(mastitis);
+  }
 
   @override
   Future<List<MastitisModel>> getAllMastitis(String? animalIdentifier) =>
@@ -38,6 +40,7 @@ class MastitisServiceImpl implements MastitisService {
   @override
   Future<bool> saveMastitis(MastitisModel mastitis) {
     mastitis.internalId ??= _uuid.v1();
+    mastitis.isEdited ??= true;
 
     return _mastitisRepository.saveMastitisInDb(mastitis);
   }

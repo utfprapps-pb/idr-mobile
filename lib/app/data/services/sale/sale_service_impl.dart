@@ -21,7 +21,11 @@ class SaleServiceImpl implements SaleService {
   Future<bool> deleteSale(SaleModel sale) => _saleRepository.deleteSale(sale);
 
   @override
-  Future<bool> editSale(SaleModel sale) => _saleRepository.editSaleInDb(sale);
+  Future<bool> editSale(SaleModel sale) {
+    sale.isEdited ??= true;
+
+    return _saleRepository.editSaleInDb(sale);
+  }
 
   @override
   Future<List<SaleModel>> getAllSales(String? animalIdentifier) =>
@@ -30,6 +34,7 @@ class SaleServiceImpl implements SaleService {
   @override
   Future<bool> saveSale(SaleModel sale) {
     sale.internalId ??= _uuid.v1();
+    sale.isEdited ??= true;
 
     return _saleRepository.saveSaleInDb(sale);
   }

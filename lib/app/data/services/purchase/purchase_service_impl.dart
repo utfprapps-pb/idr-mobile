@@ -23,8 +23,11 @@ class PurchaseServiceImpl implements PurchaseService {
       _purchaseRepository.deletePurchase(purchase);
 
   @override
-  Future<bool> editPurchase(PurchaseModel purchase) =>
-      _purchaseRepository.editPurchaseInDb(purchase);
+  Future<bool> editPurchase(PurchaseModel purchase) {
+    purchase.isEdited ??= true;
+
+    return _purchaseRepository.editPurchaseInDb(purchase);
+  }
 
   @override
   Future<List<PurchaseModel>> getAllPurchases(String? animalIdentifier) =>
@@ -33,6 +36,7 @@ class PurchaseServiceImpl implements PurchaseService {
   @override
   Future<bool> savePurchase(PurchaseModel purchase) {
     purchase.internalId ??= _uuid.v1();
+    purchase.isEdited ??= true;
 
     return _purchaseRepository.savePurchaseInDb(purchase);
   }

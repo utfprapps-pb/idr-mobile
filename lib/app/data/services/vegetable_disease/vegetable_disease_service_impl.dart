@@ -25,8 +25,12 @@ class VegetableDiseaseServiceImpl implements VegetableDiseaseService {
       _vegetableDiseaseRepository.deleteVegetableDisease(vegetableDisease);
 
   @override
-  Future<bool> editVegetableDisease(VegetableDiseaseModel vegetableDisease) =>
-      _vegetableDiseaseRepository.editVegetableDiseaseInDb(vegetableDisease);
+  Future<bool> editVegetableDisease(VegetableDiseaseModel vegetableDisease) {
+    vegetableDisease.isEdited ??= true;
+
+    return _vegetableDiseaseRepository
+        .editVegetableDiseaseInDb(vegetableDisease);
+  }
 
   @override
   Future<List<VegetableDiseaseModel>> getAllVegetableDiseases(
@@ -36,6 +40,7 @@ class VegetableDiseaseServiceImpl implements VegetableDiseaseService {
   @override
   Future<bool> saveVegetableDisease(VegetableDiseaseModel vegetableDisease) {
     vegetableDisease.internalId ??= _uuid.v1();
+    vegetableDisease.isEdited ??= true;
 
     return _vegetableDiseaseRepository
         .saveVegetableDiseaseInDb(vegetableDisease);
