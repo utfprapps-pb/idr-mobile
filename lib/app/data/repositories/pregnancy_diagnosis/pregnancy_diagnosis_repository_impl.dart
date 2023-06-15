@@ -225,7 +225,7 @@ class PregnancyDiagnosisRepositoryImpl implements PregnancyDiagnosisRepository {
   @override
   Future<bool> postPregnancyDiagnoses(List pregnancyDiagnosisList) async {
     final result = await _restClient.post(
-      'pregnancydiagnoses/sendPregnancyDiagnoses',
+      'pregnancyDiagnose/sendPregnancyDiagnoses',
       jsonEncode(pregnancyDiagnosisList),
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {
