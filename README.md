@@ -4,7 +4,7 @@
      - /dados
      # Diretório responsável por conter tudo relacionado aos nossos dados
          - /enums
-         - /Serviços
+         - /services
               # É aqui que armazenamos nossos Serviços
               # Aqui nossos repositórios são apenas classes que irão mediar a comunicação entre nosso controller e nossos dados.
               # Nossos controladores não precisam saber de onde vêm os dados e você pode usar mais de um repositório em um controlador, se precisar.
