@@ -52,13 +52,25 @@ class SyncPage extends GetView<SyncController> {
                     height: 40,
                   ),
                   CustomElevatedButton(
-                    title: 'Sincronicação forçada'.toUpperCase(),
+                    title: 'Sincronização forçada'.toUpperCase(),
                     onPressedCallBack: () {
                       Get.toNamed(Routes.FORCED_SYNC);
                       // if (controller.formKey.currentState!.validate()) {
                       //   controller.onFormSubmit();
                       // }
                     },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: CustomElevatedButton(
+                      title: 'Sincronização padrão'.toUpperCase(),
+                      onPressedCallBack: () {
+                        Get.toNamed(Routes.DEFAULT_SYNC);
+                        // if (controller.formKey.currentState!.validate()) {
+                        //   controller.onFormSubmit();
+                        // }
+                      },
+                    ),
                   ),
                 ],
               ),
