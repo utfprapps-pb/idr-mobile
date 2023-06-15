@@ -59,7 +59,7 @@ class PregnancyDiagnosisModel {
       DateTime convertToDateTime = DateFormat("dd/MM/yyy").parse(date!);
       String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
 
-      result.addAll({'date': formatted});
+      result.addAll({'diagnoseDate': formatted});
     }
     if (animalIdentifier != null) {
       result.addAll({
@@ -71,7 +71,7 @@ class PregnancyDiagnosisModel {
           DateFormat("dd/MM/yyy").parse(dateLastInsemination!);
       String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
 
-      result.addAll({'dateLastInsemination': formatted});
+      result.addAll({'lastIA': formatted});
     }
 
     return result;
