@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:idr_mobile/app/data/enums/enum_animal_gender.dart';
 import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
@@ -61,6 +62,7 @@ class AnimalFormController extends GetxController {
     loadBreeds();
 
     genderTypeSelected.value = gendersType[AnimalGenderType.m.name].toString();
+    animal.update((val) => val!.gender = genderTypeSelected.value);
 
     gendersType.forEach((key, value) {
       genderTypeList.add(value);
@@ -110,9 +112,10 @@ class AnimalFormController extends GetxController {
   }
 
   void setFormValues(AnimalModel values) {
-    bornDateController.text = dateFormat
-        .format(DateTime.tryParse(values.bornDate.toString()) ?? DateTime.now())
-        .toString();
+    DateTime convertToDateTime =
+        DateFormat("dd/MM/yyy").parse(values.bornDate.toString());
+    String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+    bornDateController.text = formatted;
     nameController.text = values.name ?? '';
 
     if (values.bornWeight != null) {
