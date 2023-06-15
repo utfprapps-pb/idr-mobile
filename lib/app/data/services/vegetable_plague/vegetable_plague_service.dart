@@ -8,4 +8,6 @@ abstract class VegetablePlagueService {
   Future<bool> editVegetablePlague(VegetablePlagueModel vegetablePlague);
   Future<bool> deleteVegetablePlague(VegetablePlagueModel vegetablePlague);
   Future<bool> deleteAll();
+  Future<List> getAllVegetablePlaguesIfIsEdited();
+  Future<bool> sendVegetablePlagues(List vegetablePlagues);
 }

@@ -24,13 +24,14 @@ class VegetableDiseaseModelAdapter extends TypeAdapter<VegetableDiseaseModel> {
       idProperty: fields[5] as int?,
       idCulture: fields[6] as int?,
       idDisease: fields[7] as int?,
+      isEdited: fields[8] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, VegetableDiseaseModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(1)
       ..write(obj.internalId)
       ..writeByte(2)
@@ -44,7 +45,9 @@ class VegetableDiseaseModelAdapter extends TypeAdapter<VegetableDiseaseModel> {
       ..writeByte(6)
       ..write(obj.idCulture)
       ..writeByte(7)
-      ..write(obj.idDisease);
+      ..write(obj.idDisease)
+      ..writeByte(8)
+      ..write(obj.isEdited);
   }
 
   @override

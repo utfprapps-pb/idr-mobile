@@ -9,4 +9,5 @@ abstract class DiseaseAnimalRepository {
   Future<bool> editDiseaseAnimalInDb(DiseaseAnimalModel diseaseAnimal);
   Future<bool> deleteDiseaseAnimal(DiseaseAnimalModel diseaseAnimal);
   Future<bool> deleteAll();
+  Future<dynamic> postDiseaseAnimals(List diseases);
 }

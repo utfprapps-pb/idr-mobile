@@ -4,6 +4,7 @@ abstract class Routes {
   static const HOME = '/home';
   static const SYNC = '/sync';
   static const FORCED_SYNC = '/forced-sync';
+  static const DEFAULT_SYNC = '/forced-default';
   static const LOGIN = '/login';
   static const PROPERTY = '/property';
 

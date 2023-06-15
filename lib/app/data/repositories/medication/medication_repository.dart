@@ -8,4 +8,5 @@ abstract class MedicationRepository {
   Future<bool> editMedicationInDb(MedicationModel medication);
   Future<bool> deleteMedication(MedicationModel medication);
   Future<bool> deleteAll();
+  Future<dynamic> postMedication(List medicationList);
 }

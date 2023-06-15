@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'vegetable_disease_model.g.dart';
@@ -22,6 +23,9 @@ class VegetableDiseaseModel {
   int? idCulture;
   @HiveField(7)
   int? idDisease;
+  @HiveField(8)
+  bool? isEdited;
+
   VegetableDiseaseModel({
     this.internalId,
     this.id,
@@ -30,6 +34,7 @@ class VegetableDiseaseModel {
     this.idProperty,
     this.idCulture,
     this.idDisease,
+    this.isEdited,
   });
 
   VegetableDiseaseModel copyWith({
@@ -40,6 +45,7 @@ class VegetableDiseaseModel {
     int? idProperty,
     int? idCulture,
     int? idDisease,
+    bool? isEdited,
   }) {
     return VegetableDiseaseModel(
       internalId: internalId ?? this.internalId,
@@ -49,15 +55,13 @@ class VegetableDiseaseModel {
       idProperty: idProperty ?? this.idProperty,
       idCulture: idCulture ?? this.idCulture,
       idDisease: idDisease ?? this.idDisease,
+      isEdited: isEdited ?? this.isEdited,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (internalId != null) {
-      result.addAll({'internalId': internalId});
-    }
     if (id != null) {
       result.addAll({'id': id});
     }
@@ -65,16 +69,25 @@ class VegetableDiseaseModel {
       result.addAll({'infestationType': infestationType});
     }
     if (date != null) {
-      result.addAll({'date': date});
+      DateTime convertToDateTime = DateFormat("dd/MM/yyy").parse(date!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'date': formatted});
     }
     if (idProperty != null) {
-      result.addAll({'idProperty': idProperty});
+      result.addAll({
+        'property': {'id': idProperty}
+      });
     }
     if (idCulture != null) {
-      result.addAll({'idCulture': idCulture});
+      result.addAll({
+        'culture': {'id': idCulture}
+      });
     }
     if (idDisease != null) {
-      result.addAll({'idDisease': idDisease});
+      result.addAll({
+        'disease': {'id': idDisease}
+      });
     }
 
     return result;
@@ -113,6 +126,7 @@ class VegetableDiseaseModel {
         other.date == date &&
         other.idProperty == idProperty &&
         other.idCulture == idCulture &&
+        other.isEdited == isEdited &&
         other.idDisease == idDisease;
   }
 
@@ -124,6 +138,7 @@ class VegetableDiseaseModel {
         date.hashCode ^
         idProperty.hashCode ^
         idCulture.hashCode ^
+        isEdited.hashCode ^
         idDisease.hashCode;
   }
 }

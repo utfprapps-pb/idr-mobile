@@ -11,5 +11,5 @@ abstract class AnimalRepository {
   Future<bool> deleteAnimal(AnimalModel animal);
   Future<bool> deleteAll();
   Future<List<AnimalModel>> getAllInDb();
-  Future<bool> sendAnimals(List<AnimalModel> animals);
+  Future<dynamic> postAnimals(List animals);
 }

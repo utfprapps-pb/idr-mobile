@@ -5,5 +5,5 @@ enum VegetableMenuType {
 
 var vegetableMenusType = {
   VegetableMenuType.plague.name: "Pragas",
-  VegetableMenuType.disease.name: "Doenças",
+  VegetableMenuType.disease.name: "Doencas",
 };

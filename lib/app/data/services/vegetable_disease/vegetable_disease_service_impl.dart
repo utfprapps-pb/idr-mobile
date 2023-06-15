@@ -25,8 +25,12 @@ class VegetableDiseaseServiceImpl implements VegetableDiseaseService {
       _vegetableDiseaseRepository.deleteVegetableDisease(vegetableDisease);
 
   @override
-  Future<bool> editVegetableDisease(VegetableDiseaseModel vegetableDisease) =>
-      _vegetableDiseaseRepository.editVegetableDiseaseInDb(vegetableDisease);
+  Future<bool> editVegetableDisease(VegetableDiseaseModel vegetableDisease) {
+    vegetableDisease.isEdited ??= true;
+
+    return _vegetableDiseaseRepository
+        .editVegetableDiseaseInDb(vegetableDisease);
+  }
 
   @override
   Future<List<VegetableDiseaseModel>> getAllVegetableDiseases(
@@ -36,6 +40,7 @@ class VegetableDiseaseServiceImpl implements VegetableDiseaseService {
   @override
   Future<bool> saveVegetableDisease(VegetableDiseaseModel vegetableDisease) {
     vegetableDisease.internalId ??= _uuid.v1();
+    vegetableDisease.isEdited ??= true;
 
     return _vegetableDiseaseRepository
         .saveVegetableDiseaseInDb(vegetableDisease);
@@ -60,5 +65,33 @@ class VegetableDiseaseServiceImpl implements VegetableDiseaseService {
         await _vegetableDiseaseRepository.getAllVegetableDiseases();
     saveVegetableDiseases(vegetableDiseases);
     return vegetableDiseases;
+  }
+
+  @override
+  Future<List> getAllVegetableDiseasesIfIsEdited() async {
+    List<VegetableDiseaseModel> vegetableDiseases =
+        await _vegetableDiseaseRepository.getAllVegetableDiseasesInDb(null);
+
+    List vegetableDiseasesList = [];
+    for (var e in vegetableDiseases) {
+      if (e.isEdited != null) {
+        vegetableDiseasesList.add(e.toMap());
+      }
+    }
+
+    return vegetableDiseasesList;
+  }
+
+  @override
+  Future<bool> sendVegetableDiseases(List vegetableDiseasesList) async {
+    if (vegetableDiseasesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _vegetableDiseaseRepository
+        .postVegetableDiseases(vegetableDiseasesList);
   }
 }

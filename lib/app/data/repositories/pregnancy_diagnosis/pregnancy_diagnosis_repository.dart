@@ -13,4 +13,5 @@ abstract class PregnancyDiagnosisRepository {
   Future<bool> deletePregnancyDiagnosis(
       PregnancyDiagnosisModel pregnancyDiagnosis);
   Future<bool> deleteAll();
+  Future<dynamic> postPregnancyDiagnoses(List pregnancyDiagnosisList);
 }

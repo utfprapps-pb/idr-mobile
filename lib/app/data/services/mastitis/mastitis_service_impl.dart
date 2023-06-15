@@ -28,8 +28,10 @@ class MastitisServiceImpl implements MastitisService {
       _mastitisRepository.deleteMastitis(mastitis);
 
   @override
-  Future<bool> editMastitis(MastitisModel mastitis) =>
-      _mastitisRepository.editMastitisInDb(mastitis);
+  Future<bool> editMastitis(MastitisModel mastitis) {
+    mastitis.isEdited ??= true;
+    return _mastitisRepository.editMastitisInDb(mastitis);
+  }
 
   @override
   Future<List<MastitisModel>> getAllMastitis(String? animalIdentifier) =>
@@ -38,6 +40,7 @@ class MastitisServiceImpl implements MastitisService {
   @override
   Future<bool> saveMastitis(MastitisModel mastitis) {
     mastitis.internalId ??= _uuid.v1();
+    mastitis.isEdited ??= true;
 
     return _mastitisRepository.saveMastitisInDb(mastitis);
   }
@@ -58,5 +61,32 @@ class MastitisServiceImpl implements MastitisService {
     List<MastitisModel> mastitis = await _mastitisRepository.getAllMastitis();
     saveMastitisList(mastitis);
     return mastitis;
+  }
+
+  @override
+  Future<List> getAllMastitisIfIsEdited() async {
+    List<MastitisModel> mastitis =
+        await _mastitisRepository.getAllMastitisInDb(null);
+
+    List mastitisList = [];
+    for (var e in mastitis) {
+      if (e.isEdited != null) {
+        mastitisList.add(e.toMap());
+      }
+    }
+
+    return mastitisList;
+  }
+
+  @override
+  Future<bool> sendMastitis(List mastitisList) async {
+    if (mastitisList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _mastitisRepository.postMastitis(mastitisList);
   }
 }

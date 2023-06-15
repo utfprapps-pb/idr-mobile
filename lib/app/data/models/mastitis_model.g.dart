@@ -26,13 +26,14 @@ class MastitisModelAdapter extends TypeAdapter<MastitisModel> {
       pe: fields[7] as String?,
       dateDiagnostic: fields[8] as String?,
       type: fields[9] as String?,
+      isEdited: fields[10] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, MastitisModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(1)
       ..write(obj.internalId)
       ..writeByte(2)
@@ -50,7 +51,9 @@ class MastitisModelAdapter extends TypeAdapter<MastitisModel> {
       ..writeByte(8)
       ..write(obj.dateDiagnostic)
       ..writeByte(9)
-      ..write(obj.type);
+      ..write(obj.type)
+      ..writeByte(10)
+      ..write(obj.isEdited);
   }
 
   @override

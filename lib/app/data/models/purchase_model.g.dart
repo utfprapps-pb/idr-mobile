@@ -24,13 +24,14 @@ class PurchaseModelAdapter extends TypeAdapter<PurchaseModel> {
       dateBirth: fields[5] as String?,
       weight: fields[6] as double?,
       value: fields[7] as double?,
+      isEdited: fields[8] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, PurchaseModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(1)
       ..write(obj.internalId)
       ..writeByte(2)
@@ -44,7 +45,9 @@ class PurchaseModelAdapter extends TypeAdapter<PurchaseModel> {
       ..writeByte(6)
       ..write(obj.weight)
       ..writeByte(7)
-      ..write(obj.value);
+      ..write(obj.value)
+      ..writeByte(8)
+      ..write(obj.isEdited);
   }
 
   @override

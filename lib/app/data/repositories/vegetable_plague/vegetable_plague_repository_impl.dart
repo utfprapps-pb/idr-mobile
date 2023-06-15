@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/vegetable_plague_model.dart';
@@ -209,5 +212,26 @@ class VegetablePlagueRepositoryImpl implements VegetablePlagueRepository {
         (element) => element.internalId == vegetablePlague.internalId);
 
     return vdm;
+  }
+
+  @override
+  Future<bool> postVegetablePlagues(List vegetablePlaguesList) async {
+    final result = await _restClient.post(
+      'vegetableplagues/sendVegetablePlagues',
+      jsonEncode(vegetablePlaguesList),
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        return data;
+      },
+    );
+
+    // Caso houver erro
+    if (result.status.code != HttpStatus.created &&
+        result.status.code != HttpStatus.ok) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _ ${result.body}');
+    }
+
+    return true;
   }
 }

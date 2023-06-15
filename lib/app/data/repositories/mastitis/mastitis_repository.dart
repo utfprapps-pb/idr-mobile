@@ -8,4 +8,5 @@ abstract class MastitisRepository {
   Future<bool> editMastitisInDb(MastitisModel mastitis);
   Future<bool> deleteMastitis(MastitisModel mastitis);
   Future<bool> deleteAll();
+  Future<dynamic> postMastitis(List mastitisList);
 }

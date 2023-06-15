@@ -21,8 +21,11 @@ class MedicationServiceImpl implements MedicationService {
       _medicationRepository.deleteMedication(medication);
 
   @override
-  Future<bool> editMedication(MedicationModel medication) =>
-      _medicationRepository.editMedicationInDb(medication);
+  Future<bool> editMedication(MedicationModel medication) {
+    medication.isEdited ??= true;
+
+    return _medicationRepository.editMedicationInDb(medication);
+  }
 
   @override
   Future<List<MedicationModel>> getAllMedications(String? animalIdentifier) =>
@@ -31,6 +34,7 @@ class MedicationServiceImpl implements MedicationService {
   @override
   Future<bool> saveMedication(MedicationModel medication) {
     medication.internalId ??= _uuid.v1();
+    medication.isEdited ??= true;
 
     return _medicationRepository.saveMedicationInDb(medication);
   }
@@ -52,5 +56,32 @@ class MedicationServiceImpl implements MedicationService {
         await _medicationRepository.getAllMedications();
     saveMedications(medications);
     return medications;
+  }
+
+  @override
+  Future<List> getAllMedicationsIfIsEdited() async {
+    List<MedicationModel> medications =
+        await _medicationRepository.getAllMedicationsInDb(null);
+
+    List medicationsList = [];
+    for (var e in medications) {
+      if (e.isEdited != null) {
+        medicationsList.add(e.toMap());
+      }
+    }
+
+    return medicationsList;
+  }
+
+  @override
+  Future<bool> sendMedications(List medicationsList) async {
+    if (medicationsList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _medicationRepository.postMedication(medicationsList);
   }
 }

@@ -34,7 +34,8 @@ class _SideMenuState extends State<SideMenu> {
                 padding: EdgeInsets.zero,
                 children: Get.currentRoute != Routes.HOME &&
                         Get.currentRoute != Routes.SYNC &&
-                        Get.currentRoute != Routes.FORCED_SYNC
+                        Get.currentRoute != Routes.FORCED_SYNC &&
+                        Get.currentRoute != Routes.DEFAULT_SYNC
                     ? _propertyInternalRoutes()
                     : _syncRoutes(),
               ),
@@ -96,7 +97,9 @@ class _SideMenuState extends State<SideMenu> {
             Get.back();
           }
         },
-        isSelected: Get.currentRoute == Routes.SYNC,
+        isSelected: Get.currentRoute == Routes.SYNC ||
+            Get.currentRoute == Routes.DEFAULT_SYNC ||
+            Get.currentRoute == Routes.FORCED_SYNC,
       ),
     ];
   }

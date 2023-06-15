@@ -1,15 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:idr_mobile/app/modules/sync_forced/sync_forced_controller.dart';
+import 'package:idr_mobile/app/modules/sync_Default/sync_Default_controller.dart';
 import 'package:idr_mobile/app/widgets/custom_loading.dart';
+import 'package:idr_mobile/app/widgets/custom_outlined_button.dart';
 import 'package:idr_mobile/app/widgets/side_menu.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
 import 'package:idr_mobile/core/utils/functions/size_config.dart';
 import 'package:idr_mobile/app/widgets/custom_elevated_button.dart';
 
-class SyncForcedPage extends GetView<SyncForcedController> {
+class SyncDefaultPage extends GetView<SyncDefaultController> {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -35,7 +36,7 @@ class SyncForcedPage extends GetView<SyncForcedController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Sincronização Forçada',
+                            'Sincronização Padrão',
                             style: UIConfig.titleStyle,
                           ),
                         ],
@@ -50,7 +51,24 @@ class SyncForcedPage extends GetView<SyncForcedController> {
                     ],
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 20,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: CustomOutlinedButton(
+                          title: 'Sincronizar',
+                          onPressedCallBack: () {
+                            controller.onReady();
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,7 +82,11 @@ class SyncForcedPage extends GetView<SyncForcedController> {
                         ),
                       ),
                       Text(
-                        'status',
+                        'Envio',
+                        style: UIConfig.textHeadStyle,
+                      ),
+                      Text(
+                        'Busca',
                         style: UIConfig.textHeadStyle,
                       ),
                       const SizedBox(
@@ -98,7 +120,7 @@ class SyncForcedPage extends GetView<SyncForcedController> {
                                   style: UIConfig.subtitleStyle,
                                 ),
                               ),
-                              synchronized.statusGet == -1
+                              synchronized.statusSend == -1
                                   ? SizedBox(
                                       height: 20,
                                       width: 20,
@@ -107,7 +129,7 @@ class SyncForcedPage extends GetView<SyncForcedController> {
                                         strokeWidth: 1.5,
                                       ),
                                     )
-                                  : synchronized.statusGet == 1
+                                  : synchronized.statusSend == 1
                                       ? Icon(
                                           Icons.check,
                                           size: 30,
@@ -133,6 +155,50 @@ class SyncForcedPage extends GetView<SyncForcedController> {
                                             )..show(),
                                           ),
                                         ),
+                              synchronized.statusGet == -2
+                                  ? Icon(
+                                      Icons.question_mark_rounded,
+                                      size: 30,
+                                      color: UIColors.primaryColor,
+                                    )
+                                  : synchronized.statusGet == -1
+                                      ? SizedBox(
+                                          height: 20,
+                                          width: 20,
+                                          child: CircularProgressIndicator(
+                                            color: UIColors.primaryColor,
+                                            strokeWidth: 1.5,
+                                          ),
+                                        )
+                                      : synchronized.statusGet == 1
+                                          ? Icon(
+                                              Icons.check,
+                                              size: 30,
+                                              color: UIColors.successColor,
+                                            )
+                                          : SizedBox(
+                                              height: 30.0,
+                                              width: 30.0,
+                                              child: IconButton(
+                                                padding:
+                                                    const EdgeInsets.all(0.0),
+                                                color: UIColors.warningColor,
+                                                icon: const Icon(
+                                                  Icons.clear,
+                                                  size: 30.0,
+                                                ),
+                                                onPressed: () => AwesomeDialog(
+                                                  context: context,
+                                                  dialogType:
+                                                      DialogType.warning,
+                                                  animType: AnimType.topSlide,
+                                                  title: 'Ocorreu uma exceção',
+                                                  desc: synchronized
+                                                      .errorMessage
+                                                      .toString(),
+                                                )..show(),
+                                              ),
+                                            ),
                               const SizedBox(
                                 width: 5,
                               )

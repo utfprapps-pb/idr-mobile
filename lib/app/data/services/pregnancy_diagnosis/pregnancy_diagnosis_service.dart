@@ -13,4 +13,6 @@ abstract class PregnancyDiagnosisService {
   Future<bool> deletePregnancyDiagnosis(
       PregnancyDiagnosisModel pregnancyDiagnosis);
   Future<bool> deleteAll();
+  Future<List> getAllPregnancyDiagnosesIfIsEdited();
+  Future<bool> sendPregnancyDiagnoses(List pregnancyDiagnoses);
 }

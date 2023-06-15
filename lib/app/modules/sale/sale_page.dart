@@ -34,10 +34,16 @@ class SalePage extends GetView<SaleController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              'Venda',
+                              style: UIConfig.titleStyle,
+                              overflow: TextOverflow.ellipsis,
+                              strutStyle: StrutStyle.disabled,
+                            ),
                             Obx(
                               () => Text(
-                                'Venda ${controller.animal.value.identifier}',
-                                style: UIConfig.titleStyle,
+                                'Animal: ${controller.animal.value.identifier}',
+                                style: UIConfig.subtitleStyle,
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: StrutStyle.disabled,
                               ),

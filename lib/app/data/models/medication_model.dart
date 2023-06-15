@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -24,6 +25,8 @@ class MedicationModel {
   String? applicationWay;
   @HiveField(8)
   int? idProduct;
+  @HiveField(9)
+  bool? isEdited;
 
   MedicationModel({
     this.internalId,
@@ -34,6 +37,7 @@ class MedicationModel {
     this.appliedDose,
     this.applicationWay,
     this.idProduct,
+    this.isEdited,
   });
 
   MedicationModel copyWith({
@@ -45,6 +49,7 @@ class MedicationModel {
     String? appliedDose,
     String? applicationWay,
     int? idProduct,
+    bool? isEdited,
   }) {
     return MedicationModel(
       internalId: internalId ?? this.internalId,
@@ -55,23 +60,27 @@ class MedicationModel {
       appliedDose: appliedDose ?? this.appliedDose,
       applicationWay: applicationWay ?? this.applicationWay,
       idProduct: idProduct ?? this.idProduct,
+      isEdited: isEdited ?? this.isEdited,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (internalId != null) {
-      result.addAll({'internalId': internalId});
-    }
     if (id != null) {
       result.addAll({'id': id});
     }
     if (animalIdentifier != null) {
-      result.addAll({'animalIdentifier': animalIdentifier});
+      result.addAll({
+        'animal': {'identifier': animalIdentifier}
+      });
     }
     if (applicationDate != null) {
-      result.addAll({'applicationDate': applicationDate});
+      DateTime convertToDateTime =
+          DateFormat("dd/MM/yyy").parse(applicationDate!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'applicationDate': formatted});
     }
     if (activePrinciple != null) {
       result.addAll({'activePrinciple': activePrinciple});
@@ -83,7 +92,9 @@ class MedicationModel {
       result.addAll({'applicationWay': applicationWay});
     }
     if (idProduct != null) {
-      result.addAll({'idProduct': idProduct});
+      result.addAll({
+        'product': {'id': idProduct}
+      });
     }
 
     return result;
@@ -124,6 +135,7 @@ class MedicationModel {
         other.activePrinciple == activePrinciple &&
         other.appliedDose == appliedDose &&
         other.applicationWay == applicationWay &&
+        other.isEdited == isEdited &&
         other.idProduct == idProduct;
   }
 
@@ -136,6 +148,7 @@ class MedicationModel {
         activePrinciple.hashCode ^
         appliedDose.hashCode ^
         applicationWay.hashCode ^
+        isEdited.hashCode ^
         idProduct.hashCode;
   }
 }

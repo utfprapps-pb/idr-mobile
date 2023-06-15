@@ -28,9 +28,12 @@ class PregnancyDiagnosisServiceImpl implements PregnancyDiagnosisService {
 
   @override
   Future<bool> editPregnancyDiagnosis(
-          PregnancyDiagnosisModel pregnancyDiagnosis) =>
-      _pregnancyDiagnosisRepository
-          .editPregnancyDiagnosisInDb(pregnancyDiagnosis);
+      PregnancyDiagnosisModel pregnancyDiagnosis) {
+    pregnancyDiagnosis.isEdited ??= true;
+
+    return _pregnancyDiagnosisRepository
+        .editPregnancyDiagnosisInDb(pregnancyDiagnosis);
+  }
 
   @override
   Future<List<PregnancyDiagnosisModel>> getAllPregnancyDiagnoses(
@@ -42,6 +45,7 @@ class PregnancyDiagnosisServiceImpl implements PregnancyDiagnosisService {
   Future<bool> savePregnancyDiagnosis(
       PregnancyDiagnosisModel pregnancyDiagnosis) {
     pregnancyDiagnosis.internalId ??= _uuid.v1();
+    pregnancyDiagnosis.isEdited ??= true;
 
     return _pregnancyDiagnosisRepository
         .savePregnancyDiagnosisInDb(pregnancyDiagnosis);
@@ -66,5 +70,33 @@ class PregnancyDiagnosisServiceImpl implements PregnancyDiagnosisService {
         await _pregnancyDiagnosisRepository.getAllPregnancyDiagnoses();
     savePregnancyDiagnoses(pregnancyDiagnoses);
     return pregnancyDiagnoses;
+  }
+
+  @override
+  Future<List> getAllPregnancyDiagnosesIfIsEdited() async {
+    List<PregnancyDiagnosisModel> pregnancyDiagnoses =
+        await _pregnancyDiagnosisRepository.getAllPregnancyDiagnosesInDb(null);
+
+    List pregnancyDiagnosesList = [];
+    for (var e in pregnancyDiagnoses) {
+      if (e.isEdited != null) {
+        pregnancyDiagnosesList.add(e.toMap());
+      }
+    }
+
+    return pregnancyDiagnosesList;
+  }
+
+  @override
+  Future<bool> sendPregnancyDiagnoses(List pregnancyDiagnosesList) async {
+    if (pregnancyDiagnosesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _pregnancyDiagnosisRepository
+        .postPregnancyDiagnoses(pregnancyDiagnosesList);
   }
 }

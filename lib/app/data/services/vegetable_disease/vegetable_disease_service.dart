@@ -9,4 +9,6 @@ abstract class VegetableDiseaseService {
   Future<bool> editVegetableDisease(VegetableDiseaseModel vegetableDisease);
   Future<bool> deleteVegetableDisease(VegetableDiseaseModel vegetableDisease);
   Future<bool> deleteAll();
+  Future<List> getAllVegetableDiseasesIfIsEdited();
+  Future<bool> sendVegetableDiseases(List vegetableDiseases);
 }

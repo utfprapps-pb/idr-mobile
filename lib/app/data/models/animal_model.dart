@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+import 'package:idr_mobile/core/utils/functions/dateformatt.dart';
+import 'package:intl/intl.dart';
 
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -17,7 +19,7 @@ class AnimalModel {
   @HiveField(4)
   double? bornWeight;
   @HiveField(5)
-  String? breed;
+  int? breed;
   @HiveField(6)
   double? currentWeight;
   @HiveField(7)
@@ -74,7 +76,7 @@ class AnimalModel {
     int? id,
     String? bornDate,
     double? bornWeight,
-    String? breed,
+    int? breed,
     double? currentWeight,
     double? ecc,
     String? identifier,
@@ -117,20 +119,22 @@ class AnimalModel {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (internalId != null) {
-      result.addAll({'internalId': internalId});
-    }
     if (id != null) {
       result.addAll({'id': id});
     }
     if (bornDate != null) {
-      result.addAll({'bornDate': bornDate});
+      DateTime convertToDateTime = DateFormat("dd/MM/yyy").parse(bornDate!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'bornDate': formatted});
     }
     if (bornWeight != null) {
       result.addAll({'bornWeight': bornWeight});
     }
     if (breed != null) {
-      result.addAll({'breed': breed});
+      result.addAll({
+        'breed': {"id": breed}
+      });
     }
     if (currentWeight != null) {
       result.addAll({'currentWeight': currentWeight});
@@ -173,9 +177,6 @@ class AnimalModel {
     if (gender != null) {
       result.addAll({'gender': gender});
     }
-    if (isEdited != null) {
-      result.addAll({'isEdited': isEdited});
-    }
 
     return result;
   }
@@ -185,13 +186,20 @@ class AnimalModel {
     if (map['animal'] != null) {
       animalMotherIdentifier = map['animal']['identifier'];
     }
+    String? bornDateFormatted;
+    if (map['bornDate'] != null) {
+      bornDateFormatted = dateFormat
+          .format(
+              DateTime.tryParse(map['bornDate'].toString()) ?? DateTime.now())
+          .toString();
+    }
 
     return AnimalModel(
       internalId: map['internalId'],
       id: map['id']?.toInt(),
-      bornDate: map['bornDate'],
+      bornDate: bornDateFormatted,
       bornWeight: map['bornWeight']?.toDouble(),
-      breed: map['breed'],
+      breed: map['breed']['id']?.toInt(),
       currentWeight: map['currentWeight']?.toDouble(),
       ecc: map['ecc']?.toDouble(),
       identifier: map['identifier'],

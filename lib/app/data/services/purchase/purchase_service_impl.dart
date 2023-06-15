@@ -23,8 +23,11 @@ class PurchaseServiceImpl implements PurchaseService {
       _purchaseRepository.deletePurchase(purchase);
 
   @override
-  Future<bool> editPurchase(PurchaseModel purchase) =>
-      _purchaseRepository.editPurchaseInDb(purchase);
+  Future<bool> editPurchase(PurchaseModel purchase) {
+    purchase.isEdited ??= true;
+
+    return _purchaseRepository.editPurchaseInDb(purchase);
+  }
 
   @override
   Future<List<PurchaseModel>> getAllPurchases(String? animalIdentifier) =>
@@ -33,6 +36,7 @@ class PurchaseServiceImpl implements PurchaseService {
   @override
   Future<bool> savePurchase(PurchaseModel purchase) {
     purchase.internalId ??= _uuid.v1();
+    purchase.isEdited ??= true;
 
     return _purchaseRepository.savePurchaseInDb(purchase);
   }
@@ -53,5 +57,32 @@ class PurchaseServiceImpl implements PurchaseService {
     List<PurchaseModel> purchases = await _purchaseRepository.getAllPurchases();
     savePurchases(purchases);
     return purchases;
+  }
+
+  @override
+  Future<List> getAllPurchasesIfIsEdited() async {
+    List<PurchaseModel> purchases =
+        await _purchaseRepository.getAllPurchasesInDb(null);
+
+    List purchasesList = [];
+    for (var e in purchases) {
+      if (e.isEdited != null) {
+        purchasesList.add(e.toMap());
+      }
+    }
+
+    return purchasesList;
+  }
+
+  @override
+  Future<bool> sendPurchases(List purchasesList) async {
+    if (purchasesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _purchaseRepository.postPurchase(purchasesList);
   }
 }

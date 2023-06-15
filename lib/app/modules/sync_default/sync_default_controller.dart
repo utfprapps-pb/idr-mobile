@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,10 +36,8 @@ import 'package:idr_mobile/app/data/services/purchase/purchase_service.dart';
 import 'package:idr_mobile/app/data/services/sale/sale_service.dart';
 import 'package:idr_mobile/app/data/services/vegetable_disease/vegetable_disease_service.dart';
 import 'package:idr_mobile/app/data/services/vegetable_plague/vegetable_plague_service.dart';
-import 'package:idr_mobile/app/widgets/snackbar.dart';
-import 'package:idr_mobile/app/data/enums/enum_snackbar_type.dart';
 
-class SyncForcedController extends GetxController {
+class SyncDefaultController extends GetxController {
   final AuthService _authService;
   final PropertyService _propertyService;
   final BreedService _breedService;
@@ -56,7 +56,7 @@ class SyncForcedController extends GetxController {
   final InseminationService _inseminationService;
   final DiseaseAnimalService _diseaseAnimalService;
 
-  SyncForcedController({
+  SyncDefaultController({
     required AuthService authService,
     required PropertyService propertyService,
     required BreedService breedService,
@@ -112,7 +112,7 @@ class SyncForcedController extends GetxController {
   RxString displayName = ''.obs;
   RxBool isFinished = false.obs;
   RxBool hasError = false.obs;
-  // final property = SyncForcedModel().obs;
+  // final property = SyncDefaultModel().obs;
 
   @override
   void onInit() {
@@ -126,7 +126,8 @@ class SyncForcedController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
-    loadProperties();
+    syncFinishedList.value = [];
+    syncAnimals();
   }
 
   void finished() {
@@ -144,7 +145,7 @@ class SyncForcedController extends GetxController {
     ).show();
   }
 
-  void loadProperties() async {
+  void syncProperties() async {
     print('Propriedades');
     SyncModel sync = SyncModel();
     sync.name = 'Propriedades';
@@ -168,440 +169,450 @@ class SyncForcedController extends GetxController {
 
     syncFinishedList.removeAt(syncFinishedList.length - 1);
     syncFinishedList.add(sync);
-    loadDiseases();
+    syncAnimals();
   }
 
-  void loadBreeds() async {
-    print('Raças');
-
-    SyncModel sync = SyncModel();
-    sync.name = 'Raças (animais)';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _breedService.deleteAll();
-      final breedsData = await _breedService.getAllBreedsOnline();
-      breedsFinal.assignAll(breedsData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      // obj['statusGet'] = 1;
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadSales();
-  }
-
-  void loadAnimals() async {
-    print('Animais');
-
+  syncAnimals() async {
     SyncModel sync = SyncModel();
     sync.name = 'Animais';
-    sync.statusGet = -1;
+    sync.statusSend = -1;
+    sync.statusGet = -2;
 
     syncFinishedList.add(sync);
 
     try {
-      await _animalService.deleteAll();
-      final animalData = await _animalService.getAllAnimalsOnline();
-      animalsFinal.assignAll(animalData);
+      final animalData = await _animalService.getAllAnimalsIfIsEdited();
 
       await Future.delayed(
         const Duration(seconds: 1),
       );
 
+      await _animalService.sendAnimals(animalData).then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _animalService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          final animalsData = await _animalService.getAllAnimalsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
       sync.statusGet = 1;
+      sync.statusSend = 1;
     } catch (e) {
-      print(e);
       sync.statusGet = 0;
+      sync.statusSend = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
 
     syncFinishedList.removeAt(syncFinishedList.length - 1);
     syncFinishedList.add(sync);
-    loadBreeds();
+    syncInseminations();
   }
 
-  void loadDiseases() async {
-    print('Doenças');
+  syncInseminations() async {
+    print('Inseminações');
 
     SyncModel sync = SyncModel();
-    sync.name = 'Doenças (vegetais)';
-    sync.statusGet = -1;
+    sync.name = 'Inseminações';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
 
     syncFinishedList.add(sync);
 
     try {
-      await _diseaseService.deleteAll();
-      final diseaseData = await _diseaseService.getAllDiseasesOnline();
-      diseasesFinal.assignAll(diseaseData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadPlagues();
-  }
-
-  void loadPlagues() async {
-    print('Pragas');
-
-    SyncModel sync = SyncModel();
-    sync.name = 'Pragas (vegetais)';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _plagueService.deleteAll();
-      final plaguesData = await _plagueService.getAllPlaguesOnline();
-      plaguesFinal.assignAll(plaguesData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadCultures();
-  }
-
-  void loadCultures() async {
-    print('Culturas');
-
-    SyncModel sync = SyncModel();
-    sync.name = 'Culturas (vegetais)';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _cultureService.deleteAll();
-      final culturesData = await _cultureService.getAllCulturesOnline();
-      culturesFinal.assignAll(culturesData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadVegetalDiseases();
-  }
-
-  void loadVegetalDiseases() async {
-    print('Doenças vegetais');
-    SyncModel sync = SyncModel();
-    sync.name = 'Doenças vegetais';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _vegetableDiseaseService.deleteAll();
-      final vegetableDiseasesData =
-          await _vegetableDiseaseService.getAllVegetableDiseasesOnline();
-      vegetableDiseasesFinal.assignAll(vegetableDiseasesData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadVegetalPlagues();
-  }
-
-  void loadVegetalPlagues() async {
-    print('Pragas vegetais');
-
-    SyncModel sync = SyncModel();
-    sync.name = 'Pragas vegetais';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _vegetablePlagueService.deleteAll();
-      final vegetablePlaguesData =
-          await _vegetablePlagueService.getAllVegetablePlaguesOnline();
-      vegetablePlaguesFinal.assignAll(vegetablePlaguesData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadAnimals();
-  }
-
-  void loadSales() async {
-    print('Vendas');
-
-    SyncModel sync = SyncModel();
-    sync.name = 'Vendas (animais)';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _saleService.deleteAll();
-      final salesData = await _saleService.getAllSalesOnline();
-      saleFinal.assignAll(salesData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadPurchases();
-  }
-
-  void loadPurchases() async {
-    print('Compras');
-    SyncModel sync = SyncModel();
-    sync.name = 'Compras (animais)';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _purchaseService.deleteAll();
-      final purchasesData = await _purchaseService.getAllPurchasesOnline();
-      purchaseFinal.assignAll(purchasesData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadProducts();
-  }
-
-  void loadProducts() async {
-    print('Produtos');
-    SyncModel sync = SyncModel();
-    sync.name = 'Produtos (medicamento)';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _productService.deleteAll();
-      final productsData = await _productService.getAllProductsOnline();
-      productsFinal.assignAll(productsData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadMedications();
-  }
-
-  void loadMedications() async {
-    print('Medicamentos');
-    SyncModel sync = SyncModel();
-    sync.name = 'Medicamentos (animais)';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _medicationService.deleteAll();
-      final medicationsData =
-          await _medicationService.getAllMedicationsOnline();
-      medicationsFinal.assignAll(medicationsData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadMastitis();
-  }
-
-  void loadMastitis() async {
-    print('Mastite');
-    SyncModel sync = SyncModel();
-    sync.name = 'Mastite (animais)';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _mastitisService.deleteAll();
-      final mastitisListData = await _mastitisService.getAllMastitisOnline();
-      mastitisFinal.assignAll(mastitisListData);
-
-      await Future.delayed(
-        const Duration(seconds: 1),
-      );
-
-      sync.statusGet = 1;
-    } catch (e) {
-      print(e);
-      sync.statusGet = 0;
-      sync.errorMessage = e.toString();
-      hasError.value = true;
-    }
-
-    syncFinishedList.removeAt(syncFinishedList.length - 1);
-    syncFinishedList.add(sync);
-    loadInsemination();
-  }
-
-  void loadInsemination() async {
-    print('Inseminação');
-    SyncModel sync = SyncModel();
-    sync.name = 'Inseminação (animais)';
-    sync.statusGet = -1;
-
-    syncFinishedList.add(sync);
-
-    try {
-      await _inseminationService.deleteAll();
       final inseminationsData =
-          await _inseminationService.getAllInseminationsOnline();
-      inseminationFinal.assignAll(inseminationsData);
+          await _inseminationService.getAllInseminationsIfIsEdited();
 
       await Future.delayed(
         const Duration(seconds: 1),
       );
 
+      await _inseminationService
+          .sendInseminations(inseminationsData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
       sync.statusGet = 1;
     } catch (e) {
-      print(e);
       sync.statusGet = 0;
+      sync.statusSend = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
 
     syncFinishedList.removeAt(syncFinishedList.length - 1);
     syncFinishedList.add(sync);
-    loadDiseaseAnimal();
+    syncMastitis();
   }
 
-  void loadDiseaseAnimal() async {
-    print('Doenças animal');
+  syncMastitis() async {
+    print('Mastites');
+
     SyncModel sync = SyncModel();
-    sync.name = 'Doenças (animais)';
-    sync.statusGet = -1;
+    sync.name = 'Mastites';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
 
     syncFinishedList.add(sync);
 
     try {
-      await _diseaseAnimalService.deleteAll();
-      final diseasesAnimalData =
-          await _diseaseAnimalService.getAllDiseaseAnimalsOnline();
-      diseaseAnimalFinal.assignAll(diseasesAnimalData);
+      final mastitisData = await _mastitisService.getAllMastitisIfIsEdited();
 
       await Future.delayed(
         const Duration(seconds: 1),
       );
 
+      await _mastitisService.sendMastitis(mastitisData).then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
       sync.statusGet = 1;
     } catch (e) {
-      print(e);
       sync.statusGet = 0;
+      sync.statusSend = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
 
     syncFinishedList.removeAt(syncFinishedList.length - 1);
     syncFinishedList.add(sync);
+    syncMedications();
+  }
 
-    finished();
+  syncMedications() async {
+    print('Medicamentos');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Medicamentos';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final medicationsData =
+          await _medicationService.getAllMedicationsIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _medicationService
+          .sendMedications(medicationsData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncPregnancyDiagnoses();
+  }
+
+  syncPregnancyDiagnoses() async {
+    print('Diagnósticos de prenhêz');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Diagnósticos de prenhêz';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final pregnancysData =
+          await _pregnancyDiagnosisService.getAllPregnancyDiagnosesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _pregnancyDiagnosisService
+          .sendPregnancyDiagnoses(pregnancysData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncAnimalPurchases();
+  }
+
+  syncAnimalPurchases() async {
+    print('Compras animal');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Compras animal';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final purchasesData = await _purchaseService.getAllPurchasesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _purchaseService.sendPurchases(purchasesData).then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncAnimalSales();
+  }
+
+  syncAnimalSales() async {
+    print('Vendas animal');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Vendas animal';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final salesData = await _saleService.getAllSalesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _saleService.sendSales(salesData).then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncVegetableDisease();
+  }
+
+  syncVegetableDisease() async {
+    print('Doenças Vegetais');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Doenças Vegetais';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final vegetableDiseasesData =
+          await _vegetableDiseaseService.getAllVegetableDiseasesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _vegetableDiseaseService
+          .sendVegetableDiseases(vegetableDiseasesData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncVegetablePlague();
+  }
+
+  syncVegetablePlague() async {
+    print('Pragas Vegetais');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Pragas Vegetais';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final vegetablePlaguesData =
+          await _vegetablePlagueService.getAllVegetablePlaguesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _vegetablePlagueService
+          .sendVegetablePlagues(vegetablePlaguesData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
   }
 }

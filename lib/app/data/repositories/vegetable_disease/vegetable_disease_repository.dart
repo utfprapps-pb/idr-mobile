@@ -10,4 +10,5 @@ abstract class VegetableDiseaseRepository {
   Future<bool> editVegetableDiseaseInDb(VegetableDiseaseModel vegetableDisease);
   Future<bool> deleteVegetableDisease(VegetableDiseaseModel vegetableDisease);
   Future<bool> deleteAll();
+  Future<bool> postVegetableDiseases(List vegetableDiseasesList);
 }

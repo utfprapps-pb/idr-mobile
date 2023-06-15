@@ -9,4 +9,6 @@ abstract class PurchaseService {
   Future<bool> editPurchase(PurchaseModel purchase);
   Future<bool> deletePurchase(PurchaseModel purchase);
   Future<bool> deleteAll();
+  Future<List> getAllPurchasesIfIsEdited();
+  Future<bool> sendPurchases(List purchases);
 }

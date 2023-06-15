@@ -21,7 +21,11 @@ class SaleServiceImpl implements SaleService {
   Future<bool> deleteSale(SaleModel sale) => _saleRepository.deleteSale(sale);
 
   @override
-  Future<bool> editSale(SaleModel sale) => _saleRepository.editSaleInDb(sale);
+  Future<bool> editSale(SaleModel sale) {
+    sale.isEdited ??= true;
+
+    return _saleRepository.editSaleInDb(sale);
+  }
 
   @override
   Future<List<SaleModel>> getAllSales(String? animalIdentifier) =>
@@ -30,6 +34,7 @@ class SaleServiceImpl implements SaleService {
   @override
   Future<bool> saveSale(SaleModel sale) {
     sale.internalId ??= _uuid.v1();
+    sale.isEdited ??= true;
 
     return _saleRepository.saveSaleInDb(sale);
   }
@@ -50,5 +55,31 @@ class SaleServiceImpl implements SaleService {
     List<SaleModel> sales = await _saleRepository.getAllSales();
     saveSales(sales);
     return sales;
+  }
+
+  @override
+  Future<List> getAllSalesIfIsEdited() async {
+    List<SaleModel> sales = await _saleRepository.getAllSalesInDb(null);
+
+    List salesList = [];
+    for (var e in sales) {
+      if (e.isEdited != null) {
+        salesList.add(e.toMap());
+      }
+    }
+
+    return salesList;
+  }
+
+  @override
+  Future<bool> sendSales(List salesList) async {
+    if (salesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _saleRepository.postSales(salesList);
   }
 }

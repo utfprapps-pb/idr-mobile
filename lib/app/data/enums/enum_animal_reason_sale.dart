@@ -1,7 +1,7 @@
 enum AnimalReasonSaleType { voluntary, disposal, emergency }
 
 var reasonsSaleType = {
-  AnimalReasonSaleType.voluntary.name: "Voluntária",
+  AnimalReasonSaleType.voluntary.name: "Voluntaria",
   AnimalReasonSaleType.disposal.name: "Descarte",
-  AnimalReasonSaleType.emergency.name: "Emergência",
+  AnimalReasonSaleType.emergency.name: "Emergencia",
 };

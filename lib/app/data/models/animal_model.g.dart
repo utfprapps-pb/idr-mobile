@@ -21,7 +21,7 @@ class AnimalModelAdapter extends TypeAdapter<AnimalModel> {
       id: fields[2] as int?,
       bornDate: fields[3] as String?,
       bornWeight: fields[4] as double?,
-      breed: fields[5] as String?,
+      breed: fields[5] as int?,
       currentWeight: fields[6] as double?,
       ecc: fields[7] as double?,
       identifier: fields[8] as String?,

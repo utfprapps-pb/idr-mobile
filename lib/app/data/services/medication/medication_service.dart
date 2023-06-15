@@ -8,4 +8,6 @@ abstract class MedicationService {
   Future<bool> editMedication(MedicationModel medication);
   Future<bool> deleteMedication(MedicationModel medication);
   Future<bool> deleteAll();
+  Future<List> getAllMedicationsIfIsEdited();
+  Future<bool> sendMedications(List medications);
 }

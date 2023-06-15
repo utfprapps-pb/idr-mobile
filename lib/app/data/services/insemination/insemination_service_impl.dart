@@ -24,8 +24,10 @@ class InseminationServiceImpl implements InseminationService {
       _inseminationRepository.deleteInsemination(insemination);
 
   @override
-  Future<bool> editInsemination(InseminationModel insemination) =>
-      _inseminationRepository.editInseminationInDb(insemination);
+  Future<bool> editInsemination(InseminationModel insemination) async {
+    insemination.isEdited ??= true;
+    return await _inseminationRepository.editInseminationInDb(insemination);
+  }
 
   @override
   Future<List<InseminationModel>> getAllInseminations(
@@ -35,6 +37,7 @@ class InseminationServiceImpl implements InseminationService {
   @override
   Future<bool> saveInsemination(InseminationModel insemination) {
     insemination.internalId ??= _uuid.v1();
+    insemination.isEdited ??= true;
 
     return _inseminationRepository.saveInseminationInDb(insemination);
   }
@@ -56,5 +59,30 @@ class InseminationServiceImpl implements InseminationService {
         await _inseminationRepository.getAllInseminations();
     saveInseminations(inseminations);
     return inseminations;
+  }
+
+  @override
+  Future<List> getAllInseminationsIfIsEdited() async {
+    List<InseminationModel> inseminations = await getAllInseminations(null);
+
+    List inseminationsList = [];
+    for (var e in inseminations) {
+      if (e.isEdited != null) {
+        inseminationsList.add(e.toMap());
+      }
+    }
+    return inseminationsList;
+  }
+
+  @override
+  Future<bool> sendInseminations(List inseminations) async {
+    if (inseminations.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _inseminationRepository.sendInseminations(inseminations);
   }
 }

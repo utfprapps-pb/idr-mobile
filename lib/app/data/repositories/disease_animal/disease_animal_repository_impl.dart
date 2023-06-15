@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/disease_animal_model.dart';
@@ -205,5 +208,26 @@ class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
     );
 
     return im;
+  }
+
+  @override
+  Future<bool> postDiseaseAnimals(List diseases) async {
+    final result = await _restClient.post(
+      'animals/sendDiseasesAnimal',
+      jsonEncode(diseases),
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        return data;
+      },
+    );
+
+    // Caso houver erro
+    if (result.status.code != HttpStatus.created &&
+        result.status.code != HttpStatus.ok) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _ ${result.body}');
+    }
+
+    return true;
   }
 }

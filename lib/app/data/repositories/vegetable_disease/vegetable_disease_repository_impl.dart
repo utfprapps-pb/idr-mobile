@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/vegetable_disease_model.dart';
@@ -214,5 +217,26 @@ class VegetableDiseaseRepositoryImpl implements VegetableDiseaseRepository {
         (element) => element.internalId == vegetableDisease.internalId);
 
     return vdm;
+  }
+
+  @override
+  Future<bool> postVegetableDiseases(List vegetableDiseasesList) async {
+    final result = await _restClient.post(
+      'vegetablediseases/sendVegetableDiseases',
+      jsonEncode(vegetableDiseasesList),
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        return data;
+      },
+    );
+
+    // Caso houver erro
+    if (result.status.code != HttpStatus.created &&
+        result.status.code != HttpStatus.ok) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _ ${result.body}');
+    }
+
+    return true;
   }
 }

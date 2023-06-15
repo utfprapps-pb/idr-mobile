@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:idr_mobile/app/data/models/insemination_model.dart';
@@ -207,5 +210,28 @@ class InseminationRepositoryImpl implements InseminationRepository {
         (element) => element.internalId == insemination.internalId);
 
     return im;
+  }
+
+  @override
+  Future<bool> sendInseminations(List inseminations) async {
+    print(jsonEncode(inseminations));
+    print(inseminations);
+    final result = await _restClient.post(
+      'inseminations/sendInseminations',
+      jsonEncode(inseminations),
+      headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
+      decoder: (data) {
+        return data;
+      },
+    );
+
+    // Caso houver erro
+    if (result.status.code != HttpStatus.created &&
+        result.status.code != HttpStatus.ok) {
+      print('Error [${result.statusText}]');
+      throw Exception('Error _ ${result.body}');
+    }
+
+    return true;
   }
 }

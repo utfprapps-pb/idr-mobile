@@ -175,8 +175,8 @@ class AnimalPageForm extends GetView<AnimalFormController> {
                                   label: 'Raça',
                                   selectedValue: controller.breedSelected.value,
                                   onChanged: (BreedModel value) {
-                                    controller.animal.update((val) =>
-                                        val!.breed = value.id.toString());
+                                    controller.animal
+                                        .update((val) => val!.breed = value.id);
                                   },
                                 ),
                               ),

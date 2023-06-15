@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:intl/intl.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -25,6 +25,8 @@ class MastitisModel {
   String? dateDiagnostic;
   @HiveField(9)
   String? type;
+  @HiveField(10)
+  bool? isEdited;
 
   MastitisModel({
     this.internalId,
@@ -36,6 +38,7 @@ class MastitisModel {
     this.pe,
     this.dateDiagnostic,
     this.type,
+    this.isEdited,
   });
 
   MastitisModel copyWith({
@@ -48,6 +51,7 @@ class MastitisModel {
     String? pe,
     String? dateDiagnostic,
     String? type,
+    bool? isEdited,
   }) {
     return MastitisModel(
       internalId: internalId ?? this.internalId,
@@ -59,20 +63,20 @@ class MastitisModel {
       pe: pe ?? this.pe,
       dateDiagnostic: dateDiagnostic ?? this.dateDiagnostic,
       type: type ?? this.type,
+      isEdited: isEdited ?? this.isEdited,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (internalId != null) {
-      result.addAll({'internalId': internalId});
-    }
     if (id != null) {
       result.addAll({'id': id});
     }
     if (animalIdentifier != null) {
-      result.addAll({'animalIdentifier': animalIdentifier});
+      result.addAll({
+        'animal': {'identifier': animalIdentifier}
+      });
     }
     if (ad != null) {
       result.addAll({'ad': ad});
@@ -87,10 +91,14 @@ class MastitisModel {
       result.addAll({'pe': pe});
     }
     if (dateDiagnostic != null) {
-      result.addAll({'dateDiagnostic': dateDiagnostic});
+      DateTime convertToDateTime =
+          DateFormat("dd/MM/yyy").parse(dateDiagnostic!);
+      String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
+
+      result.addAll({'diagnoseDate': formatted});
     }
     if (type != null) {
-      result.addAll({'type': type});
+      result.addAll({'mastitisType': type});
     }
 
     return result;
@@ -98,7 +106,6 @@ class MastitisModel {
 
   factory MastitisModel.fromMap(Map<String, dynamic> map) {
     return MastitisModel(
-      internalId: map['internalId'],
       id: map['id']?.toInt(),
       animalIdentifier: map['animalIdentifier'],
       ad: map['ad'],
@@ -133,6 +140,7 @@ class MastitisModel {
         other.pd == pd &&
         other.pe == pe &&
         other.dateDiagnostic == dateDiagnostic &&
+        other.isEdited == isEdited &&
         other.type == type;
   }
 
@@ -146,6 +154,7 @@ class MastitisModel {
         pd.hashCode ^
         pe.hashCode ^
         dateDiagnostic.hashCode ^
+        isEdited.hashCode ^
         type.hashCode;
   }
 }

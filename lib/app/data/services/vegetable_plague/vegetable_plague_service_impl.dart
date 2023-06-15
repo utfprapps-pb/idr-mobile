@@ -22,8 +22,11 @@ class VegetablePlagueServiceImpl implements VegetablePlagueService {
       _vegetablePlagueRepository.deleteVegetablePlague(vegetablePlague);
 
   @override
-  Future<bool> editVegetablePlague(VegetablePlagueModel vegetablePlague) =>
-      _vegetablePlagueRepository.editVegetablePlagueInDb(vegetablePlague);
+  Future<bool> editVegetablePlague(VegetablePlagueModel vegetablePlague) {
+    vegetablePlague.isEdited ??= true;
+
+    return _vegetablePlagueRepository.editVegetablePlagueInDb(vegetablePlague);
+  }
 
   @override
   Future<List<VegetablePlagueModel>> getAllVegetablePlagues(int? idProperty) =>
@@ -32,6 +35,7 @@ class VegetablePlagueServiceImpl implements VegetablePlagueService {
   @override
   Future<bool> saveVegetablePlague(VegetablePlagueModel vegetablePlague) {
     vegetablePlague.internalId ??= _uuid.v1();
+    vegetablePlague.isEdited ??= true;
 
     return _vegetablePlagueRepository.saveVegetablePlagueInDb(vegetablePlague);
   }
@@ -55,5 +59,33 @@ class VegetablePlagueServiceImpl implements VegetablePlagueService {
         await _vegetablePlagueRepository.getAllVegetablePlagues();
     saveVegetablePlagues(vegetablePlagues);
     return vegetablePlagues;
+  }
+
+  @override
+  Future<List> getAllVegetablePlaguesIfIsEdited() async {
+    List<VegetablePlagueModel> vegetablePlagues =
+        await _vegetablePlagueRepository.getAllVegetablePlaguesInDb(null);
+
+    List vegetablePlaguesList = [];
+    for (var e in vegetablePlagues) {
+      if (e.isEdited != null) {
+        vegetablePlaguesList.add(e.toMap());
+      }
+    }
+
+    return vegetablePlaguesList;
+  }
+
+  @override
+  Future<bool> sendVegetablePlagues(List vegetablePlaguesList) async {
+    if (vegetablePlaguesList.isEmpty) {
+      return Future.delayed(
+        const Duration(microseconds: 1),
+        () => true,
+      );
+    }
+
+    return await _vegetablePlagueRepository
+        .postVegetablePlagues(vegetablePlaguesList);
   }
 }
