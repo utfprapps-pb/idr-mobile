@@ -95,10 +95,10 @@ class MastitisModel {
           DateFormat("dd/MM/yyy").parse(dateDiagnostic!);
       String formatted = DateFormat("yyyy-MM-dd").format(convertToDateTime);
 
-      result.addAll({'dateDiagnostic': formatted});
+      result.addAll({'diagnoseDate': formatted});
     }
     if (type != null) {
-      result.addAll({'type': type});
+      result.addAll({'mastitisType': type});
     }
 
     return result;
