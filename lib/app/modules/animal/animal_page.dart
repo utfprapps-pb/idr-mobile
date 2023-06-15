@@ -41,6 +41,14 @@ class AnimalPage extends GetView<AnimalController> {
                           'Animais',
                           style: UIConfig.titleStyle,
                         ),
+                        Obx(
+                          () => Text(
+                            'Propriedade: ${controller.property.value.id}',
+                            style: UIConfig.subtitleStyle,
+                            overflow: TextOverflow.ellipsis,
+                            strutStyle: StrutStyle.disabled,
+                          ),
+                        ),
                       ],
                     ),
                     IconButton(

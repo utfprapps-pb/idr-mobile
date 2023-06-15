@@ -34,10 +34,16 @@ class DiseaseAnimalPage extends GetView<DiseaseAnimalController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              'Doenças',
+                              style: UIConfig.titleStyle,
+                              overflow: TextOverflow.ellipsis,
+                              strutStyle: StrutStyle.disabled,
+                            ),
                             Obx(
                               () => Text(
-                                'Doenças ${controller.animal.value.name}',
-                                style: UIConfig.titleStyle,
+                                'Animal: ${controller.animal.value.identifier}',
+                                style: UIConfig.subtitleStyle,
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: StrutStyle.disabled,
                               ),

@@ -35,10 +35,16 @@ class InseminationPage extends GetView<InseminationController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              'Inseminações',
+                              style: UIConfig.titleStyle,
+                              overflow: TextOverflow.ellipsis,
+                              strutStyle: StrutStyle.disabled,
+                            ),
                             Obx(
                               () => Text(
-                                'Inseminações ${controller.animal.value.name}',
-                                style: UIConfig.titleStyle,
+                                'Animal: ${controller.animal.value.identifier}',
+                                style: UIConfig.subtitleStyle,
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: StrutStyle.disabled,
                               ),
