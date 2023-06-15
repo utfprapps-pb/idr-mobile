@@ -54,7 +54,7 @@ class UIConfig {
         color: UIColors.blackColor24,
         fontFamily: 'Segoe-UI',
         fontSize: 16,
-        letterSpacing: 0.15,
+        letterSpacing: 0.3,
         fontWeight: FontWeight.w400,
       );
 
