@@ -266,5 +266,353 @@ class SyncDefaultController extends GetxController {
 
     syncFinishedList.removeAt(syncFinishedList.length - 1);
     syncFinishedList.add(sync);
+    syncMastitis();
+  }
+
+  syncMastitis() async {
+    print('Mastites');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Mastites';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final mastitisData = await _mastitisService.getAllMastitisIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _mastitisService.sendMastitis(mastitisData).then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncMedications();
+  }
+
+  syncMedications() async {
+    print('Medicamentos');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Medicamentos';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final medicationsData =
+          await _medicationService.getAllMedicationsIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _medicationService
+          .sendMedications(medicationsData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncPregnancyDiagnoses();
+  }
+
+  syncPregnancyDiagnoses() async {
+    print('Diagnósticos de prenhêz');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Diagnósticos de prenhêz';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final pregnancysData =
+          await _pregnancyDiagnosisService.getAllPregnancyDiagnosesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _pregnancyDiagnosisService
+          .sendPregnancyDiagnoses(pregnancysData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncAnimalPurchases();
+  }
+
+  syncAnimalPurchases() async {
+    print('Compras animal');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Compras animal';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final purchasesData = await _purchaseService.getAllPurchasesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _purchaseService.sendPurchases(purchasesData).then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncAnimalSales();
+  }
+
+  syncAnimalSales() async {
+    print('Vendas animal');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Vendas animal';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final salesData = await _saleService.getAllSalesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _saleService.sendSales(salesData).then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncVegetableDisease();
+  }
+
+  syncVegetableDisease() async {
+    print('Doenças Vegetais');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Doenças Vegetais';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final vegetableDiseasesData =
+          await _vegetableDiseaseService.getAllVegetableDiseasesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _vegetableDiseaseService
+          .sendVegetableDiseases(vegetableDiseasesData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncVegetablePlague();
+  }
+
+  syncVegetablePlague() async {
+    print('Pragas Vegetais');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Pragas Vegetais';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final vegetablePlaguesData =
+          await _vegetablePlagueService.getAllVegetablePlaguesIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _vegetablePlagueService
+          .sendVegetablePlagues(vegetablePlaguesData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          // await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(seconds: 2),
+          );
+          // final inseminationsData =
+          //     await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
   }
 }

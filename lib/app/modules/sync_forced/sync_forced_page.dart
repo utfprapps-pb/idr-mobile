@@ -64,7 +64,7 @@ class SyncForcedPage extends GetView<SyncForcedController> {
                         ),
                       ),
                       Text(
-                        'Status',
+                        'status',
                         style: UIConfig.textHeadStyle,
                       ),
                       const SizedBox(
@@ -98,7 +98,7 @@ class SyncForcedPage extends GetView<SyncForcedController> {
                                   style: UIConfig.subtitleStyle,
                                 ),
                               ),
-                              synchronized.status == -1
+                              synchronized.statusGet == -1
                                   ? SizedBox(
                                       height: 20,
                                       width: 20,
@@ -107,7 +107,7 @@ class SyncForcedPage extends GetView<SyncForcedController> {
                                         strokeWidth: 1.5,
                                       ),
                                     )
-                                  : synchronized.status == 1
+                                  : synchronized.statusGet == 1
                                       ? Icon(
                                           Icons.check,
                                           size: 30,

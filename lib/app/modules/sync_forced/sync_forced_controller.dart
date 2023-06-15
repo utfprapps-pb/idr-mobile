@@ -148,7 +148,7 @@ class SyncForcedController extends GetxController {
     print('Propriedades');
     SyncModel sync = SyncModel();
     sync.name = 'Propriedades';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -159,9 +159,9 @@ class SyncForcedController extends GetxController {
       await Future.delayed(
         const Duration(seconds: 1),
       );
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -176,7 +176,7 @@ class SyncForcedController extends GetxController {
 
     SyncModel sync = SyncModel();
     sync.name = 'Raças (animais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -189,11 +189,11 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      // obj['status'] = 1;
-      sync.status = 1;
+      // obj['statusGet'] = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -208,7 +208,7 @@ class SyncForcedController extends GetxController {
 
     SyncModel sync = SyncModel();
     sync.name = 'Animais';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -221,10 +221,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -239,7 +239,7 @@ class SyncForcedController extends GetxController {
 
     SyncModel sync = SyncModel();
     sync.name = 'Doenças (vegetais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -252,10 +252,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -270,7 +270,7 @@ class SyncForcedController extends GetxController {
 
     SyncModel sync = SyncModel();
     sync.name = 'Pragas (vegetais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -283,10 +283,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -301,7 +301,7 @@ class SyncForcedController extends GetxController {
 
     SyncModel sync = SyncModel();
     sync.name = 'Culturas (vegetais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -314,10 +314,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -331,7 +331,7 @@ class SyncForcedController extends GetxController {
     print('Doenças vegetais');
     SyncModel sync = SyncModel();
     sync.name = 'Doenças vegetais';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -345,10 +345,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -363,7 +363,7 @@ class SyncForcedController extends GetxController {
 
     SyncModel sync = SyncModel();
     sync.name = 'Pragas vegetais';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -377,10 +377,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -395,7 +395,7 @@ class SyncForcedController extends GetxController {
 
     SyncModel sync = SyncModel();
     sync.name = 'Vendas (animais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -408,10 +408,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -425,7 +425,7 @@ class SyncForcedController extends GetxController {
     print('Compras');
     SyncModel sync = SyncModel();
     sync.name = 'Compras (animais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -438,10 +438,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -455,7 +455,7 @@ class SyncForcedController extends GetxController {
     print('Produtos');
     SyncModel sync = SyncModel();
     sync.name = 'Produtos (medicamento)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -468,10 +468,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -485,7 +485,7 @@ class SyncForcedController extends GetxController {
     print('Medicamentos');
     SyncModel sync = SyncModel();
     sync.name = 'Medicamentos (animais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -499,10 +499,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -516,7 +516,7 @@ class SyncForcedController extends GetxController {
     print('Mastite');
     SyncModel sync = SyncModel();
     sync.name = 'Mastite (animais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -529,10 +529,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -546,7 +546,7 @@ class SyncForcedController extends GetxController {
     print('Inseminação');
     SyncModel sync = SyncModel();
     sync.name = 'Inseminação (animais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -560,10 +560,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
@@ -577,7 +577,7 @@ class SyncForcedController extends GetxController {
     print('Doenças animal');
     SyncModel sync = SyncModel();
     sync.name = 'Doenças (animais)';
-    sync.status = -1;
+    sync.statusGet = -1;
 
     syncFinishedList.add(sync);
 
@@ -591,10 +591,10 @@ class SyncForcedController extends GetxController {
         const Duration(seconds: 1),
       );
 
-      sync.status = 1;
+      sync.statusGet = 1;
     } catch (e) {
       print(e);
-      sync.status = 0;
+      sync.statusGet = 0;
       sync.errorMessage = e.toString();
       hasError.value = true;
     }
