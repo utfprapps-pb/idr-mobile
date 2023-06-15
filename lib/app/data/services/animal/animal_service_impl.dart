@@ -66,7 +66,7 @@ class AnimalServiceImpl implements AnimalService {
 
   @override
   Future<List> getAllAnimalsIfIsEdited() async {
-    List<AnimalModel> animals = await _animalRepository.getAllAnimals();
+    List<AnimalModel> animals = await _animalRepository.getAllAnimalsInDb(null);
 
     List animalsList = [];
     for (var e in animals) {
