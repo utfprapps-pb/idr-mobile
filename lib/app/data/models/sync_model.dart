@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 class SyncModel {
   String? name;
-  int? status;
+  int? statusSend;
+  int? statusGet;
   String? errorMessage;
 }
