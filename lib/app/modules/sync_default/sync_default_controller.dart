@@ -126,6 +126,7 @@ class SyncDefaultController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
+    isFinished.value = false;
     syncFinishedList.value = [];
     syncAnimals();
   }
@@ -194,11 +195,13 @@ class SyncDefaultController extends GetxController {
           syncFinishedList.removeAt(syncFinishedList.length - 1);
           syncFinishedList.add(sync);
 
-          // await _animalService.deleteAll();
+          await _animalService.deleteAll();
+          var a = await _animalService.getAllAnimals(null);
           await Future.delayed(
-            const Duration(seconds: 2),
+            const Duration(milliseconds: 500),
           );
           final animalsData = await _animalService.getAllAnimalsOnline();
+          print(animalsData);
         } else {
           sync.statusSend = 0;
         }
@@ -245,12 +248,12 @@ class SyncDefaultController extends GetxController {
           syncFinishedList.removeAt(syncFinishedList.length - 1);
           syncFinishedList.add(sync);
 
-          // await _inseminationService.deleteAll();
+          await _inseminationService.deleteAll();
           await Future.delayed(
-            const Duration(seconds: 2),
+            const Duration(milliseconds: 500),
           );
-          // final inseminationsData =
-          //     await _inseminationService.getAllInseminationsOnline();
+          final inseminationsData =
+              await _inseminationService.getAllInseminationsOnline();
         } else {
           sync.statusSend = 0;
         }
@@ -293,12 +296,12 @@ class SyncDefaultController extends GetxController {
           syncFinishedList.removeAt(syncFinishedList.length - 1);
           syncFinishedList.add(sync);
 
-          // await _inseminationService.deleteAll();
+          await _inseminationService.deleteAll();
           await Future.delayed(
-            const Duration(seconds: 2),
+            const Duration(milliseconds: 500),
           );
-          // final inseminationsData =
-          //     await _inseminationService.getAllInseminationsOnline();
+          final inseminationsData =
+              await _inseminationService.getAllInseminationsOnline();
         } else {
           sync.statusSend = 0;
         }
@@ -344,12 +347,12 @@ class SyncDefaultController extends GetxController {
           syncFinishedList.removeAt(syncFinishedList.length - 1);
           syncFinishedList.add(sync);
 
-          // await _inseminationService.deleteAll();
+          await _inseminationService.deleteAll();
           await Future.delayed(
-            const Duration(seconds: 2),
+            const Duration(milliseconds: 500),
           );
-          // final inseminationsData =
-          //     await _inseminationService.getAllInseminationsOnline();
+          final inseminationsData =
+              await _inseminationService.getAllInseminationsOnline();
         } else {
           sync.statusSend = 0;
         }
@@ -395,12 +398,12 @@ class SyncDefaultController extends GetxController {
           syncFinishedList.removeAt(syncFinishedList.length - 1);
           syncFinishedList.add(sync);
 
-          // await _inseminationService.deleteAll();
+          await _inseminationService.deleteAll();
           await Future.delayed(
-            const Duration(seconds: 2),
+            const Duration(milliseconds: 500),
           );
-          // final inseminationsData =
-          //     await _inseminationService.getAllInseminationsOnline();
+          final inseminationsData =
+              await _inseminationService.getAllInseminationsOnline();
         } else {
           sync.statusSend = 0;
         }
@@ -443,12 +446,12 @@ class SyncDefaultController extends GetxController {
           syncFinishedList.removeAt(syncFinishedList.length - 1);
           syncFinishedList.add(sync);
 
-          // await _inseminationService.deleteAll();
+          await _inseminationService.deleteAll();
           await Future.delayed(
-            const Duration(seconds: 2),
+            const Duration(milliseconds: 500),
           );
-          // final inseminationsData =
-          //     await _inseminationService.getAllInseminationsOnline();
+          final inseminationsData =
+              await _inseminationService.getAllInseminationsOnline();
         } else {
           sync.statusSend = 0;
         }
@@ -491,12 +494,63 @@ class SyncDefaultController extends GetxController {
           syncFinishedList.removeAt(syncFinishedList.length - 1);
           syncFinishedList.add(sync);
 
-          // await _inseminationService.deleteAll();
+          await _inseminationService.deleteAll();
           await Future.delayed(
-            const Duration(seconds: 2),
+            const Duration(milliseconds: 500),
           );
-          // final inseminationsData =
-          //     await _inseminationService.getAllInseminationsOnline();
+          final inseminationsData =
+              await _inseminationService.getAllInseminationsOnline();
+        } else {
+          sync.statusSend = 0;
+        }
+      });
+
+      sync.statusGet = 1;
+    } catch (e) {
+      sync.statusGet = 0;
+      sync.statusSend = 0;
+      sync.errorMessage = e.toString();
+      hasError.value = true;
+    }
+
+    syncFinishedList.removeAt(syncFinishedList.length - 1);
+    syncFinishedList.add(sync);
+    syncAnimalDisease();
+  }
+
+  syncAnimalDisease() async {
+    print('Doenças animal');
+
+    SyncModel sync = SyncModel();
+    sync.name = 'Doenças animal';
+    sync.statusSend = -1;
+    sync.statusGet = -2;
+
+    syncFinishedList.add(sync);
+
+    try {
+      final diseaseAnimalData =
+          await _diseaseAnimalService.getAllDiseasesAnimalIfIsEdited();
+
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
+
+      await _diseaseAnimalService
+          .sendDiseasesAnimal(diseaseAnimalData)
+          .then((value) async {
+        if (value) {
+          sync.statusGet = -1;
+          sync.statusSend = 1;
+          syncFinishedList.removeAt(syncFinishedList.length - 1);
+          syncFinishedList.add(sync);
+
+          await _inseminationService.deleteAll();
+          await Future.delayed(
+            const Duration(milliseconds: 500),
+          );
+          final diseaseAnimalData =
+              await _diseaseAnimalService.getAllDiseaseAnimalsOnline();
         } else {
           sync.statusSend = 0;
         }
@@ -542,12 +596,12 @@ class SyncDefaultController extends GetxController {
           syncFinishedList.removeAt(syncFinishedList.length - 1);
           syncFinishedList.add(sync);
 
-          // await _inseminationService.deleteAll();
+          await _inseminationService.deleteAll();
           await Future.delayed(
-            const Duration(seconds: 2),
+            const Duration(milliseconds: 500),
           );
-          // final inseminationsData =
-          //     await _inseminationService.getAllInseminationsOnline();
+          final inseminationsData =
+              await _inseminationService.getAllInseminationsOnline();
         } else {
           sync.statusSend = 0;
         }
@@ -593,12 +647,12 @@ class SyncDefaultController extends GetxController {
           syncFinishedList.removeAt(syncFinishedList.length - 1);
           syncFinishedList.add(sync);
 
-          // await _inseminationService.deleteAll();
+          await _inseminationService.deleteAll();
           await Future.delayed(
-            const Duration(seconds: 2),
+            const Duration(milliseconds: 500),
           );
-          // final inseminationsData =
-          //     await _inseminationService.getAllInseminationsOnline();
+          final inseminationsData =
+              await _inseminationService.getAllInseminationsOnline();
         } else {
           sync.statusSend = 0;
         }
@@ -614,5 +668,7 @@ class SyncDefaultController extends GetxController {
 
     syncFinishedList.removeAt(syncFinishedList.length - 1);
     syncFinishedList.add(sync);
+
+    finished();
   }
 }
