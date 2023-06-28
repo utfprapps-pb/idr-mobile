@@ -62,6 +62,7 @@ class LoginController extends GetxController {
           auth!.changeApiToken(value.token);
           auth!.changeIsLogged(true);
           auth!.changeDisplayName(value.displayName);
+          auth!.changeUsername(value.username);
           reauth();
         } else {
           throw Exception(e);
