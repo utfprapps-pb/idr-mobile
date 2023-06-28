@@ -15,6 +15,7 @@ class AuthService extends GetxService {
     await storage.writeIfNull(IS_LOGGED, false);
     await storage.writeIfNull(TOKEN, '');
     await storage.writeIfNull(DISPLAY_NAME, '');
+    await storage.writeIfNull(USERNAME, '');
     await storage.writeIfNull(PROPERTY_SELECTED, '');
   }
 
@@ -22,12 +23,14 @@ class AuthService extends GetxService {
   isLogged() => storage.read(IS_LOGGED);
   apiToken() => storage.read(TOKEN);
   displayName() => storage.read(DISPLAY_NAME);
+  username() => storage.read(USERNAME);
   property() => storage.read(PROPERTY_SELECTED);
 
   changeIsLogged(bool isLogged) async => storage.write(IS_LOGGED, isLogged);
   changeApiToken(String token) async => storage.write(TOKEN, token);
   changeDisplayName(String displayName) async =>
       storage.write(DISPLAY_NAME, displayName);
+  changeUsername(String username) async => storage.write(USERNAME, username);
   changeProperty(PropertyModel? property) async =>
       storage.write(PROPERTY_SELECTED, property);
 
@@ -35,6 +38,7 @@ class AuthService extends GetxService {
         changeIsLogged(false),
         changeApiToken(''),
         changeDisplayName(''),
+        changeUsername(''),
         changeProperty(null),
       };
 }
