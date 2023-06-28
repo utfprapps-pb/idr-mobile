@@ -10,7 +10,7 @@ class SyncBinding implements Bindings {
     Get.lazyPut<SyncController>(
       () => SyncController(
         authService: Get.find(),
-        // propertyService: Get.find(),
+        loginService: Get.find(),
       ),
     );
   }
