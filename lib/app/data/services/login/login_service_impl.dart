@@ -12,4 +12,8 @@ class LoginServiceImpl implements LoginService {
 
   @override
   Future<LoginModel?> login(dynamic json) => _loginRepository.login(json);
+
+  @override
+  Future<LoginModel?> refreshToken(dynamic json) =>
+      _loginRepository.refreshToken(json);
 }
