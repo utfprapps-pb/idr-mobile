@@ -108,7 +108,7 @@ class InseminationPage extends GetView<InseminationController> {
                             )
                           : const Center(
                               child: Text(
-                                "Nenhuma inseminação registrado para este animal.",
+                                "Nenhuma inseminação registrada para este animal.",
                               ),
                             );
                     }),

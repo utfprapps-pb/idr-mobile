@@ -20,6 +20,18 @@ class SyncDefaultPage extends GetView<SyncDefaultController> {
       backgroundColor: UIColors.whiteColor,
       endDrawer: SideMenu(),
       key: scaffoldKey,
+      floatingActionButton: Obx(
+        () => Visibility(
+          visible: controller.isFinished.value,
+          child: FloatingActionButton(
+            onPressed: () {
+              controller.onReady();
+            },
+            backgroundColor: UIColors.primaryColor,
+            child: const Icon(Icons.refresh_rounded),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(right: 16.0, left: 16.0, top: 32.0),
@@ -52,20 +64,6 @@ class SyncDefaultPage extends GetView<SyncDefaultController> {
                   ),
                   const SizedBox(
                     height: 20,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: CustomOutlinedButton(
-                          title: 'Sincronizar',
-                          onPressedCallBack: () {
-                            controller.onReady();
-                          },
-                        ),
-                      )
-                    ],
                   ),
                   const SizedBox(
                     height: 20,

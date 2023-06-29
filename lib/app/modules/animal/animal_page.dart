@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:idr_mobile/app/data/enums/enum_animal_menu.dart';
 import 'package:idr_mobile/app/data/models/animal_model.dart';
 import 'package:idr_mobile/app/modules/animal/animal_controller.dart';
+import 'package:idr_mobile/app/widgets/custom_loading.dart';
 import 'package:idr_mobile/app/widgets/custom_outlined_button.dart';
 import 'package:idr_mobile/app/widgets/custom_slidable.dart';
 import 'package:idr_mobile/app/widgets/side_menu.dart';
@@ -79,67 +80,78 @@ class AnimalPage extends GetView<AnimalController> {
                 ),
                 Expanded(
                   child: Obx(() {
-                    return ListView.separated(
-                      separatorBuilder: (context, index) => Divider(),
-                      itemCount: controller.animalsFinal.length,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        var animal = controller.animalsFinal[index];
-                        return PopupMenuButton<AnimalMenuType>(
-                          initialValue: selectedMenu,
-                          onSelected: (AnimalMenuType item) {
-                            switch (item) {
-                              case AnimalMenuType.insemination:
-                                controller.goToNextPage(
-                                    animal, Routes.INSEMINATION);
-                                break;
-                              case AnimalMenuType.mastitis:
-                                controller.goToNextPage(
-                                    animal, Routes.MASTITIS);
-                                break;
-                              case AnimalMenuType.disease:
-                                controller.goToNextPage(
-                                    animal, Routes.DISEASE_ANIMAL);
-                                break;
-                              case AnimalMenuType.medications:
-                                controller.goToNextPage(
-                                    animal, Routes.MEDICATION);
-                                break;
-                              case AnimalMenuType.pregnancyDiagnosis:
-                                controller.goToNextPage(
-                                    animal, Routes.PREGNANCY_DIAGNOSIS);
-                                break;
-                              case AnimalMenuType.sale:
-                                controller.goToNextPage(animal, Routes.SALE);
-                                break;
-                              case AnimalMenuType.acquisition:
-                                controller.goToNextPage(
-                                    animal, Routes.PURCHASE);
-                                break;
-                              default:
-                            }
-                          },
-                          itemBuilder: (BuildContext context) =>
-                              (animal.dead != null && animal.dead == true)
-                                  ? []
-                                  : _itemsPopMenu(),
-                          child: CustomSlidable(
-                            identity: index,
-                            content: 'Identifier ${animal.identifier ?? ''}',
-                            title:
-                                '${animal.id ?? index + 1} - ${animal.bornDate}',
-                            icon: FontAwesomeIcons.cow,
-                            onPressedEditCallBack: (BuildContext context) {
-                              controller.goToForm(animal, index);
+                    if (controller.isLoading.value) {
+                      return customLoading;
+                    } else if (controller.animalsFinal.isEmpty) {
+                      return Center(
+                        child: Text(
+                          'Nenhum animal encontrado.',
+                          style: UIConfig.textLabelStyle,
+                        ),
+                      );
+                    } else {
+                      return ListView.separated(
+                        separatorBuilder: (context, index) => Divider(),
+                        itemCount: controller.animalsFinal.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          var animal = controller.animalsFinal[index];
+                          return PopupMenuButton<AnimalMenuType>(
+                            initialValue: selectedMenu,
+                            onSelected: (AnimalMenuType item) {
+                              switch (item) {
+                                case AnimalMenuType.insemination:
+                                  controller.goToNextPage(
+                                      animal, Routes.INSEMINATION);
+                                  break;
+                                case AnimalMenuType.mastitis:
+                                  controller.goToNextPage(
+                                      animal, Routes.MASTITIS);
+                                  break;
+                                case AnimalMenuType.disease:
+                                  controller.goToNextPage(
+                                      animal, Routes.DISEASE_ANIMAL);
+                                  break;
+                                case AnimalMenuType.medications:
+                                  controller.goToNextPage(
+                                      animal, Routes.MEDICATION);
+                                  break;
+                                case AnimalMenuType.pregnancyDiagnosis:
+                                  controller.goToNextPage(
+                                      animal, Routes.PREGNANCY_DIAGNOSIS);
+                                  break;
+                                case AnimalMenuType.sale:
+                                  controller.goToNextPage(animal, Routes.SALE);
+                                  break;
+                                case AnimalMenuType.acquisition:
+                                  controller.goToNextPage(
+                                      animal, Routes.PURCHASE);
+                                  break;
+                                default:
+                              }
                             },
-                            onPressedRemoveCallBack: (BuildContext context) {
-                              controller.removeAnimal(animal);
-                            },
-                          ),
-                        );
-                      },
-                    );
+                            itemBuilder: (BuildContext context) =>
+                                (animal.dead != null && animal.dead == true)
+                                    ? []
+                                    : _itemsPopMenu(),
+                            child: CustomSlidable(
+                              identity: index,
+                              content: 'Identifier ${animal.identifier ?? ''}',
+                              title:
+                                  '${animal.id ?? index + 1} - ${animal.bornDate}',
+                              icon: FontAwesomeIcons.cow,
+                              onPressedEditCallBack: (BuildContext context) {
+                                controller.goToForm(animal, index);
+                              },
+                              onPressedRemoveCallBack: (BuildContext context) {
+                                controller.removeAnimal(animal);
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    }
                   }),
                 ),
               ],

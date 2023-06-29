@@ -107,7 +107,7 @@ class MedicationPage extends GetView<MedicationController> {
                             )
                           : const Center(
                               child: Text(
-                                "Nenhuma medicamento registrada para este animal.",
+                                "Nenhum medicamento registrado para este animal.",
                               ),
                             );
                     }),

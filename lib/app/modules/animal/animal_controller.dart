@@ -27,6 +27,7 @@ class AnimalController extends GetxController {
   final property = PropertyModel().obs;
 
   final animal = AnimalModel().obs;
+  final isLoading = false.obs;
 
   @override
   void onInit() async {
@@ -60,6 +61,10 @@ class AnimalController extends GetxController {
 
   void loadAnimals() async {
     try {
+      isLoading.value = true;
+      await Future.delayed(
+        const Duration(seconds: 1),
+      );
       final animalsData = await _animalService.getAllAnimals(property.value.id);
       animalsFinal.assignAll(animalsData);
     } catch (e) {
@@ -68,6 +73,8 @@ class AnimalController extends GetxController {
         snackType: SnackType.error,
         behavior: SnackBarBehavior.floating,
       );
+    } finally {
+      isLoading.value = false;
     }
   }
 

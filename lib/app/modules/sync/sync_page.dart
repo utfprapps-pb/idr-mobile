@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:idr_mobile/app/modules/sync/sync_controller.dart';
+import 'package:idr_mobile/app/widgets/custom_loading.dart';
 import 'package:idr_mobile/app/widgets/side_menu.dart';
 import 'package:idr_mobile/core/theme/ui_colors.dart';
 import 'package:idr_mobile/core/theme/ui_config.dart';
@@ -24,55 +25,59 @@ class SyncPage extends GetView<SyncController> {
           child: SingleChildScrollView(
             child: SizedBox(
               height: Get.height,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
+              child: Obx(
+                () => controller.isLoading.value
+                    ? Center(child: customLoading)
+                    : Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Sincronização',
-                            style: UIConfig.titleStyle,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Sincronização',
+                                    style: UIConfig.titleStyle,
+                                  ),
+                                ],
+                              ),
+                              IconButton(
+                                onPressed: () =>
+                                    scaffoldKey.currentState!.openEndDrawer(),
+                                icon: const Icon(
+                                  Icons.menu,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          CustomElevatedButton(
+                            title: 'Sincronização forçada'.toUpperCase(),
+                            onPressedCallBack: () {
+                              Get.toNamed(Routes.FORCED_SYNC);
+                              // if (controller.formKey.currentState!.validate()) {
+                              //   controller.onFormSubmit();
+                              // }
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: CustomElevatedButton(
+                              title: 'Sincronização padrão'.toUpperCase(),
+                              onPressedCallBack: () {
+                                Get.toNamed(Routes.DEFAULT_SYNC);
+                                // if (controller.formKey.currentState!.validate()) {
+                                //   controller.onFormSubmit();
+                                // }
+                              },
+                            ),
                           ),
                         ],
                       ),
-                      IconButton(
-                        onPressed: () =>
-                            scaffoldKey.currentState!.openEndDrawer(),
-                        icon: const Icon(
-                          Icons.menu,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  CustomElevatedButton(
-                    title: 'Sincronização forçada'.toUpperCase(),
-                    onPressedCallBack: () {
-                      Get.toNamed(Routes.FORCED_SYNC);
-                      // if (controller.formKey.currentState!.validate()) {
-                      //   controller.onFormSubmit();
-                      // }
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: CustomElevatedButton(
-                      title: 'Sincronização padrão'.toUpperCase(),
-                      onPressedCallBack: () {
-                        Get.toNamed(Routes.DEFAULT_SYNC);
-                        // if (controller.formKey.currentState!.validate()) {
-                        //   controller.onFormSubmit();
-                        // }
-                      },
-                    ),
-                  ),
-                ],
               ),
             ),
           ),

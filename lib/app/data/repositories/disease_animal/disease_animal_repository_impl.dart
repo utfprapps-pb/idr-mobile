@@ -213,7 +213,7 @@ class DiseaseAnimalRepositoryImpl implements DiseaseAnimalRepository {
   @override
   Future<bool> postDiseaseAnimals(List diseases) async {
     final result = await _restClient.post(
-      'animals/sendDiseasesAnimal',
+      'animalDiseases/sendAnimalDiseases',
       jsonEncode(diseases),
       headers: HeadersAPI(token: auth.apiToken()).getHeaders(),
       decoder: (data) {

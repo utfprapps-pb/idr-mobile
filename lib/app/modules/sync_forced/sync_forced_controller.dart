@@ -126,6 +126,8 @@ class SyncForcedController extends GetxController {
   void onReady() {
     // TODO: implement onReady
     super.onReady();
+    isFinished.value = false;
+    syncFinishedList.value = [];
     loadProperties();
   }
 
